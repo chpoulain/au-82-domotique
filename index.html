@@ -464,16 +464,6 @@
 
         <!-- Carte 2 -->
         <div style="flex:0 0 calc(50% - 10px);border-radius:24px;overflow:hidden;position:relative;height:360px">
-          <img src="assets/photos/carte-mentale-handicap.jpg" alt="Carte mentale handicap" style="width:100%;height:100%;object-fit:cover;display:block"/>
-          <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(20,37,70,.85) 100%)"></div>
-          <div style="position:absolute;bottom:0;left:0;right:0;padding:28px">
-            <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--yellow);margin-bottom:8px">TND &amp; Handicap</div>
-            <h3 style="font-family:'Space Grotesk';font-size:22px;font-weight:500;color:#fff;line-height:1.2;letter-spacing:-.015em">Représenter le handicap — visible et invisible</h3>
-          </div>
-        </div>
-
-        <!-- Carte 3 -->
-        <div style="flex:0 0 calc(50% - 10px);border-radius:24px;overflow:hidden;position:relative;height:360px">
           <img src="assets/photos/schema-autoregulation.jpg" alt="Schéma autorégulation" style="width:100%;height:100%;object-fit:cover;display:block"/>
           <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(20,37,70,.85) 100%)"></div>
           <div style="position:absolute;bottom:0;left:0;right:0;padding:28px">
@@ -482,7 +472,7 @@
           </div>
         </div>
 
-        <!-- Carte 4 -->
+        <!-- Carte 3 -->
         <div style="flex:0 0 calc(50% - 10px);border-radius:24px;overflow:hidden;position:relative;height:360px">
           <img src="assets/photos/arbre-postits.jpg" alt="Arbre post-its émotions" style="width:100%;height:100%;object-fit:cover;display:block"/>
           <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(20,37,70,.85) 100%)"></div>
@@ -492,17 +482,7 @@
           </div>
         </div>
 
-        <!-- Carte 5 -->
-        <div style="flex:0 0 calc(50% - 10px);border-radius:24px;overflow:hidden;position:relative;height:360px">
-          <img src="assets/photos/tableau-blanc.jpg" alt="Tableau blanc formation" style="width:100%;height:100%;object-fit:cover;display:block"/>
-          <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(20,37,70,.85) 100%)"></div>
-          <div style="position:absolute;bottom:0;left:0;right:0;padding:28px">
-            <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--yellow);margin-bottom:8px">Formation en action</div>
-            <h3 style="font-family:'Space Grotesk';font-size:22px;font-weight:500;color:#fff;line-height:1.2;letter-spacing:-.015em">Écrire, relier, questionner — le tableau comme espace de pensée collective</h3>
-          </div>
-        </div>
-
-        <!-- Carte 6 -->
+        <!-- Carte 4 -->
         <div style="flex:0 0 calc(50% - 10px);border-radius:24px;overflow:hidden;position:relative;height:360px">
           <img src="assets/photos/train-sommeil.jpg" alt="Train du sommeil" style="width:100%;height:100%;object-fit:cover;display:block"/>
           <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(20,37,70,.85) 100%)"></div>
@@ -526,9 +506,10 @@
       <button onclick="goToSlide(0)" style="width:8px;height:8px;border-radius:50%;background:var(--navy-deep);border:none;cursor:pointer;padding:0"></button>
       <button onclick="goToSlide(1)" style="width:8px;height:8px;border-radius:50%;background:var(--line);border:none;cursor:pointer;padding:0"></button>
       <button onclick="goToSlide(2)" style="width:8px;height:8px;border-radius:50%;background:var(--line);border:none;cursor:pointer;padding:0"></button>
-      <button onclick="goToSlide(3)" style="width:8px;height:8px;border-radius:50%;background:var(--line);border:none;cursor:pointer;padding:0"></button>
-      <button onclick="goToSlide(4)" style="width:8px;height:8px;border-radius:50%;background:var(--line);border:none;cursor:pointer;padding:0"></button>
     </div>
+
+    <!-- Indicateur d'état -->
+    <p id="carouselHint" style="text-align:center;font-size:12.5px;color:var(--ink-3);margin-top:14px;letter-spacing:.04em">Défilement automatique — cliquez sur une image pour figer</p>
 
   </div>
 </section>
@@ -537,9 +518,14 @@
 <script>
 (function(){
   const track = document.getElementById('carouselTrack');
+  const wrap = track.parentElement;
   const dots = document.querySelectorAll('#carouselDots button');
+  const hint = document.getElementById('carouselHint');
   let current = 0;
-  const total = 5;
+  const total = 3;
+  const intervalMs = 4500;
+  let paused = false;
+  let timer = null;
 
   function update(){
     const cardW = track.children[0].offsetWidth + 20;
@@ -550,15 +536,49 @@
     });
   }
 
-  window.moveCarousel = function(dir){
-    current = Math.max(0, Math.min(total - 1, current + dir));
+  function next(){
+    current = (current + 1) % total;
     update();
+  }
+
+  function start(){
+    stop();
+    timer = setInterval(function(){ if(!paused) next(); }, intervalMs);
+  }
+
+  function stop(){
+    if(timer){ clearInterval(timer); timer = null; }
+  }
+
+  function setPaused(p){
+    paused = p;
+    track.style.cursor = p ? 'pointer' : 'pointer';
+    if(hint){
+      hint.textContent = p
+        ? 'En pause — cliquez à nouveau pour relancer'
+        : 'Défilement automatique — cliquez sur une image pour figer';
+    }
+  }
+
+  // Click on the track (cards area) toggles pause
+  track.addEventListener('click', function(){
+    setPaused(!paused);
+  });
+
+  window.moveCarousel = function(dir){
+    current = (current + dir + total) % total;
+    update();
+    setPaused(true);
   };
 
   window.goToSlide = function(i){
     current = i;
     update();
+    setPaused(true);
   };
+
+  track.style.cursor = 'pointer';
+  start();
 })();
 </script>
 
