@@ -1,0 +1,2610 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Bossa Nova — méthode de guitare en 10 modules</title>
+<meta name="description" content="Apprendre la guitare bossa nova de zéro : harmonie, accords colorés, main droite et rythme, en 10 modules progressifs avec étoiles et validation." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<style>
+/* =========================================================
+   Bossa Nova — feuille de style partagée
+   Méthode de guitare bossa nova en 10 modules
+   ========================================================= */
+
+:root{
+  --navy:#1f3a6b;
+  --navy-deep:#142546;
+  --teal:#1ea7a0;
+  --yellow:#f5b820;
+  --orange:#ee5a2a;
+  --lime:#a7c842;
+  --sky:#5fa8d6;
+  --cream:#fbf8f1;
+  --paper:#fff;
+  --ink:#0e1a33;
+  --ink-2:#404a66;
+  --ink-3:#7a849c;
+  --line:rgba(20,37,70,.10);
+
+  /* accents bossa */
+  --sand:#f3e9d6;
+  --leaf:#2f8f6b;
+  --sun:#e8933a;
+  --wave:#3d7ea6;
+  --violet:#6b5ca8;
+
+  --star:#f5b820;
+  --star-off:#d9d2c4;
+
+  --radius:18px;
+  --shadow:0 18px 50px -24px rgba(20,37,70,.35);
+  --shadow-sm:0 6px 20px -10px rgba(20,37,70,.3);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+html,body{
+  background:var(--cream);
+  color:var(--ink);
+  font-family:"Space Grotesk",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.6;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.serif{font-family:"Instrument Serif",serif;font-weight:400;font-style:italic}
+.wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+.wrap-narrow{max-width:820px;margin:0 auto;padding:0 28px}
+
+/* ---------- NAV ---------- */
+.bnav{position:sticky;top:0;z-index:60;background:rgba(251,248,241,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.bnav-inner{display:flex;align-items:center;justify-content:space-between;height:70px;gap:16px}
+.bbrand{display:flex;align-items:center;gap:11px;font-weight:700;font-size:19px;letter-spacing:-.02em;color:var(--navy-deep)}
+.bbrand .glyph{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--leaf),var(--teal));display:grid;place-items:center;color:#fff;font-size:18px;box-shadow:var(--shadow-sm)}
+.bnav-right{display:flex;align-items:center;gap:16px}
+.bnav-stars{display:inline-flex;align-items:center;gap:8px;padding:8px 15px;background:var(--paper);border:1px solid var(--line);border-radius:99px;font-weight:600;font-size:14px;color:var(--navy-deep);box-shadow:var(--shadow-sm)}
+.bnav-stars svg{width:17px;height:17px}
+.bnav-back{display:inline-flex;align-items:center;gap:8px;padding:9px 17px;background:var(--navy-deep);color:#fff;border-radius:99px;font-weight:600;font-size:14px;transition:background .18s}
+.bnav-back:hover{background:var(--orange)}
+
+/* ---------- HERO ---------- */
+.bhero{padding:56px 0 40px}
+.beyebrow{display:inline-flex;align-items:center;gap:9px;padding:7px 15px;background:var(--lime);border-radius:99px;font-size:12.5px;font-weight:600;color:var(--navy-deep);text-transform:uppercase;letter-spacing:.06em}
+.beyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--navy-deep)}
+.bhero h1{font-family:"Space Grotesk",sans-serif;font-weight:500;font-size:clamp(40px,7vw,86px);line-height:.98;letter-spacing:-.035em;color:var(--navy-deep);margin:22px 0 20px;text-wrap:balance}
+.bhero h1 .accent{color:var(--orange)}
+.bhero h1 .accent2{color:var(--teal)}
+.bhero-desc{font-size:19px;color:var(--ink-2);max-width:620px;text-wrap:pretty}
+.bhero-desc strong{color:var(--navy-deep);font-weight:600}
+
+/* progress strip */
+.progress-strip{margin-top:36px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px;box-shadow:var(--shadow-sm)}
+.progress-strip .ps-top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:16px}
+.ps-stat{display:flex;gap:34px;flex-wrap:wrap}
+.ps-stat .num{font-family:"Instrument Serif",serif;font-style:italic;font-size:36px;color:var(--navy-deep);line-height:1}
+.ps-stat .num .sub{font-size:18px;color:var(--ink-3)}
+.ps-stat .lbl{font-size:12px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.07em;font-weight:600;margin-top:3px}
+.pbar{height:12px;border-radius:99px;background:var(--sand);overflow:hidden}
+.pbar > span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--leaf),var(--teal),var(--yellow));transition:width .6s cubic-bezier(.2,.7,.2,1)}
+.reset-link{background:none;border:none;font-family:inherit;color:var(--ink-3);font-size:12.5px;cursor:pointer;text-decoration:underline;padding:0}
+.reset-link:hover{color:var(--orange)}
+
+/* ---------- MODULE GRID (hub) ---------- */
+.mgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;padding:8px 0 70px}
+.mcard{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:26px 26px 24px;box-shadow:var(--shadow-sm);transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column;gap:14px;overflow:hidden}
+.mcard::before{content:"";position:absolute;inset:0 auto 0 0;width:5px;background:var(--c,var(--teal))}
+.mcard.is-open:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.mcard.is-locked{opacity:.6}
+.mcard-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.mnum{font-family:"Instrument Serif",serif;font-style:italic;font-size:44px;line-height:.8;color:var(--c,var(--teal))}
+.mbadge{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;padding:5px 11px;border-radius:99px}
+.mbadge.locked{background:var(--sand);color:var(--ink-3)}
+.mbadge.open{background:rgba(30,167,160,.14);color:var(--teal)}
+.mbadge.done{background:rgba(47,143,107,.16);color:var(--leaf)}
+.mcard h3{font-size:20px;font-weight:600;letter-spacing:-.02em;color:var(--navy-deep);line-height:1.2}
+.mcard p{font-size:14.5px;color:var(--ink-2)}
+.mcard-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:6px}
+.mstars{display:inline-flex;gap:3px}
+.mstars svg{width:16px;height:16px}
+.mcard-cta{display:inline-flex;align-items:center;gap:7px;font-weight:600;font-size:14px;color:var(--navy-deep)}
+.mcard.is-open .mcard-cta:hover{color:var(--orange)}
+.mcard .lockmsg{font-size:13px;color:var(--ink-3);font-weight:500}
+.mtime{font-size:12.5px;color:var(--ink-3);display:inline-flex;align-items:center;gap:6px}
+
+/* ---------- MODULE PAGE ---------- */
+.module-head{padding:44px 0 10px}
+.mh-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:var(--c,var(--teal));text-transform:uppercase;letter-spacing:.08em}
+.mh-eyebrow .chip{background:var(--c,var(--teal));color:#fff;border-radius:99px;padding:3px 11px;font-family:"Instrument Serif",serif;font-style:italic;letter-spacing:0}
+.module-head h1{font-size:clamp(32px,5vw,56px);font-weight:500;letter-spacing:-.03em;color:var(--navy-deep);line-height:1.02;margin:14px 0 16px;text-wrap:balance}
+.module-head .lead{font-size:18px;color:var(--ink-2);max-width:680px}
+.mh-meta{display:flex;gap:14px;flex-wrap:wrap;margin-top:22px}
+.mh-meta .pill{display:inline-flex;align-items:center;gap:8px;background:var(--paper);border:1px solid var(--line);border-radius:99px;padding:8px 15px;font-size:13px;font-weight:500;color:var(--ink-2)}
+.mh-meta .pill b{color:var(--navy-deep);font-weight:600}
+
+/* objectifs */
+.goals{list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:12px 26px;margin:8px 0}
+.goals li{display:flex;gap:11px;font-size:15px;color:var(--ink-2)}
+.goals li::before{content:"";flex:0 0 auto;width:20px;height:20px;margin-top:2px;border-radius:6px;background:var(--c,var(--teal));background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");background-size:14px;background-position:center;background-repeat:no-repeat}
+
+/* sections */
+.section{padding:34px 0;border-top:1px solid var(--line)}
+.section:first-of-type{border-top:none}
+.section h2{font-size:26px;font-weight:600;letter-spacing:-.02em;color:var(--navy-deep);margin-bottom:6px;display:flex;align-items:baseline;gap:12px}
+.section h2 .idx{font-family:"Instrument Serif",serif;font-style:italic;font-size:22px;color:var(--c,var(--teal))}
+.section h3{font-size:18px;font-weight:600;color:var(--navy-deep);margin:26px 0 8px}
+.section p{font-size:16px;color:var(--ink-2);margin:10px 0}
+.section p strong,.section li strong{color:var(--navy-deep);font-weight:600}
+.section ul,.section ol{margin:12px 0 12px 4px;padding-left:22px}
+.section li{font-size:16px;color:var(--ink-2);margin:7px 0}
+.section a.tlink{color:var(--wave);border-bottom:1px solid rgba(61,126,166,.4);font-weight:500}
+.section a.tlink:hover{color:var(--orange);border-color:var(--orange)}
+
+/* callouts */
+.callout{display:flex;gap:15px;background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--c,var(--teal));border-radius:12px;padding:18px 20px;margin:20px 0;box-shadow:var(--shadow-sm)}
+.callout .ico{flex:0 0 auto;width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-size:19px;background:rgba(30,167,160,.12)}
+.callout h4{font-size:15px;font-weight:600;color:var(--navy-deep);margin-bottom:3px}
+.callout p{font-size:14.5px;color:var(--ink-2);margin:0}
+.callout.tip{border-left-color:var(--leaf)}.callout.tip .ico{background:rgba(47,143,107,.14)}
+.callout.warn{border-left-color:var(--orange)}.callout.warn .ico{background:rgba(238,90,42,.13)}
+.callout.ear{border-left-color:var(--violet)}.callout.ear .ico{background:rgba(107,92,168,.14)}
+.callout.hist{border-left-color:var(--sun)}.callout.hist .ico{background:rgba(232,147,58,.16)}
+
+/* practice card */
+.practice{background:linear-gradient(135deg,#fff,var(--sand));border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px;margin:24px 0;box-shadow:var(--shadow-sm)}
+.practice .ptag{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--leaf)}
+.practice h4{font-size:19px;font-weight:600;color:var(--navy-deep);margin:8px 0 4px}
+.practice .metro{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--navy-deep);background:var(--paper);border:1px solid var(--line);border-radius:99px;padding:5px 13px;margin-top:6px}
+
+/* chord diagram row */
+.chord-row{display:flex;flex-wrap:wrap;gap:22px;margin:22px 0;align-items:flex-start}
+.chord{width:112px;text-align:center}
+.chord .cname{font-weight:600;font-size:16px;color:var(--navy-deep);margin-bottom:2px}
+.chord .csub{font-size:11.5px;color:var(--ink-3);margin-bottom:8px;min-height:15px}
+.chord svg{margin:0 auto;filter:drop-shadow(0 6px 14px rgba(20,37,70,.12))}
+
+/* rhythm grid */
+.rhythm{background:var(--navy-deep);border-radius:var(--radius);padding:22px 24px;margin:22px 0;color:#fff;overflow-x:auto}
+.rhythm .rtitle{font-size:14px;font-weight:600;letter-spacing:.02em;color:var(--yellow);margin-bottom:14px;display:flex;align-items:center;gap:9px}
+.rgrid{display:grid;gap:5px;min-width:520px}
+.rlane{display:grid;grid-template-columns:88px 1fr;align-items:center;gap:12px}
+.rlane .rlbl{font-size:13px;font-weight:600;color:rgba(255,255,255,.82);text-align:right}
+.rcells{display:grid;grid-template-columns:repeat(16,1fr);gap:4px}
+.rcell{height:26px;border-radius:5px;background:rgba(255,255,255,.09);position:relative}
+.rcell.beat{background:rgba(255,255,255,.16)}
+.rcell.hit{background:var(--teal)}
+.rcell.hit.thumb{background:var(--yellow)}
+.rcell.hit.acc{background:var(--orange)}
+.rcell .lab{position:absolute;inset:0;display:grid;place-items:center;font-size:11px;font-weight:700;color:var(--navy-deep)}
+.rbeats{display:grid;grid-template-columns:88px 1fr;gap:12px;margin-top:8px}
+.rbeats .sp{}
+.rbeats .nums{display:grid;grid-template-columns:repeat(4,1fr);font-size:11px;color:rgba(255,255,255,.55);font-weight:600}
+.rlegend{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:12px;color:rgba(255,255,255,.75)}
+.rlegend span{display:inline-flex;align-items:center;gap:6px}
+.rlegend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+
+/* progression table */
+.grille{width:100%;border-collapse:separate;border-spacing:6px;margin:20px 0}
+.grille td{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 10px;text-align:center;font-weight:600;color:var(--navy-deep);font-size:16px}
+.grille td .deg{display:block;font-size:11px;color:var(--ink-3);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-top:3px}
+.grille td.empty{background:var(--sand);color:var(--ink-3)}
+
+/* ---------- QUIZ ---------- */
+.quiz-wrap{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:30px 30px 26px;margin:14px 0 30px;box-shadow:var(--shadow)}
+.quiz-wrap h2{font-size:26px;margin-bottom:4px}
+.quiz-intro{font-size:15px;color:var(--ink-2);margin-bottom:8px}
+.q{padding:22px 0;border-top:1px solid var(--line)}
+.q:first-of-type{border-top:none}
+.q .qnum{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--c,var(--teal))}
+.q .qtext{font-size:17px;font-weight:600;color:var(--navy-deep);margin:6px 0 14px;line-height:1.4}
+.q .qtext .mono{font-family:"Space Grotesk";background:var(--sand);padding:1px 7px;border-radius:6px;font-weight:600}
+.opts{display:grid;gap:9px}
+.opt{display:flex;gap:12px;align-items:flex-start;padding:13px 15px;border:1.5px solid var(--line);border-radius:12px;cursor:pointer;transition:border-color .15s,background .15s;font-size:15px;color:var(--ink-2)}
+.opt:hover{border-color:var(--teal)}
+.opt input{margin-top:3px;accent-color:var(--teal);flex:0 0 auto}
+.opt.correct{border-color:var(--leaf);background:rgba(47,143,107,.08)}
+.opt.wrong{border-color:var(--orange);background:rgba(238,90,42,.07)}
+.opt .mark{margin-left:auto;font-weight:700;font-size:13px}
+.opt.correct .mark{color:var(--leaf)}
+.opt.wrong .mark{color:var(--orange)}
+.explain{margin-top:11px;font-size:14px;color:var(--ink-2);background:var(--cream);border-radius:10px;padding:12px 15px;display:none}
+.explain.show{display:block}
+.explain b{color:var(--navy-deep)}
+
+/* self-check tasks */
+.selfcheck{margin:8px 0}
+.selfcheck .sc-item{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px dashed var(--line);cursor:pointer}
+.selfcheck .sc-item:first-child{border-top:none}
+.selfcheck input{margin-top:3px;width:19px;height:19px;accent-color:var(--leaf);flex:0 0 auto;cursor:pointer}
+.selfcheck .sc-item span{font-size:15px;color:var(--ink-2)}
+
+.quiz-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:26px;padding-top:22px;border-top:1px solid var(--line)}
+.btn-check{display:inline-flex;align-items:center;gap:11px;padding:15px 26px;background:var(--navy-deep);color:#fff;border:none;border-radius:99px;font-weight:600;font-size:15px;font-family:inherit;cursor:pointer;transition:background .18s}
+.btn-check:hover{background:var(--orange)}
+.btn-check:disabled{opacity:.5;cursor:not-allowed}
+.quiz-score{font-size:15px;font-weight:600;color:var(--ink-2)}
+
+/* result banner */
+.result{margin-top:22px;border-radius:var(--radius);padding:24px 26px;display:none}
+.result.show{display:block;animation:pop .4s ease}
+.result.pass{background:linear-gradient(135deg,rgba(47,143,107,.14),rgba(30,167,160,.12));border:1px solid rgba(47,143,107,.3)}
+.result.fail{background:rgba(238,90,42,.08);border:1px solid rgba(238,90,42,.3)}
+.result h3{font-size:22px;color:var(--navy-deep);margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.result p{font-size:15px;color:var(--ink-2);margin:0}
+.result .earned{display:inline-flex;gap:4px;margin:12px 0}
+.result .earned svg{width:24px;height:24px}
+.result .next-btn{display:inline-flex;align-items:center;gap:10px;margin-top:16px;padding:14px 24px;background:var(--leaf);color:#fff;border-radius:99px;font-weight:600;font-size:15px;transition:background .18s}
+.result .next-btn:hover{background:var(--navy-deep)}
+@keyframes pop{from{transform:scale(.96);opacity:0}to{transform:scale(1);opacity:1}}
+
+/* footer nav between modules */
+.module-foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:30px 0 70px;border-top:1px solid var(--line);margin-top:20px}
+.foot-link{display:inline-flex;align-items:center;gap:10px;padding:13px 22px;border:1px solid var(--line);border-radius:99px;font-weight:600;font-size:14.5px;color:var(--navy-deep);background:var(--paper);transition:background .18s,color .18s}
+.foot-link:hover{background:var(--navy-deep);color:#fff}
+.foot-link.disabled{opacity:.4;pointer-events:none}
+
+/* site footer */
+.bfoot{background:var(--navy-deep);color:rgba(255,255,255,.7);padding:38px 0;font-size:13.5px}
+.bfoot .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+.bfoot a{color:#fff;border-bottom:1px solid rgba(255,255,255,.3)}
+.bfoot a:hover{color:var(--yellow)}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:var(--navy-deep);color:#fff;padding:14px 22px;border-radius:99px;font-weight:600;font-size:14.5px;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;z-index:200;display:flex;align-items:center;gap:10px}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast svg{width:18px;height:18px}
+
+@media(max-width:760px){
+  .mgrid{grid-template-columns:1fr}
+  .goals{grid-template-columns:1fr}
+  .wrap,.wrap-narrow{padding:0 20px}
+  .bnav-back span.hide-sm{display:none}
+}
+
+
+  .view[hidden]{display:none}
+  .bbrand{cursor:pointer}
+  .mcard-cta{color:var(--navy-deep)}
+
+</style>
+</head>
+<body data-page="app">
+
+<nav class="bnav">
+  <div class="wrap bnav-inner">
+    <div class="bbrand" data-goto="hub"><span class="glyph">♫</span> Bossa&nbsp;Nova · Método</div>
+    <div class="bnav-right">
+      <span class="bnav-stars" data-nav-stars></span>
+      <a class="bnav-back" style="cursor:pointer" data-goto="hub">☰ <span class="hide-sm">Parcours</span></a>
+    </div>
+  </div>
+</nav>
+
+<div id="app">
+<section class="view" id="view-hub">
+
+
+<header class="bhero">
+  <div class="wrap">
+    <span class="beyebrow"><span class="dot"></span> Guitare · de zéro à l'autonomie</span>
+    <h1>La guitare <span class="serif accent">bossa nova</span>,<br />comprise et jouée</h1>
+    <p class="bhero-desc">
+      Dix modules pour passer de la première corde pincée à l'intégration des accords bossa
+      dans <strong>n'importe quelle chanson</strong>. On y travaille l'oreille, l'harmonie
+      (les fameux <strong>maj7, m7, ii–V–I</strong>), la main gauche qui colore les accords,
+      et surtout la <strong>main droite</strong> qui fait swinguer la <em>batida</em>.
+      Chaque module dure ≈ 1 h 30, se valide à 80 %, et rapporte des étoiles.
+    </p>
+
+    <div class="progress-strip">
+      <div class="ps-top">
+        <div class="ps-stat">
+          <div>
+            <div class="num" data-passed-count>0</div>
+            <div class="lbl">Modules validés · /10</div>
+          </div>
+          <div>
+            <div class="num"><span data-total-stars>0</span><span class="sub"> / <span data-max-stars>50</span></span></div>
+            <div class="lbl">Étoiles gagnées</div>
+          </div>
+          <div>
+            <div class="num serif">80<span class="sub">%</span></div>
+            <div class="lbl">Seuil de validation</div>
+          </div>
+        </div>
+        <button class="reset-link" data-reset>Réinitialiser ma progression</button>
+      </div>
+      <div class="pbar"><span data-progress-fill style="width:0%"></span></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="mgrid" data-hub-grid><!-- généré par bossa.js --></div>
+</div>
+
+<section class="wrap-narrow" style="padding:0 28px 70px">
+  <div class="callout tip">
+    <div class="ico">🎯</div>
+    <div>
+      <h4>Comment ça marche</h4>
+      <p>Suis les modules dans l'ordre : chacun s'appuie sur le précédent. À la fin de chaque module,
+      un petit quiz mêle <b>théorie</b> et <b>auto-évaluation de ta pratique</b>. Atteins 80 % pour
+      valider, gagner tes étoiles et débloquer le suivant. Ta progression est enregistrée dans
+      ton navigateur — tu peux revenir quand tu veux.</p>
+    </div>
+  </div>
+  <div class="callout ear">
+    <div class="ico">👂</div>
+    <div>
+      <h4>Le vrai secret : écouter</h4>
+      <p>La bossa nova s'apprend autant avec l'oreille qu'avec les doigts. À chaque module, prends
+      le temps d'écouter João Gilberto, Antônio Carlos Jobim, Baden Powell ou Luiz Bonfá : tu
+      reconnaîtras vite les couleurs d'accords et la respiration du rythme que tu travailles.</p>
+    </div>
+  </div>
+</section>
+
+
+</section>
+
+<section class="view" id="view-m1" data-module="1" style="--c:#2f8f6b" hidden>
+<div class="lockpanel wrap-narrow" hidden>
+    <div style="padding:70px 0;text-align:center">
+      <div style="font-size:52px">🔒</div>
+      <h1 style="font-size:30px;color:var(--navy-deep);margin:16px 0 10px">Module verrouillé</h1>
+      <p style="font-size:17px;color:var(--ink-2);max-width:520px;margin:0 auto 26px">
+        Pour garder une progression solide, ce module s'ouvre une fois le module 0 validé (80 %).</p>
+      <a class="bnav-back" style="display:inline-flex;cursor:pointer" data-goto="hub">← Retour au parcours</a>
+    </div></div>
+<div class="modulebody">
+  <header class="module-head">
+    <div class="mh-eyebrow"><span class="chip">Module 1 / 10</span> Fondations</div>
+    <h1>Entrer dans la bossa nova</h1>
+    <p class="lead">Avant les accords, on installe le décor : d'où vient cette musique, comment
+    on s'assoit avec la guitare, comment on l'accorde, et surtout comment on <em>écoute</em>.
+    C'est la fondation invisible sur laquelle tout le reste va tenir.</p>
+    <div class="mh-meta">
+      <span class="pill">⏱ <b>≈ 1 h 30</b></span>
+      <span class="pill">Prérequis : <b>aucun</b></span>
+      <span class="pill">🌟 Objectif : <b>5 étoiles</b></span>
+    </div>
+  </header>
+
+  <ul class="goals">
+    <li>Situer la bossa nova dans son histoire et reconnaître son « son ».</li>
+    <li>Adopter une posture et une tenue de guitare adaptées au jeu assis.</li>
+    <li>Accorder sa guitare et nommer les six cordes.</li>
+    <li>Développer une écoute active des grands interprètes.</li>
+  </ul>
+
+  <section class="section">
+    <h2><span class="idx">1.1</span> Qu'est-ce que la bossa nova ?</h2>
+    <p>La bossa nova (« nouvelle vague » en portugais brésilien) naît à Rio de Janeiro à la fin
+    des années 1950. Elle fusionne la <strong>samba</strong> — son balancement, sa pulsation — avec
+    l'harmonie raffinée du <strong>jazz cool</strong> américain. Le résultat : une musique intime,
+    murmurée, où la guitare devient à elle seule un petit orchestre.</p>
+    <p>Trois noms fondateurs à garder en tête :</p>
+    <ul>
+      <li><strong>João Gilberto</strong> — l'inventeur du geste : sa main droite (la fameuse
+      <em>batida</em>) et sa voix chuchotée définissent le style.</li>
+      <li><strong>Antônio Carlos Jobim</strong> (Tom Jobim) — le compositeur-harmoniste, auteur de
+      <em>Garota de Ipanema</em>, <em>Corcovado</em>, <em>Wave</em>.</li>
+      <li><strong>Vinícius de Moraes</strong> — le poète, parolier de nombre de ces standards.</li>
+    </ul>
+    <div class="callout hist">
+      <div class="ico">🎶</div>
+      <div>
+        <h4>Le disque-repère</h4>
+        <p><em>Chega de Saudade</em> (João Gilberto, 1959) est considéré comme l'acte de naissance
+        de la bossa nova. Écoute la guitare seule : la basse au pouce et les accords syncopés au-dessus.
+        C'est exactement ce que tu vas apprendre à faire.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2><span class="idx">1.2</span> Le son bossa, en une phrase</h2>
+    <p>Ce qui rend une musique « bossa » tient à trois ingrédients que nous travaillerons tout au long
+    du parcours :</p>
+    <ul>
+      <li><strong>Des accords colorés</strong> : pas de simples accords majeurs/mineurs, mais des
+      accords à quatre sons — <span class="mono">maj7</span>, <span class="mono">m7</span>,
+      <span class="mono">7</span> et leurs enrichissements. (Modules 3, 4, 8.)</li>
+      <li><strong>Une main droite syncopée</strong> : le pouce marque une basse régulière pendant que
+      les doigts placent l'accord « à contretemps ». (Modules 2, 6.)</li>
+      <li><strong>Une harmonie qui respire</strong> : les accords s'enchaînent par petites cellules
+      logiques (le <span class="mono">ii–V–I</span>). (Modules 4, 7, 10.)</li>
+    </ul>
+    <div class="callout ear">
+      <div class="ico">👂</div>
+      <div>
+        <h4>Écoute active (15 min)</h4>
+        <p>Écoute trois fois <em>Corcovado</em> de Tom Jobim. 1ʳᵉ fois : la voix. 2ᵉ fois : la basse
+        (les notes graves de la guitare). 3ᵉ fois : le « tchic » des accords entre les basses.
+        Tu viens d'isoler pouce et doigts — le cœur de la technique.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2><span class="idx">1.3</span> S'installer avec la guitare</h2>
+    <p>La bossa se joue presque toujours <strong>assis</strong>, guitare posée sur la cuisse.
+    La priorité est la <strong>détente</strong> : c'est une musique de nuance, pas de force.</p>
+    <ul>
+      <li>Assieds-toi au bord de la chaise, dos droit mais relâché.</li>
+      <li>Guitare sur la cuisse droite (droitier), manche légèrement relevé.</li>
+      <li>Le poignet droit reste souple, la main flotte au-dessus de la rosace / des micros.</li>
+      <li>La main gauche : le pouce derrière le manche, les doigts arrondis, on appuie
+      <em>juste derrière</em> la barrette, pas dessus.</li>
+    </ul>
+    <div class="callout tip">
+      <div class="ico">🌿</div>
+      <div>
+        <h4>Test de détente</h4>
+        <p>Épaules basses, respiration lente. Si ton avant-bras ou ta nuque se crispent au bout de
+        deux minutes, c'est que tu forces : relâche, la bossa doit rester confortable.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2><span class="idx">1.4</span> Accorder & nommer les cordes</h2>
+    <p>De la plus grave (la plus épaisse) à la plus aiguë, les six cordes à vide donnent :</p>
+    <table class="grille" style="border-spacing:6px">
+      <tr>
+        <td>Mi<span class="deg">6ᵉ · grave</span></td>
+        <td>La<span class="deg">5ᵉ</span></td>
+        <td>Ré<span class="deg">4ᵉ</span></td>
+        <td>Sol<span class="deg">3ᵉ</span></td>
+        <td>Si<span class="deg">2ᵉ</span></td>
+        <td>Mi<span class="deg">1ʳᵉ · aiguë</span></td>
+      </tr>
+    </table>
+    <p>Moyen mnémotechnique classique : « <strong>Mi</strong> <strong>La</strong>tin <strong>Ré</strong>sonne
+    <strong>Sol</strong>ennel <strong>Si</strong> <strong>Mi</strong>gnon ». En notation anglo-saxonne
+    (utile pour lire les grilles bossa) : <span class="mono">E A D G B E</span>.</p>
+    <div class="callout warn">
+      <div class="ico">🎚️</div>
+      <div>
+        <h4>Accordage juste = son bossa</h4>
+        <p>Utilise un accordeur (appli ou clip). Les accords <span class="mono">maj7</span> révèlent
+        impitoyablement une guitare fausse : consacre une minute à bien accorder avant chaque séance.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2><span class="idx">1.5</span> Ta première corde pincée</h2>
+    <p>Pas encore d'accord : on apprend juste le geste du pouce, qui portera toute la basse bossa.</p>
+    <div class="practice">
+      <span class="ptag">🎸 À jouer</span>
+      <h4>La basse au pouce</h4>
+      <p>Pose le pouce (noté <span class="mono">p</span>) sur la 6ᵉ corde (Mi grave). Pince-la
+      vers le bas, laisse-la sonner. Passe à la 5ᵉ, puis à la 4ᵉ. Cherche un son <strong>rond et
+      régulier</strong>, jamais claqué. Compte lentement 1 – 2 – 3 – 4, une basse par temps.</p>
+      <span class="metro">🕰️ Métronome 60 bpm · une note par clic</span>
+    </div>
+  </section>
+
+  <!-- ===================== QUIZ ===================== -->
+  <div class="quiz-wrap" id="quiz">
+    <form data-quiz="1">
+      <h2>Valider le module 1</h2>
+      <p class="quiz-intro">Quatre questions de compréhension + une auto-évaluation de ta pratique.
+      Il faut <strong>80 %</strong> pour valider et débloquer le module 2.</p>
+
+      <div class="q" data-answer="b">
+        <div class="qnum">Question 1</div>
+        <div class="qtext">D'où vient principalement le balancement rythmique de la bossa nova ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q1" value="a"> Du rock'n'roll américain</label>
+          <label class="opt"><input type="radio" name="q1" value="b"> De la samba brésilienne</label>
+          <label class="opt"><input type="radio" name="q1" value="c"> Du flamenco espagnol</label>
+        </div>
+        <div class="explain"><b>Samba.</b> La bossa nova = le balancement de la samba + l'harmonie du jazz cool. Rio, fin des années 1950.</div>
+      </div>
+
+      <div class="q" data-answer="c">
+        <div class="qnum">Question 2</div>
+        <div class="qtext">Quel musicien est considéré comme l'inventeur de la <em>batida</em> (la main droite bossa) ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q2" value="a"> Vinícius de Moraes</label>
+          <label class="opt"><input type="radio" name="q2" value="b"> Baden Powell</label>
+          <label class="opt"><input type="radio" name="q2" value="c"> João Gilberto</label>
+        </div>
+        <div class="explain"><b>João Gilberto.</b> Son geste de main droite et sa voix murmurée définissent le style dès <em>Chega de Saudade</em> (1959).</div>
+      </div>
+
+      <div class="q" data-answer="a">
+        <div class="qnum">Question 3</div>
+        <div class="qtext">De la plus grave à la plus aiguë, comment s'appellent les six cordes ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q3" value="a"> Mi – La – Ré – Sol – Si – Mi</label>
+          <label class="opt"><input type="radio" name="q3" value="b"> Mi – Ré – La – Sol – Si – Mi</label>
+          <label class="opt"><input type="radio" name="q3" value="c"> La – Mi – Ré – Sol – Do – Mi</label>
+        </div>
+        <div class="explain"><b>Mi La Ré Sol Si Mi</b> (E A D G B E). Ce sont ces noms que tu retrouveras dans les grilles.</div>
+      </div>
+
+      <div class="q" data-answer="b">
+        <div class="qnum">Question 4</div>
+        <div class="qtext">Dans le jeu bossa, quel doigt de la main droite tient le rôle de la basse ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q4" value="a"> L'index (i)</label>
+          <label class="opt"><input type="radio" name="q4" value="b"> Le pouce (p)</label>
+          <label class="opt"><input type="radio" name="q4" value="c"> L'annulaire (a)</label>
+        </div>
+        <div class="explain"><b>Le pouce (p).</b> Il joue les cordes graves de façon régulière ; les doigts s'occupent de l'accord au-dessus.</div>
+      </div>
+
+      <h3 style="margin-top:26px">Auto-évaluation de ta pratique</h3>
+      <p class="quiz-intro">Coche honnêtement ce que tu sais déjà faire (chaque case cochée compte).</p>
+      <div class="selfcheck">
+        <label class="sc-item"><input type="checkbox"> <span>Je peux m'installer avec la guitare, épaules relâchées, pendant 2 minutes sans crisper.</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>J'ai accordé ma guitare et je sais nommer chaque corde à vide.</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>Je pince les cordes graves au pouce avec un son rond et régulier à 60 bpm.</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>J'ai écouté au moins un morceau de João Gilberto ou Tom Jobim en repérant basse / accords.</span></label>
+      </div>
+
+      <div class="quiz-actions">
+        <button type="button" class="btn-check" data-check>Vérifier mes réponses</button>
+        <span class="quiz-score" data-live-score></span>
+      </div>
+      <div class="result" data-result></div>
+    </form>
+  </div>
+
+  <nav class="module-foot">
+    <a class="foot-link disabled">← Module précédent</a>
+    <a class="foot-link" data-goto="m2" style="cursor:pointer">Module 2 : la main droite →</a>
+  </nav>
+</div>
+</section>
+
+<section class="view" id="view-m2" data-module="2" style="--c:#1ea7a0" hidden>
+<div class="lockpanel wrap-narrow" hidden>
+    <div style="padding:70px 0;text-align:center">
+      <div style="font-size:52px">🔒</div>
+      <h1 style="font-size:30px;color:var(--navy-deep);margin:16px 0 10px">Module verrouillé</h1>
+      <p style="font-size:17px;color:var(--ink-2);max-width:520px;margin:0 auto 26px">
+        Pour garder une progression solide, ce module s'ouvre une fois le module 1 validé (80 %).</p>
+      <a class="bnav-back" style="display:inline-flex;cursor:pointer" data-goto="hub">← Retour au parcours</a>
+    </div></div>
+<div class="modulebody">
+  <header class="module-head">
+    <div class="mh-eyebrow"><span class="chip">Module 2 / 10</span> Main droite</div>
+    <h1>La main droite : le geste fondateur</h1>
+    <p class="lead">Dans la bossa, la main droite est le moteur. Le pouce joue une basse régulière,
+    pendant que les doigts posent l'accord juste à côté. Séparer ces deux rôles est
+    <em>la</em> compétence-clé du style : on la construit ici, doucement.</p>
+    <div class="mh-meta">
+      <span class="pill">⏱ <b>≈ 1 h 30</b></span>
+      <span class="pill">Prérequis : <b>module 1</b></span>
+      <span class="pill">🌟 Objectif : <b>5 étoiles</b></span>
+    </div>
+  </header>
+
+  <ul class="goals">
+    <li>Nommer et placer les doigts de la main droite : p – i – m – a.</li>
+    <li>Jouer une basse au pouce régulière et ronde.</li>
+    <li>Coordonner pouce (basse) et doigts (accord) sur un motif simple.</li>
+    <li>Tenir le geste à un tempo lent, détendu, sans regarder la main.</li>
+  </ul>
+
+  <section class="section">
+    <h2><span class="idx">2.1</span> Les noms des doigts</h2>
+    <p>La technique bossa vient de la guitare classique : chaque doigt de la main droite a un nom,
+    hérité du portugais / espagnol.</p>
+    <table class="grille">
+      <tr>
+        <td>p<span class="deg">polegar · pouce</span></td>
+        <td>i<span class="deg">indicador · index</span></td>
+        <td>m<span class="deg">médio · majeur</span></td>
+        <td>a<span class="deg">anular · annulaire</span></td>
+      </tr>
+    </table>
+    <p>Le partage des tâches est presque toujours le même :</p>
+    <ul>
+      <li><strong>p</strong> (pouce) → cordes graves : 6ᵉ, 5ᵉ, 4ᵉ. C'est la <strong>basse</strong>.</li>
+      <li><strong>i</strong> → 3ᵉ corde (Sol), <strong>m</strong> → 2ᵉ corde (Si), <strong>a</strong> → 1ʳᵉ corde (Mi aigu).</li>
+    </ul>
+    <div class="callout tip">
+      <div class="ico">🖐️</div>
+      <div>
+        <h4>La position « plantée »</h4>
+        <p>Pose déjà <span class="mono">i-m-a</span> sur les cordes 3-2-1 et laisse-les y « habiter ».
+        Le pouce, lui, se promène librement sur les graves. Cette position stable est le point de
+        départ de tous les motifs bossa.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2><span class="idx">2.2</span> Étape 1 — La basse au pouce</h2>
+    <p>On isole d'abord le pouce. Sur la bossa, la basse alterne souvent entre la
+    <strong>fondamentale</strong> (grave) et la <strong>quinte</strong> (une corde plus aiguë).
+    Sans accord pour l'instant : joue les cordes à vide.</p>
+    <div class="rhythm" data-rhythm='{"title":"Basse alternée au pouce — cordes à vide","beats":16,"lanes":[{"lbl":"Pouce p","pattern":"o...o...o...o..."},{"lbl":"Doigts","pattern":"................"}]}'></div>
+    <div class="practice">
+      <span class="ptag">🎸 À jouer</span>
+      <h4>Pouce : 6ᵉ – 4ᵉ – 5ᵉ – 4ᵉ</h4>
+      <p>Une note grave par temps : <span class="mono">Mi(6)</span> · <span class="mono">Ré(4)</span> ·
+      <span class="mono">La(5)</span> · <span class="mono">Ré(4)</span>. Cherche l'égalité :
+      même volume, même durée. Le pouce « marche ».</p>
+      <span class="metro">🕰️ 60 bpm · une basse par clic</span>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2><span class="idx">2.3</span> Étape 2 — Les doigts posent l'accord</h2>
+    <p>Maintenant les doigts <span class="mono">i-m-a</span> pincent ensemble les cordes 3-2-1
+    (« le petit pluck »). Pour que ça sonne joli sans connaître d'accord, tu peux tenir un
+    <strong>Mi mineur</strong> tout simple (2ᵉ case des cordes La et Ré) — ou rester à vide.</p>
+    <div class="chord-row">
+      <div class="chord" data-chord='{"name":"Em","sub":"facultatif","frets":[0,2,2,0,0,0],"fingers":[0,2,3,0,0,0],"color":"#1ea7a0"}'></div>
+    </div>
+    <div class="rhythm" data-rhythm='{"title":"Pouce + doigts : la coordination de base","beats":16,"lanes":[{"lbl":"Pouce p","pattern":"o...o...o...o..."},{"lbl":"Doigts ima","pattern":"..x...x...x...x."}]}'></div>
+    <p>Lis la grille ainsi : sur chaque temps (1-2-3-4) le pouce donne une basse ; juste après,
+    « <em>et</em> », les doigts pincent l'accord. On obtient le célèbre
+    « <strong>boum-tchic</strong> » de la bossa, en tout petit.</p>
+    <div class="callout warn">
+      <div class="ico">🐢</div>
+      <div>
+        <h4>Lentement, vraiment</h4>
+        <p>L'indépendance pouce / doigts est un réflexe qui se construit. Commence à 50 bpm.
+        Si le pouce et les doigts jouent en même temps au lieu de se répondre, ralentis encore.
+        La vitesse viendra seule.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2><span class="idx">2.4</span> Étape 3 — Décaler l'accord (la syncope)</h2>
+    <p>Le sel de la bossa, c'est que l'accord tombe <strong>juste avant</strong> le temps, pas dessus.
+    On déplace le pincé des doigts d'un cran plus tôt : c'est la <strong>syncope</strong>, qui donne
+    cette sensation de balancement. On l'approfondira au module 6 ; ici, on la goûte.</p>
+    <div class="rhythm" data-rhythm='{"title":"Premier goût de syncope","beats":16,"lanes":[{"lbl":"Pouce p","pattern":"o...o...o...o..."},{"lbl":"Doigts ima","pattern":".x.....x.x.....x"}]}'></div>
+    <div class="callout ear">
+      <div class="ico">👂</div>
+      <div>
+        <h4>Chante-le</h4>
+        <p>Dis à voix haute : « <b>boum</b>-tchic … <b>boum</b> … -tchic ». Le « boum » est le pouce
+        sur le temps, le « tchic » est l'accord qui glisse à côté. Chanter le motif avant de le jouer
+        te le fera intégrer deux fois plus vite.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== QUIZ ===================== -->
+  <div class="quiz-wrap" id="quiz">
+    <form data-quiz="2">
+      <h2>Valider le module 2</h2>
+      <p class="quiz-intro">Compréhension + auto-évaluation de ta pratique. <strong>80 %</strong> pour valider.</p>
+
+      <div class="q" data-answer="c">
+        <div class="qnum">Question 1</div>
+        <div class="qtext">Dans la notation p-i-m-a, que désigne le <span class="mono">p</span> ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q1" value="a"> L'index</label>
+          <label class="opt"><input type="radio" name="q1" value="b"> Le petit doigt</label>
+          <label class="opt"><input type="radio" name="q1" value="c"> Le pouce (polegar)</label>
+        </div>
+        <div class="explain"><b>Le pouce.</b> p = polegar. i = index, m = majeur (médio), a = annulaire (anular).</div>
+      </div>
+
+      <div class="q" data-answer="b">
+        <div class="qnum">Question 2</div>
+        <div class="qtext">Quel est le rôle du pouce dans le jeu bossa ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q2" value="a"> Gratter tout l'accord d'un coup</label>
+          <label class="opt"><input type="radio" name="q2" value="b"> Jouer la basse régulière sur les cordes graves</label>
+          <label class="opt"><input type="radio" name="q2" value="c"> Pincer la corde la plus aiguë</label>
+        </div>
+        <div class="explain"><b>La basse.</b> Le pouce s'occupe des cordes 6-5-4 et marque la pulsation, comme une contrebasse.</div>
+      </div>
+
+      <div class="q" data-answer="a">
+        <div class="qnum">Question 3</div>
+        <div class="qtext">À quelles cordes sont typiquement assignés les doigts i, m, a ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q3" value="a"> i→3ᵉ (Sol), m→2ᵉ (Si), a→1ʳᵉ (Mi aigu)</label>
+          <label class="opt"><input type="radio" name="q3" value="b"> i→6ᵉ, m→5ᵉ, a→4ᵉ</label>
+          <label class="opt"><input type="radio" name="q3" value="c"> Ils jouent tous la même corde</label>
+        </div>
+        <div class="explain"><b>3-2-1.</b> Les doigts couvrent les trois cordes aiguës, une corde chacun : c'est la position « plantée ».</div>
+      </div>
+
+      <div class="q" data-answer="c">
+        <div class="qnum">Question 4</div>
+        <div class="qtext">Qu'est-ce qui donne à la bossa sa sensation de balancement ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q4" value="a"> Jouer toujours très fort</label>
+          <label class="opt"><input type="radio" name="q4" value="b"> Poser l'accord exactement sur le temps, avec le pouce</label>
+          <label class="opt"><input type="radio" name="q4" value="c"> Décaler l'accord à côté du temps (la syncope)</label>
+        </div>
+        <div class="explain"><b>La syncope.</b> L'accord des doigts tombe légèrement à côté du temps ; le pouce, lui, reste sur le temps. Ce décalage crée le swing bossa.</div>
+      </div>
+
+      <h3 style="margin-top:26px">Auto-évaluation de ta pratique</h3>
+      <p class="quiz-intro">Coche ce que tu sais faire (chaque case compte).</p>
+      <div class="selfcheck">
+        <label class="sc-item"><input type="checkbox"> <span>Je tiens la position « plantée » i-m-a sur les cordes 3-2-1, pouce libre sur les graves.</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>Je joue une basse au pouce régulière (6-4-5-4) à 60 bpm.</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>Je coordonne « pouce puis doigts » (boum-tchic) sur 8 mesures sans m'arrêter.</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>J'ai essayé le motif syncopé, même lentement, et j'entends le décalage.</span></label>
+      </div>
+
+      <div class="quiz-actions">
+        <button type="button" class="btn-check" data-check>Vérifier mes réponses</button>
+        <span class="quiz-score" data-live-score></span>
+      </div>
+      <div class="result" data-result></div>
+    </form>
+  </div>
+
+  <nav class="module-foot">
+    <a class="foot-link" data-goto="m1" style="cursor:pointer">← Module 1</a>
+    <a class="foot-link" data-goto="m3" style="cursor:pointer">Module 3 : les premiers accords →</a>
+  </nav>
+</div>
+</section>
+
+<section class="view" id="view-m3" data-module="3" style="--c:#3d7ea6" hidden>
+<div class="lockpanel wrap-narrow" hidden>
+    <div style="padding:70px 0;text-align:center">
+      <div style="font-size:52px">🔒</div>
+      <h1 style="font-size:30px;color:var(--navy-deep);margin:16px 0 10px">Module verrouillé</h1>
+      <p style="font-size:17px;color:var(--ink-2);max-width:520px;margin:0 auto 26px">
+        Pour garder une progression solide, ce module s'ouvre une fois le module 2 validé (80 %).</p>
+      <a class="bnav-back" style="display:inline-flex;cursor:pointer" data-goto="hub">← Retour au parcours</a>
+    </div></div>
+<div class="modulebody">
+  <header class="module-head">
+    <div class="mh-eyebrow"><span class="chip">Module 3 / 10</span> Accords</div>
+    <h1>Les premiers accords colorés</h1>
+    <p class="lead">Voici le vrai vocabulaire de la bossa. On abandonne les accords « à trois sons »
+    du camp de guitare pour des accords <strong>à quatre sons</strong> : maj7, m7 et 7. Une seule
+    note ajoutée, et tout devient soyeux, brésilien.</p>
+    <div class="mh-meta">
+      <span class="pill">⏱ <b>≈ 1 h 30</b></span>
+      <span class="pill">Prérequis : <b>module 2</b></span>
+      <span class="pill">🌟 Objectif : <b>5 étoiles</b></span>
+    </div>
+  </header>
+
+  <ul class="goals">
+    <li>Comprendre la différence entre un accord à 3 sons et un accord à 4 sons.</li>
+    <li>Reconnaître les trois familles : maj7, m7, 7 (dominante).</li>
+    <li>Placer six accords bossa ouverts, proprement.</li>
+    <li>Enchaîner deux accords colorés en gardant la basse au pouce.</li>
+  </ul>
+
+  <section class="section">
+    <h2><span class="idx">3.1</span> Une note change tout</h2>
+    <p>Un accord « ordinaire » a trois sons : la <strong>fondamentale</strong>, la <strong>tierce</strong>
+    (majeure ou mineure = joyeux ou triste) et la <strong>quinte</strong>. La bossa ajoute une
+    quatrième note : la <strong>septième</strong>. Écoute la métamorphose sur un Do :</p>
+    <div class="chord-row">
+      <div class="chord" data-chord='{"name":"C","sub":"3 sons — neutre","frets":[-1,3,2,0,1,0],"fingers":[0,3,2,0,1,0],"color":"#7a849c"}'></div>
+      <div class="chord" data-chord='{"name":"Cmaj7","sub":"+7M — rêveur","frets":[-1,3,2,0,0,0],"fingers":[0,3,2,0,0,0],"color":"#3d7ea6"}'></div>
+      <div class="chord" data-chord='{"name":"C7","sub":"+7m — tendu","frets":[-1,3,2,3,1,0],"fingers":[0,3,2,4,1,0],"color":"#e8933a"}'></div>
+    </div>
+    <p>Même accord de départ, trois couleurs : <span class="mono">Cmaj7</span> est doux et suspendu,
+    <span class="mono">C7</span> est tendu et « veut avancer ». Cette tension est le moteur de
+    l'harmonie bossa (module 4).</p>
+    <div class="callout ear">
+      <div class="ico">👂</div>
+      <div>
+        <h4>Le test de l'oreille</h4>
+        <p>Joue les trois l'un après l'autre, lentement. Le maj7 « plane », le 7 « tire vers l'avant ».
+        Savoir entendre cette différence vaut dix pages de théorie.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2><span class="idx">3.2</span> Les trois familles</h2>
+    <ul>
+      <li><strong>maj7</strong> (« Majeur 7 ») — sonorité douce, lumineuse, posée. C'est souvent
+      l'accord d'<em>arrivée</em>, de repos. Ex. : <span class="mono">Cmaj7, Fmaj7</span>.</li>
+      <li><strong>m7</strong> (« mineur 7 ») — velouté, mélancolique mais souple. Très fréquent comme
+      accord de <em>passage</em>. Ex. : <span class="mono">Am7, Dm7, Em7</span>.</li>
+      <li><strong>7</strong> (« septième de dominante ») — instable, il appelle une résolution.
+      C'est l'accord <em>moteur</em>. Ex. : <span class="mono">G7, A7</span>.</li>
+    </ul>
+    <div class="callout tip">
+      <div class="ico">🎨</div>
+      <div>
+        <h4>Trois couleurs, une logique</h4>
+        <p>Retiens la métaphore : <b>maj7 = repos</b>, <b>m7 = passage</b>, <b>7 = tension qui pousse</b>.
+        Toute la bossa est un jeu entre ces trois états.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2><span class="idx">3.3</span> Ta boîte à six accords</h2>
+    <p>Voici six accords ouverts qui suffisent déjà à jouer des dizaines de morceaux. Les chiffres
+    sous chaque diagramme donnent le doigté ; « × » = corde muette, « o » = corde à vide.</p>
+    <div class="chord-row">
+      <div class="chord" data-chord='{"name":"Cmaj7","sub":"repos","frets":[-1,3,2,0,0,0],"fingers":[0,3,2,0,0,0],"color":"#3d7ea6"}'></div>
+      <div class="chord" data-chord='{"name":"Fmaj7","sub":"repos","frets":[-1,-1,3,2,1,0],"fingers":[0,0,3,2,1,0],"color":"#3d7ea6"}'></div>
+      <div class="chord" data-chord='{"name":"Dm7","sub":"passage","frets":[-1,-1,0,2,1,1],"fingers":[0,0,0,3,1,1],"color":"#1ea7a0"}'></div>
+    </div>
+    <div class="chord-row">
+      <div class="chord" data-chord='{"name":"Am7","sub":"passage","frets":[-1,0,2,0,1,0],"fingers":[0,0,2,0,1,0],"color":"#1ea7a0"}'></div>
+      <div class="chord" data-chord='{"name":"Em7","sub":"passage","frets":[0,2,0,0,0,0],"fingers":[0,2,0,0,0,0],"color":"#1ea7a0"}'></div>
+      <div class="chord" data-chord='{"name":"G7","sub":"tension","frets":[3,2,0,0,0,1],"fingers":[3,2,0,0,0,1],"color":"#e8933a"}'></div>
+    </div>
+    <div class="callout warn">
+      <div class="ico">✋</div>
+      <div>
+        <h4>Propreté avant vitesse</h4>
+        <p>Appuie juste derrière la barrette, doigts arrondis, et joue chaque corde une à une pour
+        vérifier qu'aucune ne « frise ». Un maj7 mal appuyé sonne faux : la bossa ne pardonne pas
+        l'à-peu-près.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2><span class="idx">3.4</span> Premier enchaînement</h2>
+    <p>On relie deux accords en gardant le geste du module 2 : pouce = basse, doigts = accord.
+    Change d'accord <strong>pendant</strong> le silence des doigts, sans arrêter le pouce.</p>
+    <table class="grille">
+      <tr>
+        <td>Dm7<span class="deg">passage</span></td>
+        <td>G7<span class="deg">tension</span></td>
+        <td>Cmaj7<span class="deg">repos</span></td>
+        <td>Cmaj7<span class="deg">repos</span></td>
+      </tr>
+    </table>
+    <div class="practice">
+      <span class="ptag">🎸 À jouer</span>
+      <h4>Dm7 → G7 → Cmaj7</h4>
+      <p>Une mesure par accord, basse au pouce sur la fondamentale (Ré, Sol, Do), doigts qui pincent
+      l'accord. Tu viens de jouer, sans le savoir, la cellule reine de la bossa : le
+      <strong>ii–V–I</strong>, qu'on décortique au module 4.</p>
+      <span class="metro">🕰️ 60 bpm · un accord par mesure</span>
+    </div>
+  </section>
+
+  <!-- ===================== QUIZ ===================== -->
+  <div class="quiz-wrap" id="quiz">
+    <form data-quiz="3">
+      <h2>Valider le module 3</h2>
+      <p class="quiz-intro">Compréhension + auto-évaluation. <strong>80 %</strong> pour valider.</p>
+
+      <div class="q" data-answer="b">
+        <div class="qnum">Question 1</div>
+        <div class="qtext">Quelle note distingue un accord bossa (à 4 sons) d'un accord ordinaire (à 3 sons) ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q1" value="a"> La quinte</label>
+          <label class="opt"><input type="radio" name="q1" value="b"> La septième</label>
+          <label class="opt"><input type="radio" name="q1" value="c"> La tierce</label>
+        </div>
+        <div class="explain"><b>La septième.</b> Fondamentale + tierce + quinte + <b>7ᵉ</b> = l'accord à quatre sons, base du son bossa.</div>
+      </div>
+
+      <div class="q" data-answer="c">
+        <div class="qnum">Question 2</div>
+        <div class="qtext">Quel accord a la sonorité la plus douce, « au repos » ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q2" value="a"> Le 7 (dominante)</label>
+          <label class="opt"><input type="radio" name="q2" value="b"> Le m7</label>
+          <label class="opt"><input type="radio" name="q2" value="c"> Le maj7</label>
+        </div>
+        <div class="explain"><b>Le maj7.</b> Lumineux et posé, c'est typiquement l'accord d'arrivée. Le 7 (dominante), lui, crée la tension.</div>
+      </div>
+
+      <div class="q" data-answer="a">
+        <div class="qnum">Question 3</div>
+        <div class="qtext">Lequel de ces accords est une <em>dominante</em> (accord de tension) ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q3" value="a"> G7</label>
+          <label class="opt"><input type="radio" name="q3" value="b"> Am7</label>
+          <label class="opt"><input type="radio" name="q3" value="c"> Fmaj7</label>
+        </div>
+        <div class="explain"><b>G7.</b> Le suffixe « 7 » seul (sans maj ni m) désigne la septième de dominante, instable, qui appelle une résolution.</div>
+      </div>
+
+      <div class="q" data-answer="b">
+        <div class="qnum">Question 4</div>
+        <div class="qtext">L'enchaînement <span class="mono">Dm7 → G7 → Cmaj7</span> illustre quelle logique ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q4" value="a"> Repos → repos → tension</label>
+          <label class="opt"><input type="radio" name="q4" value="b"> Passage → tension → repos</label>
+          <label class="opt"><input type="radio" name="q4" value="c"> Tension → repos → passage</label>
+        </div>
+        <div class="explain"><b>Passage → tension → repos.</b> m7 (passage) → 7 (tension) → maj7 (repos) : c'est le ii–V–I, étudié au module 4.</div>
+      </div>
+
+      <h3 style="margin-top:26px">Auto-évaluation de ta pratique</h3>
+      <p class="quiz-intro">Coche ce que tu sais faire.</p>
+      <div class="selfcheck">
+        <label class="sc-item"><input type="checkbox"> <span>Je place proprement Cmaj7, Fmaj7 et G7 (chaque corde sonne claire).</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>Je place proprement Am7, Dm7 et Em7.</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>J'entends la différence entre maj7 (repos) et 7 (tension).</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>J'enchaîne Dm7 → G7 → Cmaj7 avec la basse au pouce, à tempo lent.</span></label>
+      </div>
+
+      <div class="quiz-actions">
+        <button type="button" class="btn-check" data-check>Vérifier mes réponses</button>
+        <span class="quiz-score" data-live-score></span>
+      </div>
+      <div class="result" data-result></div>
+    </form>
+  </div>
+
+  <nav class="module-foot">
+    <a class="foot-link" data-goto="m2" style="cursor:pointer">← Module 2</a>
+    <a class="foot-link" data-goto="m4" style="cursor:pointer">Module 4 : l'harmonie ii–V–I →</a>
+  </nav>
+</div>
+</section>
+
+<section class="view" id="view-m4" data-module="4" style="--c:#6b5ca8" hidden>
+<div class="lockpanel wrap-narrow" hidden>
+    <div style="padding:70px 0;text-align:center">
+      <div style="font-size:52px">🔒</div>
+      <h1 style="font-size:30px;color:var(--navy-deep);margin:16px 0 10px">Module verrouillé</h1>
+      <p style="font-size:17px;color:var(--ink-2);max-width:520px;margin:0 auto 26px">
+        Pour garder une progression solide, ce module s'ouvre une fois le module 3 validé (80 %).</p>
+      <a class="bnav-back" style="display:inline-flex;cursor:pointer" data-goto="hub">← Retour au parcours</a>
+    </div></div>
+<div class="modulebody">
+  <header class="module-head">
+    <div class="mh-eyebrow"><span class="chip">Module 4 / 10</span> Harmonie</div>
+    <h1>Comprendre l'harmonie : le ii–V–I</h1>
+    <p class="lead">C'est le module qui fait tout basculer. Comprendre le <strong>ii–V–I</strong>, c'est
+    tenir la clé qui ouvre 90 % du répertoire bossa et jazz. Après ça, tu ne verras plus les grilles
+    comme une liste d'accords, mais comme une <em>phrase</em> qui a un sens.</p>
+    <div class="mh-meta">
+      <span class="pill">⏱ <b>≈ 1 h 30</b></span>
+      <span class="pill">Prérequis : <b>module 3</b></span>
+      <span class="pill">🌟 Objectif : <b>5 étoiles</b></span>
+    </div>
+  </header>
+
+  <ul class="goals">
+    <li>Comprendre la notion de degré (I, ii, V…) dans une tonalité.</li>
+    <li>Construire les accords diatoniques d'une gamme majeure.</li>
+    <li>Reconnaître et jouer le ii–V–I majeur.</li>
+    <li>Découvrir le ii–V–i mineur (avec l'accord m7♭5).</li>
+  </ul>
+
+  <section class="section">
+    <h2><span class="idx">4.1</span> Les degrés : chaque accord a un numéro</h2>
+    <p>Dans une tonalité, on numérote les accords de 1 à 7 avec des chiffres romains. Majuscule =
+    accord majeur, minuscule = mineur. En do majeur, en empilant des septièmes sur chaque note de la
+    gamme, on obtient :</p>
+    <table class="grille">
+      <tr>
+        <td>Cmaj7<span class="deg">I</span></td>
+        <td>Dm7<span class="deg">ii</span></td>
+        <td>Em7<span class="deg">iii</span></td>
+        <td>Fmaj7<span class="deg">IV</span></td>
+        <td>G7<span class="deg">V</span></td>
+        <td>Am7<span class="deg">vi</span></td>
+        <td>Bm7♭5<span class="deg">vii°</span></td>
+      </tr>
+    </table>
+    <p>Retiens surtout trois piliers : le <strong>I</strong> (la maison, le repos, un maj7), le
+    <strong>ii</strong> (un m7 qui prépare), et le <strong>V</strong> (le 7 de tension qui ramène à la maison).</p>
+    <div class="callout tip">
+      <div class="ico">🧭</div>
+      <div>
+        <h4>Pourquoi les chiffres romains ?</h4>
+        <p>Parce qu'ils sont <b>transposables</b>. « ii–V–I » décrit une logique valable dans toutes
+        les tonalités. Apprends la formule une fois, joue-la partout — c'est exactement ce dont tu auras
+        besoin au module 10 pour bossanoviser n'importe quelle chanson.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2><span class="idx">4.2</span> Le ii–V–I majeur, cellule reine</h2>
+    <p>La progression <span class="mono">ii → V → I</span> raconte une mini-histoire :
+    <strong>préparation → tension → résolution</strong>. C'est un aimant : le V7 « appelle » le I, et
+    l'oreille est satisfaite quand il arrive.</p>
+    <table class="grille">
+      <tr>
+        <td>Dm7<span class="deg">ii — prépare</span></td>
+        <td>G7<span class="deg">V — tension</span></td>
+        <td>Cmaj7<span class="deg">I — résout</span></td>
+      </tr>
+    </table>
+    <div class="chord-row">
+      <div class="chord" data-chord='{"name":"Dm7","sub":"ii","frets":[-1,-1,0,2,1,1],"fingers":[0,0,0,3,1,1],"color":"#6b5ca8"}'></div>
+      <div class="chord" data-chord='{"name":"G7","sub":"V","frets":[3,2,0,0,0,1],"fingers":[3,2,0,0,0,1],"color":"#e8933a"}'></div>
+      <div class="chord" data-chord='{"name":"Cmaj7","sub":"I","frets":[-1,3,2,0,0,0],"fingers":[0,3,2,0,0,0],"color":"#3d7ea6"}'></div>
+    </div>
+    <div class="callout ear">
+      <div class="ico">👂</div>
+      <div>
+        <h4>Entends l'aimant</h4>
+        <p>Joue G7 et… arrête-toi. Tu ressens le « manque » ? Ton oreille réclame le Cmaj7. Cette
+        attente, c'est la force de la dominante. La bossa en joue sans arrêt, en la retardant, en la
+        déviant (module 8).</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2><span class="idx">4.3</span> Le même geste, partout</h2>
+    <p>Puisque « ii–V–I » est une formule, on la transpose. Voici la même cellule dans deux autres
+    tonalités très fréquentes en bossa :</p>
+    <table class="grille">
+      <tr>
+        <td>Gm7<span class="deg">ii de Fa</span></td>
+        <td>C7<span class="deg">V</span></td>
+        <td>Fmaj7<span class="deg">I</span></td>
+      </tr>
+    </table>
+    <table class="grille">
+      <tr>
+        <td>Am7<span class="deg">ii de Sol</span></td>
+        <td>D7<span class="deg">V</span></td>
+        <td>Gmaj7<span class="deg">I</span></td>
+      </tr>
+    </table>
+    <p>La <strong>règle</strong> : le ii se trouve un ton au-dessus du I ; le V, une quarte au-dessus du I
+    (ou une quinte en dessous). Une fois le réflexe pris, tu repères les ii–V–I dans n'importe quelle grille.</p>
+  </section>
+
+  <section class="section">
+    <h2><span class="idx">4.4</span> Le ii–V–i mineur</h2>
+    <p>La bossa adore les couleurs mineures (pensez à <em>Insensatez</em>, <em>Black Orpheus</em>).
+    Le ii–V–i mineur introduit un accord nouveau : le <strong>m7♭5</strong> (dit « demi-diminué »),
+    et une dominante souvent altérée.</p>
+    <table class="grille">
+      <tr>
+        <td>Bm7♭5<span class="deg">ii° de La m</span></td>
+        <td>E7<span class="deg">V</span></td>
+        <td>Am7<span class="deg">i</span></td>
+      </tr>
+    </table>
+    <div class="chord-row">
+      <div class="chord" data-chord='{"name":"Bm7♭5","sub":"ii demi-dim.","frets":[-1,2,3,2,3,-1],"fingers":[0,1,3,2,4,0],"color":"#6b5ca8"}'></div>
+      <div class="chord" data-chord='{"name":"E7","sub":"V","frets":[0,2,0,1,0,0],"fingers":[0,2,0,1,0,0],"color":"#e8933a"}'></div>
+      <div class="chord" data-chord='{"name":"Am7","sub":"i","frets":[-1,0,2,0,1,0],"fingers":[0,0,2,0,1,0],"color":"#1ea7a0"}'></div>
+    </div>
+    <div class="practice">
+      <span class="ptag">🎸 À jouer</span>
+      <h4>Deux ii–V–I enchaînés</h4>
+      <p>Joue <span class="mono">Dm7–G7–Cmaj7</span> (majeur), puis <span class="mono">Bm7♭5–E7–Am7</span>
+      (mineur), une mesure par accord, en gardant ta main droite. Écoute comme le mineur assombrit
+      la couleur : c'est déjà de la vraie bossa.</p>
+      <span class="metro">🕰️ 60–70 bpm · un accord par mesure</span>
+    </div>
+  </section>
+
+  <!-- ===================== QUIZ ===================== -->
+  <div class="quiz-wrap" id="quiz">
+    <form data-quiz="4">
+      <h2>Valider le module 4</h2>
+      <p class="quiz-intro">Compréhension + auto-évaluation. <strong>80 %</strong> pour valider.</p>
+
+      <div class="q" data-answer="b">
+        <div class="qnum">Question 1</div>
+        <div class="qtext">Dans « ii–V–I », que représentent les chiffres romains ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q1" value="a"> Le nombre de cordes à jouer</label>
+          <label class="opt"><input type="radio" name="q1" value="b"> Les degrés (la place des accords dans la tonalité)</label>
+          <label class="opt"><input type="radio" name="q1" value="c"> Le tempo</label>
+        </div>
+        <div class="explain"><b>Les degrés.</b> I = 1ᵉʳ accord de la gamme, ii = 2ᵉ, etc. Ils sont transposables dans toutes les tonalités.</div>
+      </div>
+
+      <div class="q" data-answer="c">
+        <div class="qnum">Question 2</div>
+        <div class="qtext">En do majeur, quel accord est le degré <span class="mono">V</span> (la dominante) ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q2" value="a"> Dm7</label>
+          <label class="opt"><input type="radio" name="q2" value="b"> Cmaj7</label>
+          <label class="opt"><input type="radio" name="q2" value="c"> G7</label>
+        </div>
+        <div class="explain"><b>G7.</b> Le V de do majeur est Sol, joué en 7 de dominante : G7. C'est lui qui « appelle » le Cmaj7.</div>
+      </div>
+
+      <div class="q" data-answer="a">
+        <div class="qnum">Question 3</div>
+        <div class="qtext">Quelle est la logique émotionnelle du ii–V–I ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q3" value="a"> Préparation → tension → résolution</label>
+          <label class="opt"><input type="radio" name="q3" value="b"> Résolution → repos → repos</label>
+          <label class="opt"><input type="radio" name="q3" value="c"> Tension → tension → tension</label>
+        </div>
+        <div class="explain"><b>Préparation → tension → résolution.</b> Le ii (m7) prépare, le V (7) crée la tension, le I (maj7) résout.</div>
+      </div>
+
+      <div class="q" data-answer="c">
+        <div class="qnum">Question 4</div>
+        <div class="qtext">Quel accord nouveau apparaît dans un ii–V–i <em>mineur</em> ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q4" value="a"> Le maj7</label>
+          <label class="opt"><input type="radio" name="q4" value="b"> Le 7sus4</label>
+          <label class="opt"><input type="radio" name="q4" value="c"> Le m7♭5 (demi-diminué)</label>
+        </div>
+        <div class="explain"><b>Le m7♭5.</b> Le ii du mode mineur est un accord « demi-diminué », par ex. Bm7♭5 dans la tonalité de la mineur.</div>
+      </div>
+
+      <h3 style="margin-top:26px">Auto-évaluation de ta pratique</h3>
+      <p class="quiz-intro">Coche ce que tu sais faire.</p>
+      <div class="selfcheck">
+        <label class="sc-item"><input type="checkbox"> <span>Je sais nommer le I, le ii et le V d'une tonalité donnée (au moins en Do).</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>Je joue Dm7 → G7 → Cmaj7 proprement, en boucle.</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>Je place l'accord Bm7♭5 et joue le ii–V–i mineur.</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>J'entends l'« appel » du V7 vers le I.</span></label>
+      </div>
+
+      <div class="quiz-actions">
+        <button type="button" class="btn-check" data-check>Vérifier mes réponses</button>
+        <span class="quiz-score" data-live-score></span>
+      </div>
+      <div class="result" data-result></div>
+    </form>
+  </div>
+
+  <nav class="module-foot">
+    <a class="foot-link" data-goto="m3" style="cursor:pointer">← Module 3</a>
+    <a class="foot-link" data-goto="m5" style="cursor:pointer">Module 5 : voicings mobiles →</a>
+  </nav>
+</div>
+</section>
+
+<section class="view" id="view-m5" data-module="5" style="--c:#e8933a" hidden>
+<div class="lockpanel wrap-narrow" hidden>
+    <div style="padding:70px 0;text-align:center">
+      <div style="font-size:52px">🔒</div>
+      <h1 style="font-size:30px;color:var(--navy-deep);margin:16px 0 10px">Module verrouillé</h1>
+      <p style="font-size:17px;color:var(--ink-2);max-width:520px;margin:0 auto 26px">
+        Pour garder une progression solide, ce module s'ouvre une fois le module 4 validé (80 %).</p>
+      <a class="bnav-back" style="display:inline-flex;cursor:pointer" data-goto="hub">← Retour au parcours</a>
+    </div></div>
+<div class="modulebody">
+  <header class="module-head">
+    <div class="mh-eyebrow"><span class="chip">Module 5 / 10</span> Voicings</div>
+    <h1>Voicings & accords barrés mobiles</h1>
+    <p class="lead">Les accords ouverts, c'est confortable mais limité. Le vrai jeu bossa se passe
+    au milieu du manche, sur des formes <strong>mobiles</strong> qu'on glisse d'une case à l'autre.
+    Apprends trois formes, et tu tiens 36 accords.</p>
+    <div class="mh-meta">
+      <span class="pill">⏱ <b>≈ 1 h 30</b></span>
+      <span class="pill">Prérequis : <b>module 4</b></span>
+      <span class="pill">🌟 Objectif : <b>5 étoiles</b></span>
+    </div>
+  </header>
+
+  <ul class="goals">
+    <li>Comprendre ce qu'est un « voicing » (une manière de disposer les notes).</li>
+    <li>Mémoriser trois formes mobiles à fondamentale sur la 6ᵉ corde.</li>
+    <li>Nommer un accord grâce à la position de sa fondamentale.</li>
+    <li>Jouer un ii–V–I en voicings, sans cordes à vide.</li>
+  </ul>
+
+  <section class="section">
+    <h2><span class="idx">5.1</span> Qu'est-ce qu'un voicing ?</h2>
+    <p>Un même accord (par ex. Gmaj7) peut se jouer de dix façons différentes : c'est le
+    <strong>voicing</strong>, l'agencement des notes dans l'espace. Les bossaistes préfèrent des
+    voicings <strong>compacts</strong> (4 cordes voisines), qui sonnent doux et laissent de la place
+    à la basse du pouce. On abandonne souvent les 1ʳᵉ et 6ᵉ cordes.</p>
+    <div class="callout tip">
+      <div class="ico">📦</div>
+      <div>
+        <h4>La beauté du mobile</h4>
+        <p>Une forme sans corde à vide se déplace : la même main, deux cases plus haut, donne un
+        autre accord. Tu n'apprends plus des accords, tu apprends des <b>formes</b>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2><span class="idx">5.2</span> Trois formes, une fondamentale (6ᵉ corde)</h2>
+    <p>Voici les trois qualités essentielles, toutes fondamentale sur la 6ᵉ corde, ici en position de
+    Sol (fondamentale = 3ᵉ case). Observe : on passe de l'une à l'autre en bougeant une seule note.</p>
+    <div class="chord-row">
+      <div class="chord" data-chord='{"name":"Gmaj7","sub":"forme maj7","frets":[3,-1,4,4,3,-1],"fingers":[1,0,3,4,1,0],"color":"#e8933a"}'></div>
+      <div class="chord" data-chord='{"name":"G7","sub":"forme 7","frets":[3,-1,3,4,3,-1],"fingers":[1,0,1,3,1,0],"color":"#ee5a2a"}'></div>
+      <div class="chord" data-chord='{"name":"Gm7","sub":"forme m7","frets":[3,-1,3,3,3,-1],"fingers":[1,0,1,1,1,0],"color":"#1ea7a0"}'></div>
+    </div>
+    <p><strong>La logique :</strong> le maj7 → on descend la 7ᵉ d'un demi-ton → 7 (dominante) → on
+    descend aussi la 3ᵉ → m7. Trois accords qui vivent au même endroit du manche : idéal pour un ii–V–I.</p>
+    <div class="callout warn">
+      <div class="ico">💪</div>
+      <div>
+        <h4>Le petit barré</h4>
+        <p>L'index couche légèrement pour tenir les cordes de même case. Pas besoin d'écraser :
+        seules 4 cordes sonnent. Roule un peu l'index sur son flanc pour un contact net.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2><span class="idx">5.3</span> Nommer l'accord : la fondamentale décide</h2>
+    <p>La forme ne change pas ; c'est la <strong>case de la fondamentale</strong> (sur la 6ᵉ corde)
+    qui donne le nom. Repères des fondamentales sur la 6ᵉ corde :</p>
+    <table class="grille">
+      <tr>
+        <td>Fa<span class="deg">case 1</span></td>
+        <td>Sol<span class="deg">case 3</span></td>
+        <td>La<span class="deg">case 5</span></td>
+        <td>Si<span class="deg">case 7</span></td>
+        <td>Do<span class="deg">case 8</span></td>
+        <td>Ré<span class="deg">case 10</span></td>
+      </tr>
+    </table>
+    <p>Ainsi la « forme maj7 » posée case 1 = Fmaj7, case 5 = Amaj7, case 8 = Cmaj7. Une forme, tout
+    le manche.</p>
+    <div class="chord-row">
+      <div class="chord" data-chord='{"name":"Amaj7","sub":"forme maj7, case 5","frets":[5,-1,6,6,5,-1],"fingers":[1,0,3,4,1,0],"base":4,"color":"#e8933a"}'></div>
+      <div class="chord" data-chord='{"name":"Cmaj7","sub":"forme maj7, case 8","frets":[8,-1,9,9,8,-1],"fingers":[1,0,3,4,1,0],"base":7,"color":"#e8933a"}'></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2><span class="idx">5.4</span> Un ii–V–I tout en voicings</h2>
+    <p>On rejoue le ii–V–I de do majeur, mais sans aucune corde à vide, avec un mélange de formes
+    fondamentale-6 et fondamentale-5 (Cmaj7 ci-dessus a sa fondamentale sur la 5ᵉ corde, case 3) :</p>
+    <div class="chord-row">
+      <div class="chord" data-chord='{"name":"Dm7","sub":"ii · fond. 5ᵉ","frets":[-1,5,7,5,6,-1],"fingers":[0,1,3,1,2,0],"base":4,"color":"#6b5ca8"}'></div>
+      <div class="chord" data-chord='{"name":"G7","sub":"V · fond. 6ᵉ","frets":[3,-1,3,4,3,-1],"fingers":[1,0,1,3,1,0],"color":"#ee5a2a"}'></div>
+      <div class="chord" data-chord='{"name":"Cmaj7","sub":"I · fond. 5ᵉ","frets":[-1,3,5,4,5,-1],"fingers":[0,1,3,2,4,0],"color":"#3d7ea6"}'></div>
+    </div>
+    <div class="practice">
+      <span class="ptag">🎸 À jouer</span>
+      <h4>ii–V–I mobile en Do</h4>
+      <p>Dm7 (case 5) → G7 (case 3) → Cmaj7 (case 3). Les accords sont proches : peu de déplacement,
+      transitions fluides. Ajoute la main droite du module 2. Puis <strong>transpose</strong> tout d'un
+      ton (en Ré) pour prouver que la forme voyage.</p>
+      <span class="metro">🕰️ 60–72 bpm · un accord par mesure</span>
+    </div>
+    <div class="callout ear">
+      <div class="ico">🎧</div>
+      <div>
+        <h4>Compare</h4>
+        <p>Joue le ii–V–I en accords ouverts (module 4) puis en voicings mobiles. Le second sonne plus
+        « pro », plus resserré, plus proche des disques. C'est le son que tu cherchais.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== QUIZ ===================== -->
+  <div class="quiz-wrap" id="quiz">
+    <form data-quiz="5">
+      <h2>Valider le module 5</h2>
+      <p class="quiz-intro">Compréhension + auto-évaluation. <strong>80 %</strong> pour valider.</p>
+
+      <div class="q" data-answer="b">
+        <div class="qnum">Question 1</div>
+        <div class="qtext">Qu'appelle-t-on un « voicing » ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q1" value="a"> Le volume auquel on joue</label>
+          <label class="opt"><input type="radio" name="q1" value="b"> La façon de disposer les notes d'un accord</label>
+          <label class="opt"><input type="radio" name="q1" value="c"> Un type de médiator</label>
+        </div>
+        <div class="explain"><b>La disposition des notes.</b> Un même accord peut se voicer de plusieurs manières ; la bossa préfère les voicings compacts sur 4 cordes.</div>
+      </div>
+
+      <div class="q" data-answer="c">
+        <div class="qnum">Question 2</div>
+        <div class="qtext">En partant de la forme maj7 (fond. 6ᵉ corde), comment obtient-on la forme 7 (dominante) ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q2" value="a"> En montant la fondamentale d'une case</label>
+          <label class="opt"><input type="radio" name="q2" value="b"> En ajoutant la 1ʳᵉ corde à vide</label>
+          <label class="opt"><input type="radio" name="q2" value="c"> En descendant la 7ᵉ d'un demi-ton</label>
+        </div>
+        <div class="explain"><b>On abaisse la 7ᵉ d'un demi-ton.</b> maj7 → 7. Puis en abaissant aussi la 3ᵉ, on obtient m7. Trois qualités au même endroit.</div>
+      </div>
+
+      <div class="q" data-answer="a">
+        <div class="qnum">Question 3</div>
+        <div class="qtext">La « forme maj7 » fondamentale-6 posée case 8 donne quel accord ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q3" value="a"> Cmaj7</label>
+          <label class="opt"><input type="radio" name="q3" value="b"> Fmaj7</label>
+          <label class="opt"><input type="radio" name="q3" value="c"> Gmaj7</label>
+        </div>
+        <div class="explain"><b>Cmaj7.</b> Sur la 6ᵉ corde, la case 8 = Do. La forme ne change pas, c'est la fondamentale qui nomme l'accord.</div>
+      </div>
+
+      <div class="q" data-answer="b">
+        <div class="qnum">Question 4</div>
+        <div class="qtext">Pourquoi les formes mobiles sont-elles si pratiques ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q4" value="a"> Elles utilisent beaucoup de cordes à vide</label>
+          <label class="opt"><input type="radio" name="q4" value="b"> Une même forme, déplacée, donne tous les accords de sa famille</label>
+          <label class="opt"><input type="radio" name="q4" value="c"> Elles ne s'utilisent qu'en do majeur</label>
+        </div>
+        <div class="explain"><b>Elles se transposent.</b> Apprendre 3 formes = tenir toutes les tonalités, simplement en glissant la main.</div>
+      </div>
+
+      <h3 style="margin-top:26px">Auto-évaluation de ta pratique</h3>
+      <p class="quiz-intro">Coche ce que tu sais faire.</p>
+      <div class="selfcheck">
+        <label class="sc-item"><input type="checkbox"> <span>Je joue les 3 formes fondamentale-6 (maj7, 7, m7) proprement.</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>Je trouve les fondamentales sur la 6ᵉ corde (au moins Fa, Sol, La, Do).</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>Je joue un ii–V–I en voicings mobiles en Do.</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>J'ai transposé ce ii–V–I dans une autre tonalité.</span></label>
+      </div>
+
+      <div class="quiz-actions">
+        <button type="button" class="btn-check" data-check>Vérifier mes réponses</button>
+        <span class="quiz-score" data-live-score></span>
+      </div>
+      <div class="result" data-result></div>
+    </form>
+  </div>
+
+  <nav class="module-foot">
+    <a class="foot-link" data-goto="m4" style="cursor:pointer">← Module 4</a>
+    <a class="foot-link" data-goto="m6" style="cursor:pointer">Module 6 : le rythme bossa →</a>
+  </nav>
+</div>
+</section>
+
+<section class="view" id="view-m6" data-module="6" style="--c:#ee5a2a" hidden>
+<div class="lockpanel wrap-narrow" hidden>
+    <div style="padding:70px 0;text-align:center">
+      <div style="font-size:52px">🔒</div>
+      <h1 style="font-size:30px;color:var(--navy-deep);margin:16px 0 10px">Module verrouillé</h1>
+      <p style="font-size:17px;color:var(--ink-2);max-width:520px;margin:0 auto 26px">
+        Pour garder une progression solide, ce module s'ouvre une fois le module 5 validé (80 %).</p>
+      <a class="bnav-back" style="display:inline-flex;cursor:pointer" data-goto="hub">← Retour au parcours</a>
+    </div></div>
+<div class="modulebody">
+  <header class="module-head">
+    <div class="mh-eyebrow"><span class="chip">Module 6 / 10</span> Rythme</div>
+    <h1>Le rythme bossa : la batida de João</h1>
+    <p class="lead">Le cœur battant du style. La <em>batida</em>, c'est la manière de João Gilberto de
+    faire dialoguer une basse régulière au pouce et des accords syncopés aux doigts. On la construit
+    ici pas à pas, jusqu'à la boucle de deux mesures qui « swingue » toute seule.</p>
+    <div class="mh-meta">
+      <span class="pill">⏱ <b>≈ 1 h 30</b></span>
+      <span class="pill">Prérequis : <b>module 5</b></span>
+      <span class="pill">🌟 Objectif : <b>5 étoiles</b></span>
+    </div>
+  </header>
+
+  <ul class="goals">
+    <li>Comprendre la notion de clave (motif rythmique de référence).</li>
+    <li>Stabiliser la basse au pouce sur 1 et 3.</li>
+    <li>Placer les accords syncopés des doigts, à contretemps.</li>
+    <li>Jouer la boucle de 2 mesures de la batida en boucle.</li>
+  </ul>
+
+  <section class="section">
+    <h2><span class="idx">6.1</span> Le principe : deux mains, deux rôles</h2>
+    <p>La batida repose sur une <strong>indépendance</strong> : le pouce est une horloge imperturbable
+    (la basse), les doigts jouent « autour », en anticipant ou en retardant les accords. C'est cette
+    tension entre régularité et syncope qui fait le balancement.</p>
+    <p>On mesure en croches (huitièmes de temps). Chaque temps se dit « <strong>1</strong>-et
+    <strong>2</strong>-et <strong>3</strong>-et <strong>4</strong>-et » : le « et » est le contretemps,
+    là où la bossa aime frapper.</p>
+    <div class="callout hist">
+      <div class="ico">🌊</div>
+      <div>
+        <h4>La clave</h4>
+        <p>La <b>clave</b> est un motif rythmique-clé hérité des musiques afro-brésiliennes. La bossa en
+        garde l'esprit : un déséquilibre régulier, réparti sur <b>deux mesures</b> qui ne sont pas
+        identiques. C'est pour ça qu'on travaille toujours la batida par blocs de deux mesures.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2><span class="idx">6.2</span> Étape A — La basse seule</h2>
+    <p>Le pouce joue deux basses par mesure : la <strong>fondamentale</strong> sur le temps 1, la
+    <strong>quinte</strong> (ou une autre corde grave) sur le temps 3. Régulier comme un métronome.</p>
+    <div class="rhythm" data-rhythm='{"title":"Basse au pouce — 1 et 3","beats":8,"lanes":[{"lbl":"Pouce p","pattern":"o...o..."},{"lbl":"Doigts","pattern":"........"}]}'></div>
+    <div class="practice">
+      <span class="ptag">🎸 À jouer</span>
+      <h4>Basse « pompe » sur un Cmaj7</h4>
+      <p>Tiens Cmaj7. Pouce : Do (5ᵉ corde) sur le 1, Sol (6ᵉ corde) sur le 3. Rien d'autre. Cherche
+      l'égalité parfaite. C'est ta fondation : elle ne doit jamais trembler.</p>
+      <span class="metro">🕰️ 60 bpm · deux basses par mesure</span>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2><span class="idx">6.3</span> Étape B — Les accords syncopés (mesure 1)</h2>
+    <p>On ajoute les doigts. Dans la première mesure, l'accord frappe sur le <strong>1</strong>,
+    sur le <strong>« et » du 2</strong>, et sur le <strong>4</strong>. Le pouce, lui, ne bouge pas
+    de son 1 et 3.</p>
+    <div class="rhythm" data-rhythm='{"title":"Batida — mesure 1","beats":8,"lanes":[{"lbl":"Pouce p","pattern":"o...o..."},{"lbl":"Doigts ima","pattern":"x..x..x."}]}'></div>
+    <div class="callout tip">
+      <div class="ico">🗣️</div>
+      <div>
+        <h4>Verbalise le motif</h4>
+        <p>Dis-le avant de le jouer : « <b>PAM</b>-ka … -ka-<b>PAM</b> ». Le pouce et le premier accord
+        tombent ensemble sur le 1, puis les doigts glissent sur les contretemps. Chanter dissocie les
+        deux mains bien mieux que compter.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2><span class="idx">6.4</span> Étape C — La mesure 2 (le contraste)</h2>
+    <p>La deuxième mesure est décalée : l'accord anticipe sur le <strong>« et » du 1</strong>, frappe
+    sur le <strong>3</strong>, puis sur le <strong>« et » du 4</strong> (qui annonce la mesure suivante).
+    Ce déséquilibre entre les deux mesures, c'est <em>toute</em> la magie.</p>
+    <div class="rhythm" data-rhythm='{"title":"Batida — mesure 2","beats":8,"lanes":[{"lbl":"Pouce p","pattern":"o...o..."},{"lbl":"Doigts ima","pattern":".x..x..x"}]}'></div>
+    <div class="callout ear">
+      <div class="ico">🔁</div>
+      <div>
+        <h4>La boucle de 2 mesures</h4>
+        <p>Enchaîne mesure 1 puis mesure 2, en boucle, sans t'arrêter. Au début ce sera laborieux,
+        puis d'un coup ça « tourne » : ton corps a trouvé le balancement. C'est un déclic bien connu
+        des bossaistes — patience, il arrive à tout le monde.</p>
+      </div>
+    </div>
+    <div class="practice">
+      <span class="ptag">🎸 À jouer</span>
+      <h4>Batida complète sur ii–V–I</h4>
+      <p>Applique la boucle 2 mesures sur <span class="mono">Dm7 | G7 | Cmaj7 | Cmaj7</span>
+      (une mesure par accord = deux boucles). Reste très lent tant que le pouce n'est pas totalement
+      automatique. La vitesse n'est pas l'objectif : la <b>régularité</b> l'est.</p>
+      <span class="metro">🕰️ 54–66 bpm · ne pas accélérer avant que ce soit fluide</span>
+    </div>
+    <div class="callout warn">
+      <div class="ico">⚠️</div>
+      <div>
+        <h4>Le piège n°1</h4>
+        <p>Quand les doigts syncopent, le pouce a tendance à « suivre » et à se décaler aussi. Erreur !
+        Le pouce doit rester droit comme un métronome. Si besoin, rejoue l'étape A quelques minutes pour
+        réancrer la basse.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== QUIZ ===================== -->
+  <div class="quiz-wrap" id="quiz">
+    <form data-quiz="6">
+      <h2>Valider le module 6</h2>
+      <p class="quiz-intro">Compréhension + auto-évaluation. <strong>80 %</strong> pour valider.</p>
+
+      <div class="q" data-answer="b">
+        <div class="qnum">Question 1</div>
+        <div class="qtext">Dans la batida, quel est le rôle du pouce ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q1" value="a"> Jouer les accords syncopés</label>
+          <label class="opt"><input type="radio" name="q1" value="b"> Tenir une basse régulière, comme une horloge</label>
+          <label class="opt"><input type="radio" name="q1" value="c"> Rester immobile</label>
+        </div>
+        <div class="explain"><b>La basse régulière.</b> Le pouce est le métronome (temps 1 et 3) ; les doigts, eux, jouent à contretemps.</div>
+      </div>
+
+      <div class="q" data-answer="c">
+        <div class="qnum">Question 2</div>
+        <div class="qtext">Qu'appelle-t-on le « et » d'un temps ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q2" value="a"> Le temps fort suivant</label>
+          <label class="opt"><input type="radio" name="q2" value="b"> Un ralentissement</label>
+          <label class="opt"><input type="radio" name="q2" value="c"> Le contretemps, entre deux temps</label>
+        </div>
+        <div class="explain"><b>Le contretemps.</b> « 1-et-2-et… » : le « et » tombe entre deux temps. La bossa aime y placer ses accords.</div>
+      </div>
+
+      <div class="q" data-answer="a">
+        <div class="qnum">Question 3</div>
+        <div class="qtext">Pourquoi travaille-t-on la batida par blocs de <em>deux</em> mesures ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q3" value="a"> Parce que les deux mesures sont différentes (esprit de la clave)</label>
+          <label class="opt"><input type="radio" name="q3" value="b"> Parce qu'une mesure est trop courte à jouer</label>
+          <label class="opt"><input type="radio" name="q3" value="c"> Pour aller deux fois plus vite</label>
+        </div>
+        <div class="explain"><b>Les deux mesures diffèrent.</b> Ce déséquilibre régulier, hérité de la clave, crée le balancement caractéristique.</div>
+      </div>
+
+      <div class="q" data-answer="b">
+        <div class="qnum">Question 4</div>
+        <div class="qtext">Quel est le piège le plus courant quand on ajoute la syncope des doigts ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q4" value="a"> Jouer les accords trop clairs</label>
+          <label class="opt"><input type="radio" name="q4" value="b"> Le pouce se met à suivre les doigts et perd sa régularité</label>
+          <label class="opt"><input type="radio" name="q4" value="c"> Accorder la guitare trop grave</label>
+        </div>
+        <div class="explain"><b>Le pouce dérape.</b> Il doit rester imperturbable. Si la basse se décale, reviens à l'étape « basse seule » quelques minutes.</div>
+      </div>
+
+      <h3 style="margin-top:26px">Auto-évaluation de ta pratique</h3>
+      <p class="quiz-intro">Coche ce que tu sais faire.</p>
+      <div class="selfcheck">
+        <label class="sc-item"><input type="checkbox"> <span>Je tiens une basse pouce régulière (1 et 3) sans trembler à 60 bpm.</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>Je joue la mesure 1 de la batida (accords sur 1, &2, 4).</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>Je joue la mesure 2 (accords sur &1, 3, &4) sans décaler le pouce.</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>J'enchaîne la boucle 2 mesures sur un ii–V–I, même lentement.</span></label>
+      </div>
+
+      <div class="quiz-actions">
+        <button type="button" class="btn-check" data-check>Vérifier mes réponses</button>
+        <span class="quiz-score" data-live-score></span>
+      </div>
+      <div class="result" data-result></div>
+    </form>
+  </div>
+
+  <nav class="module-foot">
+    <a class="foot-link" data-goto="m5" style="cursor:pointer">← Module 5</a>
+    <a class="foot-link" data-goto="m7" style="cursor:pointer">Module 7 : progressions typiques →</a>
+  </nav>
+</div>
+</section>
+
+<section class="view" id="view-m7" data-module="7" style="--c:#c1425f" hidden>
+<div class="lockpanel wrap-narrow" hidden>
+    <div style="padding:70px 0;text-align:center">
+      <div style="font-size:52px">🔒</div>
+      <h1 style="font-size:30px;color:var(--navy-deep);margin:16px 0 10px">Module verrouillé</h1>
+      <p style="font-size:17px;color:var(--ink-2);max-width:520px;margin:0 auto 26px">
+        Pour garder une progression solide, ce module s'ouvre une fois le module 6 validé (80 %).</p>
+      <a class="bnav-back" style="display:inline-flex;cursor:pointer" data-goto="hub">← Retour au parcours</a>
+    </div></div>
+<div class="modulebody">
+  <header class="module-head">
+    <div class="mh-eyebrow"><span class="chip">Module 7 / 10</span> Progressions</div>
+    <h1>Progressions typiques & cycle des quintes</h1>
+    <p class="lead">Un ii–V–I isolé, c'est une phrase. Un morceau, c'est un paragraphe : plusieurs
+    cellules enchaînées. Ce module te donne les <strong>enchaînements récurrents</strong> de la bossa
+    et la logique qui les relie tous : le cycle des quintes.</p>
+    <div class="mh-meta">
+      <span class="pill">⏱ <b>≈ 1 h 30</b></span>
+      <span class="pill">Prérequis : <b>module 6</b></span>
+      <span class="pill">🌟 Objectif : <b>5 étoiles</b></span>
+    </div>
+  </header>
+
+  <ul class="goals">
+    <li>Jouer le turnaround I–vi–ii–V.</li>
+    <li>Comprendre le cycle des quintes et pourquoi les dominantes « tirent ».</li>
+    <li>Enchaîner plusieurs ii–V vers des cibles différentes.</li>
+    <li>Repérer ces schémas dans une grille réelle.</li>
+  </ul>
+
+  <section class="section">
+    <h2><span class="idx">7.1</span> Le turnaround I–vi–ii–V</h2>
+    <p>C'est l'enchaînement le plus fréquent de toute la musique populaire, omniprésent en bossa. Il
+    « tourne » : il repart vers le I, ce qui permet de boucler indéfiniment. En do majeur :</p>
+    <table class="grille">
+      <tr>
+        <td>Cmaj7<span class="deg">I</span></td>
+        <td>Am7<span class="deg">vi</span></td>
+        <td>Dm7<span class="deg">ii</span></td>
+        <td>G7<span class="deg">V</span></td>
+      </tr>
+    </table>
+    <p>Variante très bossa : on transforme le vi (Am7) en <strong>A7</strong> (dominante), pour tendre
+    davantage vers le ii. C'est une « dominante secondaire » :</p>
+    <table class="grille">
+      <tr>
+        <td>Cmaj7<span class="deg">I</span></td>
+        <td>A7<span class="deg">V/ii</span></td>
+        <td>Dm7<span class="deg">ii</span></td>
+        <td>G7<span class="deg">V</span></td>
+      </tr>
+    </table>
+    <div class="callout tip">
+      <div class="ico">🔄</div>
+      <div>
+        <h4>Pourquoi « turnaround » ?</h4>
+        <p>Parce qu'il se place en fin de section pour <b>ramener</b> au début. Apprends-le en boucle :
+        il te servira dans des centaines de morceaux.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2><span class="idx">7.2</span> Le cycle des quintes</h2>
+    <p>Voici la loi cachée derrière presque toutes les progressions bossa : une dominante « appelle »
+    l'accord situé une <strong>quinte en dessous</strong> (= une quarte au-dessus). G7 → C, C7 → F,
+    A7 → D… En chaînant ces attractions, on obtient le cycle des quintes :</p>
+    <table class="grille">
+      <tr>
+        <td>E7<span class="deg">→</span></td>
+        <td>A7<span class="deg">→</span></td>
+        <td>D7<span class="deg">→</span></td>
+        <td>G7<span class="deg">→</span></td>
+        <td>C<span class="deg">cible</span></td>
+      </tr>
+    </table>
+    <p>Chaque accord tire vers le suivant. Beaucoup de ponts de standards bossa ne sont qu'un morceau de
+    ce cycle. Le reconnaître, c'est prévoir la suite de la grille <em>avant même de l'avoir lue</em>.</p>
+    <div class="callout ear">
+      <div class="ico">🧲</div>
+      <div>
+        <h4>Entends la chute</h4>
+        <p>Joue E7–A7–D7–G7–Cmaj7 en descendant, une mesure chacun. On dirait qu'on « tombe » vers le
+        Do, de plus en plus attiré. C'est le moteur harmonique le plus puissant du répertoire.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2><span class="idx">7.3</span> Enchaîner deux ii–V vers deux cibles</h2>
+    <p>Un morceau module souvent : il visite plusieurs tonalités par des ii–V successifs. Exemple
+    typique : d'abord un ii–V vers Do, puis un ii–V vers Fa.</p>
+    <table class="grille">
+      <tr>
+        <td>Dm7<span class="deg">ii de Do</span></td>
+        <td>G7<span class="deg">V de Do</span></td>
+        <td>Gm7<span class="deg">ii de Fa</span></td>
+        <td>C7<span class="deg">V de Fa</span></td>
+      </tr>
+      <tr>
+        <td>Fmaj7<span class="deg">I de Fa</span></td>
+        <td class="empty">…</td>
+        <td class="empty">…</td>
+        <td class="empty">…</td>
+      </tr>
+    </table>
+    <p>Astuce d'analyse : dès que tu vois un <span class="mono">m7</span> suivi d'un
+    <span class="mono">7</span> un ton plus bas, tu tiens un ii–V — et sa cible est une quarte plus haut
+    que le 7.</p>
+  </section>
+
+  <section class="section">
+    <h2><span class="idx">7.4</span> Mise en pratique</h2>
+    <div class="practice">
+      <span class="ptag">🎸 À jouer</span>
+      <h4>Turnaround + cycle, à la batida</h4>
+      <p>1) Boucle le turnaround <span class="mono">Cmaj7 – A7 – Dm7 – G7</span> avec la batida du
+      module 6, en voicings mobiles (module 5). 2) Puis joue la descente du cycle
+      <span class="mono">E7–A7–D7–G7–Cmaj7</span>. Cherche des voicings proches pour limiter les
+      déplacements de main : c'est ça, « conduire les voix ».</p>
+      <span class="metro">🕰️ 60–76 bpm · privilégie la fluidité des changements</span>
+    </div>
+    <div class="callout warn">
+      <div class="ico">🎯</div>
+      <div>
+        <h4>Objectif : anticiper</h4>
+        <p>Le but n'est pas de mémoriser des grilles par cœur, mais de <b>comprendre</b> où elles vont.
+        Un guitariste bossa lit « ii–V vers Fa » et sait déjà quoi jouer. Tu y arrives.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== QUIZ ===================== -->
+  <div class="quiz-wrap" id="quiz">
+    <form data-quiz="7">
+      <h2>Valider le module 7</h2>
+      <p class="quiz-intro">Compréhension + auto-évaluation. <strong>80 %</strong> pour valider.</p>
+
+      <div class="q" data-answer="b">
+        <div class="qnum">Question 1</div>
+        <div class="qtext">À quoi sert un « turnaround » (ex. I–vi–ii–V) ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q1" value="a"> À finir définitivement un morceau</label>
+          <label class="opt"><input type="radio" name="q1" value="b"> À ramener la progression vers le début (boucler)</label>
+          <label class="opt"><input type="radio" name="q1" value="c"> À changer d'instrument</label>
+        </div>
+        <div class="explain"><b>Boucler.</b> Placé en fin de section, il « retourne » vers le I pour repartir. Omniprésent en bossa.</div>
+      </div>
+
+      <div class="q" data-answer="c">
+        <div class="qnum">Question 2</div>
+        <div class="qtext">Une dominante 7 « appelle » l'accord situé…</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q2" value="a"> un demi-ton au-dessus</label>
+          <label class="opt"><input type="radio" name="q2" value="b"> à la même hauteur</label>
+          <label class="opt"><input type="radio" name="q2" value="c"> une quinte en dessous (= une quarte au-dessus)</label>
+        </div>
+        <div class="explain"><b>Une quinte en dessous.</b> G7 → C, D7 → G, A7 → D… C'est la base du cycle des quintes.</div>
+      </div>
+
+      <div class="q" data-answer="a">
+        <div class="qnum">Question 3</div>
+        <div class="qtext">Tu vois <span class="mono">Gm7 – C7</span> dans une grille. Vers quel accord ce ii–V pointe-t-il ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q3" value="a"> Fmaj7 (une quarte au-dessus de C7)</label>
+          <label class="opt"><input type="radio" name="q3" value="b"> Cmaj7</label>
+          <label class="opt"><input type="radio" name="q3" value="c"> Am7</label>
+        </div>
+        <div class="explain"><b>Fmaj7.</b> C7 (le V) résout une quarte plus haut, sur Fa. Gm7–C7–Fmaj7 = ii–V–I en Fa.</div>
+      </div>
+
+      <div class="q" data-answer="b">
+        <div class="qnum">Question 4</div>
+        <div class="qtext">Dans le turnaround <span class="mono">Cmaj7 – A7 – Dm7 – G7</span>, pourquoi jouer A7 plutôt qu'Am7 ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q4" value="a"> Parce que Am7 n'existe pas</label>
+          <label class="opt"><input type="radio" name="q4" value="b"> Pour créer une dominante secondaire qui tend vers Dm7</label>
+          <label class="opt"><input type="radio" name="q4" value="c"> Parce que c'est plus facile à jouer</label>
+        </div>
+        <div class="explain"><b>Dominante secondaire.</b> A7 (le V de Ré) tire plus fort vers Dm7 : la progression gagne en tension et en couleur.</div>
+      </div>
+
+      <h3 style="margin-top:26px">Auto-évaluation de ta pratique</h3>
+      <p class="quiz-intro">Coche ce que tu sais faire.</p>
+      <div class="selfcheck">
+        <label class="sc-item"><input type="checkbox"> <span>Je boucle un turnaround I–vi–ii–V (ou I–V/ii–ii–V) à la batida.</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>Je joue la descente du cycle des quintes E7–A7–D7–G7–Cmaj7.</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>Je repère un ii–V et je sais nommer sa cible.</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>Je choisis des voicings proches pour enchaîner sans grands sauts.</span></label>
+      </div>
+
+      <div class="quiz-actions">
+        <button type="button" class="btn-check" data-check>Vérifier mes réponses</button>
+        <span class="quiz-score" data-live-score></span>
+      </div>
+      <div class="result" data-result></div>
+    </form>
+  </div>
+
+  <nav class="module-foot">
+    <a class="foot-link" data-goto="m6" style="cursor:pointer">← Module 6</a>
+    <a class="foot-link" data-goto="m8" style="cursor:pointer">Module 8 : enrichissements →</a>
+  </nav>
+</div>
+</section>
+
+<section class="view" id="view-m8" data-module="8" style="--c:#8a8f2c" hidden>
+<div class="lockpanel wrap-narrow" hidden>
+    <div style="padding:70px 0;text-align:center">
+      <div style="font-size:52px">🔒</div>
+      <h1 style="font-size:30px;color:var(--navy-deep);margin:16px 0 10px">Module verrouillé</h1>
+      <p style="font-size:17px;color:var(--ink-2);max-width:520px;margin:0 auto 26px">
+        Pour garder une progression solide, ce module s'ouvre une fois le module 7 validé (80 %).</p>
+      <a class="bnav-back" style="display:inline-flex;cursor:pointer" data-goto="hub">← Retour au parcours</a>
+    </div></div>
+<div class="modulebody">
+  <header class="module-head">
+    <div class="mh-eyebrow"><span class="chip">Module 8 / 10</span> Couleurs</div>
+    <h1>Enrichissements & substitutions</h1>
+    <p class="lead">On tient les fondations. Place maintenant aux <em>parfums</em> : les 9, 11, 13 et
+    altérations qui donnent aux accords cette profondeur « jazz », et la substitution tritonique, le
+    tour de magie préféré de Jobim. C'est ici que ton jeu se met à sonner vraiment bossa.</p>
+    <div class="mh-meta">
+      <span class="pill">⏱ <b>≈ 1 h 30</b></span>
+      <span class="pill">Prérequis : <b>module 7</b></span>
+      <span class="pill">🌟 Objectif : <b>5 étoiles</b></span>
+    </div>
+  </header>
+
+  <ul class="goals">
+    <li>Comprendre ce qu'est une « tension » (9, 11, 13) ajoutée à un accord.</li>
+    <li>Enrichir un accord sans en changer la fonction.</li>
+    <li>Comprendre et utiliser la substitution tritonique.</li>
+    <li>Colorer un ii–V–I avec des tensions.</li>
+  </ul>
+
+  <section class="section">
+    <h2><span class="idx">8.1</span> Les tensions : au-delà de la 7ᵉ</h2>
+    <p>Un accord à 4 sons empile fondamentale, 3, 5, 7. Si on continue d'empiler des tierces, on obtient
+    la <strong>9</strong>, la <strong>11</strong> et la <strong>13</strong> : ce sont les
+    <strong>tensions</strong>. Elles n'ajoutent pas une nouvelle fonction, elles <em>parfument</em>.</p>
+    <ul>
+      <li><strong>9</strong> : la couleur la plus douce, on peut l'ajouter presque partout
+      (<span class="mono">maj9, m9, 9</span>).</li>
+      <li><strong>13</strong> : sur les dominantes, brillante et « ouverte » (<span class="mono">13</span>).</li>
+      <li><strong>Altérations</strong> (<span class="mono">♭9, ♯9, ♭5, ♯5</span>) : réservées aux
+      dominantes, elles augmentent la tension avant une résolution — très bossa dans les cadences mineures.</li>
+    </ul>
+    <div class="chord-row">
+      <div class="chord" data-chord='{"name":"G13","sub":"dominante enrichie","frets":[3,-1,3,4,5,-1],"fingers":[1,0,1,2,4,0],"color":"#8a8f2c"}'></div>
+      <div class="chord" data-chord='{"name":"Cmaj7","sub":"résolution","frets":[-1,3,5,4,5,-1],"fingers":[0,1,3,2,4,0],"color":"#3d7ea6"}'></div>
+    </div>
+    <div class="callout tip">
+      <div class="ico">🌺</div>
+      <div>
+        <h4>Une règle simple pour débuter</h4>
+        <p>Remplace n'importe quel accord <span class="mono">7</span> par un <span class="mono">9</span>
+        ou un <span class="mono">13</span> : la fonction (dominante) reste la même, mais la couleur
+        s'enrichit. Idem, un <span class="mono">maj7</span> devient volontiers <span class="mono">maj9</span>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2><span class="idx">8.2</span> La substitution tritonique</h2>
+    <p>Le secret le plus « chic » de la bossa. Toute dominante 7 peut être remplacée par une autre
+    dominante située à un <strong>triton</strong> (trois tons) de distance : elles partagent les deux
+    notes qui créent la tension (la 3 et la 7). Ainsi, à la place de <span class="mono">G7</span>, on
+    peut jouer <span class="mono">D♭7</span> — les deux résolvent sur Do.</p>
+    <div class="chord-row">
+      <div class="chord" data-chord='{"name":"G7","sub":"V habituel","frets":[3,-1,3,4,3,-1],"fingers":[1,0,1,3,1,0],"color":"#ee5a2a"}'></div>
+      <div class="chord" data-chord='{"name":"D♭7","sub":"substitut tritonique","frets":[-1,4,6,4,6,-1],"fingers":[0,1,3,1,4,0],"base":3,"color":"#8a8f2c"}'></div>
+      <div class="chord" data-chord='{"name":"Cmaj7","sub":"cible commune","frets":[-1,3,5,4,5,-1],"fingers":[0,1,3,2,4,0],"color":"#3d7ea6"}'></div>
+    </div>
+    <p>L'avantage sonore : la basse descend chromatiquement. Au lieu de <span class="mono">Dm7 – G7 – Cmaj7</span>
+    (basses Ré–Sol–Do), on obtient <span class="mono">Dm7 – D♭7 – Cmaj7</span> :
+    basses <strong>Ré – Ré♭ – Do</strong>, une glissade demi-ton par demi-ton, irrésistible.</p>
+    <div class="callout ear">
+      <div class="ico">👂</div>
+      <div>
+        <h4>Le « son Jobim »</h4>
+        <p>Cette descente chromatique de la basse est une signature de Tom Jobim. Joue les deux versions
+        du ii–V–I : dès que tu entends la basse glisser Ré–Ré♭–Do, tu reconnais la bossa savante.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2><span class="idx">8.3</span> Colorer sans se perdre</h2>
+    <p>Deux garde-fous pour enrichir avec goût :</p>
+    <ol>
+      <li><strong>La fonction d'abord.</strong> Une tension ne change pas le rôle de l'accord : un G13
+      reste le V. Tu peux donc enrichir librement une grille sans casser son sens.</li>
+      <li><strong>Moins, c'est plus.</strong> La bossa est intime. Une ou deux couleurs bien placées
+      valent mieux qu'un empilement. Choisis <em>où</em> tu enrichis.</li>
+    </ol>
+    <div class="practice">
+      <span class="ptag">🎸 À jouer</span>
+      <h4>Un ii–V–I, trois versions</h4>
+      <p>Joue à la batida : 1) <span class="mono">Dm7 – G7 – Cmaj7</span> (nature) ;
+      2) <span class="mono">Dm9 – G13 – Cmaj9</span> (enrichi) ;
+      3) <span class="mono">Dm7 – D♭7 – Cmaj7</span> (substitution tritonique). Écoute comme chaque
+      version raconte la même histoire avec un autre éclairage.</p>
+      <span class="metro">🕰️ 60–72 bpm · compare les trois couleurs</span>
+    </div>
+  </section>
+
+  <!-- ===================== QUIZ ===================== -->
+  <div class="quiz-wrap" id="quiz">
+    <form data-quiz="8">
+      <h2>Valider le module 8</h2>
+      <p class="quiz-intro">Compréhension + auto-évaluation. <strong>80 %</strong> pour valider.</p>
+
+      <div class="q" data-answer="b">
+        <div class="qnum">Question 1</div>
+        <div class="qtext">Qu'est-ce qu'une « tension » (9, 11, 13) sur un accord ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q1" value="a"> Une corde jouée trop fort</label>
+          <label class="opt"><input type="radio" name="q1" value="b"> Une note de couleur ajoutée qui ne change pas la fonction</label>
+          <label class="opt"><input type="radio" name="q1" value="c"> Un changement de tonalité</label>
+        </div>
+        <div class="explain"><b>Une note de couleur.</b> On empile des tierces au-delà de la 7ᵉ : 9, 11, 13. La fonction (repos, tension…) reste la même.</div>
+      </div>
+
+      <div class="q" data-answer="c">
+        <div class="qnum">Question 2</div>
+        <div class="qtext">La substitution tritonique remplace une dominante par…</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q2" value="a"> son accord mineur relatif</label>
+          <label class="opt"><input type="radio" name="q2" value="b"> un accord maj7</label>
+          <label class="opt"><input type="radio" name="q2" value="c"> une autre dominante située à un triton</label>
+        </div>
+        <div class="explain"><b>Une dominante à un triton.</b> G7 → D♭7 : elles partagent la 3 et la 7, donc résolvent vers la même cible (Do).</div>
+      </div>
+
+      <div class="q" data-answer="a">
+        <div class="qnum">Question 3</div>
+        <div class="qtext">Quel est l'effet sonore principal de <span class="mono">Dm7 – D♭7 – Cmaj7</span> ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q3" value="a"> La basse descend chromatiquement : Ré – Ré♭ – Do</label>
+          <label class="opt"><input type="radio" name="q3" value="b"> Le morceau change de tempo</label>
+          <label class="opt"><input type="radio" name="q3" value="c"> On perd la résolution vers Do</label>
+        </div>
+        <div class="explain"><b>Descente chromatique.</b> Cette glissade demi-ton par demi-ton de la basse est une signature du son Jobim.</div>
+      </div>
+
+      <div class="q" data-answer="b">
+        <div class="qnum">Question 4</div>
+        <div class="qtext">Si je remplace un G7 par un G13, la fonction de l'accord…</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q4" value="a"> devient un accord de repos</label>
+          <label class="opt"><input type="radio" name="q4" value="b"> reste une dominante (V), seule la couleur change</label>
+          <label class="opt"><input type="radio" name="q4" value="c"> disparaît</label>
+        </div>
+        <div class="explain"><b>Reste une dominante.</b> Une tension enrichit sans changer le rôle : G13 est toujours le V, juste plus coloré.</div>
+      </div>
+
+      <h3 style="margin-top:26px">Auto-évaluation de ta pratique</h3>
+      <p class="quiz-intro">Coche ce que tu sais faire.</p>
+      <div class="selfcheck">
+        <label class="sc-item"><input type="checkbox"> <span>Je place un G13 et j'entends sa couleur plus riche qu'un G7.</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>Je joue la substitution tritonique Dm7 – D♭7 – Cmaj7.</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>Je sais enrichir un maj7 en maj9 / un 7 en 9 ou 13.</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>Je compare les 3 versions d'un ii–V–I et je choisis ma préférée.</span></label>
+      </div>
+
+      <div class="quiz-actions">
+        <button type="button" class="btn-check" data-check>Vérifier mes réponses</button>
+        <span class="quiz-score" data-live-score></span>
+      </div>
+      <div class="result" data-result></div>
+    </form>
+  </div>
+
+  <nav class="module-foot">
+    <a class="foot-link" data-goto="m7" style="cursor:pointer">← Module 7</a>
+    <a class="foot-link" data-goto="m9" style="cursor:pointer">Module 9 : morceaux d'application →</a>
+  </nav>
+</div>
+</section>
+
+<section class="view" id="view-m9" data-module="9" style="--c:#1f7a8c" hidden>
+<div class="lockpanel wrap-narrow" hidden>
+    <div style="padding:70px 0;text-align:center">
+      <div style="font-size:52px">🔒</div>
+      <h1 style="font-size:30px;color:var(--navy-deep);margin:16px 0 10px">Module verrouillé</h1>
+      <p style="font-size:17px;color:var(--ink-2);max-width:520px;margin:0 auto 26px">
+        Pour garder une progression solide, ce module s'ouvre une fois le module 8 validé (80 %).</p>
+      <a class="bnav-back" style="display:inline-flex;cursor:pointer" data-goto="hub">← Retour au parcours</a>
+    </div></div>
+<div class="modulebody">
+  <header class="module-head">
+    <div class="mh-eyebrow"><span class="chip">Module 9 / 10</span> Répertoire</div>
+    <h1>Morceaux d'application</h1>
+    <p class="lead">Le moment où tout se relie. On prend trois <strong>grilles-types</strong>, inspirées
+    des grands standards, pour reconnaître en situation réelle les cellules apprises : ii–V–I,
+    turnarounds, dominantes secondaires, substitutions. Analyse d'abord, joue ensuite.</p>
+    <div class="mh-meta">
+      <span class="pill">⏱ <b>≈ 1 h 30</b></span>
+      <span class="pill">Prérequis : <b>module 8</b></span>
+      <span class="pill">🌟 Objectif : <b>5 étoiles</b></span>
+    </div>
+  </header>
+
+  <ul class="goals">
+    <li>Lire et analyser une grille de standard bossa.</li>
+    <li>Repérer les ii–V–I et les tournures dans un contexte réel.</li>
+    <li>Jouer trois grilles complètes à la batida.</li>
+    <li>S'appuyer sur l'écoute des versions originales.</li>
+  </ul>
+
+  <div class="callout hist">
+    <div class="ico">📀</div>
+    <div>
+      <h4>Comment utiliser ce module</h4>
+      <p>Les grilles ci-dessous sont des <b>supports d'étude harmonique</b> (les suites d'accords)
+      inspirés de standards célèbres. Écoute l'enregistrement original en parallèle pour caler ton
+      oreille et ton rythme — c'est la meilleure école.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <h2><span class="idx">9.1</span> Grille A — thème lumineux en Fa</h2>
+    <p>Ambiance <em>« Ipanema »</em> : majeur, ensoleillé, avec une dominante « étrangère » qui apporte
+    la fameuse couleur brésilienne. Écoute : <em>Garota de Ipanema</em> (Jobim / de Moraes).</p>
+    <table class="grille">
+      <tr>
+        <td>Fmaj7<span class="deg">I</span></td>
+        <td>Fmaj7<span class="deg">I</span></td>
+        <td>G7<span class="deg">II7</span></td>
+        <td>G7<span class="deg">II7</span></td>
+      </tr>
+      <tr>
+        <td>Gm7<span class="deg">ii</span></td>
+        <td>C7<span class="deg">V</span></td>
+        <td>Fmaj7<span class="deg">I</span></td>
+        <td>Fmaj7<span class="deg">I</span></td>
+      </tr>
+    </table>
+    <p><strong>À repérer :</strong> le <span class="mono">G7</span> n'appartient pas à Fa (ce serait Gm7) :
+    c'est une dominante secondaire, la « surprise » colorée. La ligne 2 est un ii–V–I classique en Fa.</p>
+  </section>
+
+  <section class="section">
+    <h2><span class="idx">9.2</span> Grille B — ballade intime en Do</h2>
+    <p>Ambiance <em>« Corcovado »</em> : douce, presque murmurée, riche en ii–V. Écoute :
+    <em>Corcovado (Quiet Nights)</em> de Tom Jobim.</p>
+    <table class="grille">
+      <tr>
+        <td>Cmaj7<span class="deg">I</span></td>
+        <td>Cmaj7<span class="deg">I</span></td>
+        <td>Bm7♭5<span class="deg">ii° / Am</span></td>
+        <td>E7<span class="deg">V / Am</span></td>
+      </tr>
+      <tr>
+        <td>Am7<span class="deg">vi</span></td>
+        <td>D7<span class="deg">V/V</span></td>
+        <td>Dm7<span class="deg">ii</span></td>
+        <td>G7<span class="deg">V</span></td>
+      </tr>
+    </table>
+    <p><strong>À repérer :</strong> <span class="mono">Bm7♭5 – E7</span> est un ii–V mineur qui vise Am7 ;
+    <span class="mono">D7</span> est une dominante secondaire vers G7. La grille « visite » plusieurs
+    petites tonalités avant de rentrer à la maison.</p>
+  </section>
+
+  <section class="section">
+    <h2><span class="idx">9.3</span> Grille C — couleur mineure en La</h2>
+    <p>Ambiance <em>« Black Orpheus »</em> : mineur, mélancolique, cyclique. Écoute :
+    <em>Manhã de Carnaval</em> (Luiz Bonfá).</p>
+    <table class="grille">
+      <tr>
+        <td>Am7<span class="deg">i</span></td>
+        <td>Bm7♭5<span class="deg">ii°</span></td>
+        <td>E7<span class="deg">V</span></td>
+        <td>Am7<span class="deg">i</span></td>
+      </tr>
+      <tr>
+        <td>Dm7<span class="deg">iv</span></td>
+        <td>G7<span class="deg">V/Do</span></td>
+        <td>Cmaj7<span class="deg">III</span></td>
+        <td>E7<span class="deg">V</span></td>
+      </tr>
+    </table>
+    <p><strong>À repérer :</strong> le ii–V mineur <span class="mono">Bm7♭5 – E7 – Am7</span> ouvre et
+    referme ; au milieu, <span class="mono">Dm7 – G7 – Cmaj7</span> est un ii–V–I en Do (le relatif
+    majeur) qui éclaire un instant la couleur avant de replonger dans le mineur.</p>
+    <div class="practice">
+      <span class="ptag">🎸 À jouer</span>
+      <h4>Une grille au choix, en entier</h4>
+      <p>Choisis une grille, joue-la en boucle à la batida, avec des voicings mobiles. D'abord au
+      métronome très lent en nommant chaque fonction à voix haute, puis avec l'enregistrement original
+      pour te fondre dans le tempo et le feeling.</p>
+      <span class="metro">🕰️ 60–80 bpm · puis « playback » avec l'original</span>
+    </div>
+    <div class="callout tip">
+      <div class="ico">🎼</div>
+      <div>
+        <h4>Analyser = mémoriser</h4>
+        <p>Ne retiens pas « Fa, Fa, Sol7… » mais « I, I, II7, ii–V–I ». Une grille comprise en fonctions
+        se mémorise trois fois plus vite et se transpose sans effort.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== QUIZ ===================== -->
+  <div class="quiz-wrap" id="quiz">
+    <form data-quiz="9">
+      <h2>Valider le module 9</h2>
+      <p class="quiz-intro">Analyse + auto-évaluation. <strong>80 %</strong> pour valider.</p>
+
+      <div class="q" data-answer="b">
+        <div class="qnum">Question 1</div>
+        <div class="qtext">Dans la grille A (en Fa), pourquoi <span class="mono">G7</span> attire-t-il l'oreille ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q1" value="a"> Parce qu'il est joué très fort</label>
+          <label class="opt"><input type="radio" name="q1" value="b"> C'est une dominante secondaire, étrangère à la tonalité de Fa</label>
+          <label class="opt"><input type="radio" name="q1" value="c"> Parce que c'est le I de Fa</label>
+        </div>
+        <div class="explain"><b>Dominante secondaire.</b> Le degré II de Fa serait Gm7 ; le G7 (majeur/dominante) crée la couleur inattendue typique du morceau.</div>
+      </div>
+
+      <div class="q" data-answer="c">
+        <div class="qnum">Question 2</div>
+        <div class="qtext">Que vise le ii–V <span class="mono">Bm7♭5 – E7</span> de la grille B ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q2" value="a"> Fmaj7</label>
+          <label class="opt"><input type="radio" name="q2" value="b"> G7</label>
+          <label class="opt"><input type="radio" name="q2" value="c"> Am7 (un ii–V mineur)</label>
+        </div>
+        <div class="explain"><b>Am7.</b> Bm7♭5 (ii°) – E7 (V) – Am7 (i) : c'est un ii–V–i mineur, comme au module 4.</div>
+      </div>
+
+      <div class="q" data-answer="a">
+        <div class="qnum">Question 3</div>
+        <div class="qtext">Dans la grille C (La mineur), que représente le passage <span class="mono">Dm7 – G7 – Cmaj7</span> ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q3" value="a"> Un ii–V–I en Do majeur (le relatif majeur), qui éclaire la couleur</label>
+          <label class="opt"><input type="radio" name="q3" value="b"> Une erreur d'harmonie</label>
+          <label class="opt"><input type="radio" name="q3" value="c"> Trois accords de repos</label>
+        </div>
+        <div class="explain"><b>ii–V–I en Do.</b> Do majeur est le relatif de La mineur : la grille visite cette lumière avant de retourner au mineur.</div>
+      </div>
+
+      <div class="q" data-answer="c">
+        <div class="qnum">Question 4</div>
+        <div class="qtext">Quelle est la meilleure façon de mémoriser une grille bossa ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q4" value="a"> Retenir chaque nom d'accord isolément</label>
+          <label class="opt"><input type="radio" name="q4" value="b"> Ne jamais l'analyser</label>
+          <label class="opt"><input type="radio" name="q4" value="c"> La lire en fonctions (I, ii–V–I, turnaround…)</label>
+        </div>
+        <div class="explain"><b>En fonctions.</b> Une grille comprise en degrés se mémorise vite et se transpose sans effort.</div>
+      </div>
+
+      <h3 style="margin-top:26px">Auto-évaluation de ta pratique</h3>
+      <p class="quiz-intro">Coche ce que tu sais faire.</p>
+      <div class="selfcheck">
+        <label class="sc-item"><input type="checkbox"> <span>J'ai joué au moins une grille complète en entier, à la batida.</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>Je repère les ii–V–I (majeurs et mineurs) dans les grilles.</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>J'ai identifié au moins une dominante secondaire.</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>J'ai joué en écoutant l'enregistrement original d'un des morceaux.</span></label>
+      </div>
+
+      <div class="quiz-actions">
+        <button type="button" class="btn-check" data-check>Vérifier mes réponses</button>
+        <span class="quiz-score" data-live-score></span>
+      </div>
+      <div class="result" data-result></div>
+    </form>
+  </div>
+
+  <nav class="module-foot">
+    <a class="foot-link" data-goto="m8" style="cursor:pointer">← Module 8</a>
+    <a class="foot-link" data-goto="m10" style="cursor:pointer">Module 10 : bossanoviser →</a>
+  </nav>
+</div>
+</section>
+
+<section class="view" id="view-m10" data-module="10" style="--c:#b5651d" hidden>
+<div class="lockpanel wrap-narrow" hidden>
+    <div style="padding:70px 0;text-align:center">
+      <div style="font-size:52px">🔒</div>
+      <h1 style="font-size:30px;color:var(--navy-deep);margin:16px 0 10px">Module verrouillé</h1>
+      <p style="font-size:17px;color:var(--ink-2);max-width:520px;margin:0 auto 26px">
+        Pour garder une progression solide, ce module s'ouvre une fois le module 9 validé (80 %).</p>
+      <a class="bnav-back" style="display:inline-flex;cursor:pointer" data-goto="hub">← Retour au parcours</a>
+    </div></div>
+<div class="modulebody">
+  <header class="module-head">
+    <div class="mh-eyebrow"><span class="chip">Module 10 / 10</span> Synthèse</div>
+    <h1>Bossanoviser n'importe quelle chanson</h1>
+    <p class="lead">Le sommet du parcours. Tu vas prendre une chanson quelconque — pop, variété,
+    folk — et la transformer en bossa. Ce n'est pas de la magie : c'est une méthode en cinq gestes,
+    qui réunit tout ce que tu as appris. Une fois le réflexe acquis, plus rien ne t'arrête.</p>
+    <div class="mh-meta">
+      <span class="pill">⏱ <b>≈ 1 h 30</b></span>
+      <span class="pill">Prérequis : <b>module 9</b></span>
+      <span class="pill">🌟 Objectif : <b>5 étoiles</b></span>
+    </div>
+  </header>
+
+  <ul class="goals">
+    <li>Appliquer une méthode de réharmonisation en 5 étapes.</li>
+    <li>Transformer des accords simples en accords bossa colorés.</li>
+    <li>Insérer des ii–V et des substitutions dans une grille existante.</li>
+    <li>Jouer une chanson « bossanovisée » de bout en bout.</li>
+  </ul>
+
+  <section class="section">
+    <h2><span class="idx">10.1</span> La méthode en 5 gestes</h2>
+    <ol>
+      <li><strong>Repérer la tonalité et les accords d'origine.</strong> Trouve le I (l'accord de repos)
+      et lis la grille en degrés.</li>
+      <li><strong>Colorer : passer aux 4 sons.</strong> Chaque majeur → <span class="mono">maj7</span>,
+      chaque mineur → <span class="mono">m7</span>, chaque dominante → <span class="mono">7</span>
+      (puis 9/13).</li>
+      <li><strong>Préparer les cibles : insérer les ii avant les V.</strong> Devant un accord de dominante,
+      ajoute son m7 situé un ton plus bas → tu fabriques un ii–V.</li>
+      <li><strong>Fluidifier : substitutions & basses chromatiques.</strong> Remplace un V par son
+      substitut tritonique quand la basse peut descendre par demi-tons.</li>
+      <li><strong>Habiller : la batida.</strong> Applique la main droite du module 6 et choisis un tempo
+      lent, intime.</li>
+    </ol>
+    <div class="callout tip">
+      <div class="ico">🧩</div>
+      <div>
+        <h4>Tu as déjà tout appris</h4>
+        <p>Étape 2 = module 3. Étape 3 = modules 4 et 7. Étape 4 = module 8. Étape 5 = module 6.
+        Ce module ne t'apprend rien de neuf : il t'apprend à <b>combiner</b>. C'est ça, être autonome.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2><span class="idx">10.2</span> Exemple guidé — d'une pop à une bossa</h2>
+    <p>Partons d'une progression on ne peut plus banale en do majeur, du genre qu'on entend partout :</p>
+    <table class="grille">
+      <tr>
+        <td>C<span class="deg">I</span></td>
+        <td>Am<span class="deg">vi</span></td>
+        <td>F<span class="deg">IV</span></td>
+        <td>G<span class="deg">V</span></td>
+      </tr>
+    </table>
+    <p><strong>Geste 2 — on colore</strong> (accords à 4 sons) :</p>
+    <table class="grille">
+      <tr>
+        <td>Cmaj7<span class="deg">I</span></td>
+        <td>Am7<span class="deg">vi</span></td>
+        <td>Fmaj7<span class="deg">IV</span></td>
+        <td>G7<span class="deg">V</span></td>
+      </tr>
+    </table>
+    <p><strong>Geste 3 — on prépare</strong>. Le <span class="mono">F</span> et le
+    <span class="mono">G</span> peuvent devenir un vrai ii–V vers Do : on remplace IV–V par
+    <span class="mono">Dm7 – G7</span> (le ii–V–I canonique). Et on transforme Am7 en
+    <span class="mono">A7</span> pour tendre vers Dm7 :</p>
+    <table class="grille">
+      <tr>
+        <td>Cmaj7<span class="deg">I</span></td>
+        <td>A7<span class="deg">V/ii</span></td>
+        <td>Dm7<span class="deg">ii</span></td>
+        <td>G7<span class="deg">V</span></td>
+      </tr>
+    </table>
+    <p><strong>Geste 4 — on fluidifie</strong>. On glisse une substitution tritonique sur le G7
+    (→ <span class="mono">D♭7</span>) pour faire descendre la basse Ré → Ré♭ → Do au retour du thème :</p>
+    <table class="grille">
+      <tr>
+        <td>Cmaj7<span class="deg">I</span></td>
+        <td>A7<span class="deg">V/ii</span></td>
+        <td>Dm7<span class="deg">ii</span></td>
+        <td>D♭7<span class="deg">subV</span></td>
+      </tr>
+    </table>
+    <div class="chord-row">
+      <div class="chord" data-chord='{"name":"Cmaj7","frets":[-1,3,2,0,0,0],"fingers":[0,3,2,0,0,0],"color":"#b5651d"}'></div>
+      <div class="chord" data-chord='{"name":"A7","frets":[-1,0,2,0,2,0],"fingers":[0,0,2,0,3,0],"color":"#e8933a"}'></div>
+      <div class="chord" data-chord='{"name":"Dm7","frets":[-1,-1,0,2,1,1],"fingers":[0,0,0,3,1,1],"color":"#1ea7a0"}'></div>
+      <div class="chord" data-chord='{"name":"D♭7","sub":"subV","frets":[-1,4,6,4,6,-1],"fingers":[0,1,3,1,4,0],"base":3,"color":"#8a8f2c"}'></div>
+    </div>
+    <div class="callout ear">
+      <div class="ico">✨</div>
+      <div>
+        <h4>Écoute la transformation</h4>
+        <p>Joue d'abord les 4 accords secs du départ (C–Am–F–G), puis la version finale à la batida.
+        La même chanson, méconnaissable : intime, brésilienne, raffinée. Tu viens de bossanoviser.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2><span class="idx">10.3</span> À toi de jouer</h2>
+    <div class="practice">
+      <span class="ptag">🎸 Projet final</span>
+      <h4>Bossanovise une chanson que tu aimes</h4>
+      <p>Prends une chanson simple que tu connais (3–4 accords). Applique les 5 gestes :
+      repère la tonalité, colore en 4 sons, insère un ii–V, tente une substitution, puis joue le tout
+      à la batida, tempo lent. Enregistre-toi : c'est le meilleur miroir.</p>
+      <span class="metro">🕰️ tempo libre · l'objectif est le feeling, pas la vitesse</span>
+    </div>
+    <div class="callout warn">
+      <div class="ico">🌱</div>
+      <div>
+        <h4>La suite du voyage</h4>
+        <p>Ce parcours t'a donné les fondations solides. Pour continuer : transcris à l'oreille tes
+        morceaux préférés, travaille les liaisons de voix (voice leading), explore les rythmes samba
+        plus rapides, et surtout — joue avec d'autres. La bossa est une conversation.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== QUIZ ===================== -->
+  <div class="quiz-wrap" id="quiz">
+    <form data-quiz="10">
+      <h2>Valider le module 10 — et le parcours !</h2>
+      <p class="quiz-intro">Dernière ligne droite : synthèse + auto-évaluation. <strong>80 %</strong> pour valider.</p>
+
+      <div class="q" data-answer="b">
+        <div class="qnum">Question 1</div>
+        <div class="qtext">Quelle est la toute première étape pour bossanoviser une chanson ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q1" value="a"> Ajouter tout de suite des substitutions tritoniques</label>
+          <label class="opt"><input type="radio" name="q1" value="b"> Repérer la tonalité et lire les accords en degrés</label>
+          <label class="opt"><input type="radio" name="q1" value="c"> Accélérer le tempo</label>
+        </div>
+        <div class="explain"><b>Repérer la tonalité.</b> On identifie le I et on lit la grille en fonctions (I, vi, IV, V…) avant toute transformation.</div>
+      </div>
+
+      <div class="q" data-answer="c">
+        <div class="qnum">Question 2</div>
+        <div class="qtext">« Colorer » un accord majeur simple, c'est le transformer en…</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q2" value="a"> accord de puissance</label>
+          <label class="opt"><input type="radio" name="q2" value="b"> m7♭5</label>
+          <label class="opt"><input type="radio" name="q2" value="c"> maj7 (puis éventuellement maj9)</label>
+        </div>
+        <div class="explain"><b>maj7.</b> Majeur → maj7, mineur → m7, dominante → 7 (puis 9/13). C'est le geste 2 de la méthode.</div>
+      </div>
+
+      <div class="q" data-answer="a">
+        <div class="qnum">Question 3</div>
+        <div class="qtext">Comment « préparer » une dominante G7 pour en faire un ii–V ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q3" value="a"> Placer un Dm7 (le m7 un ton en dessous) juste avant</label>
+          <label class="opt"><input type="radio" name="q3" value="b"> Doubler le volume</label>
+          <label class="opt"><input type="radio" name="q3" value="c"> Le remplacer par un Cmaj7</label>
+        </div>
+        <div class="explain"><b>Ajouter le ii.</b> Devant G7, on met Dm7 : on obtient le ii–V (Dm7–G7) qui résout vers Cmaj7.</div>
+      </div>
+
+      <div class="q" data-answer="b">
+        <div class="qnum">Question 4</div>
+        <div class="qtext">Pourquoi remplacer G7 par D♭7 dans notre exemple ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q4" value="a"> Parce que G7 est faux</label>
+          <label class="opt"><input type="radio" name="q4" value="b"> Pour obtenir une descente chromatique de la basse (Ré–Ré♭–Do)</label>
+          <label class="opt"><input type="radio" name="q4" value="c"> Pour changer de tonalité définitivement</label>
+        </div>
+        <div class="explain"><b>Basse chromatique.</b> D♭7 est le substitut tritonique de G7 ; il crée la glissade Ré–Ré♭–Do, signature du son Jobim.</div>
+      </div>
+
+      <div class="q" data-answer="c">
+        <div class="qnum">Question 5</div>
+        <div class="qtext">Qu'est-ce qui rend enfin le tout « bossa » une fois les accords choisis ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q5" value="a"> Jouer très fort au médiator</label>
+          <label class="opt"><input type="radio" name="q5" value="b"> Gratter tous les accords en bloc</label>
+          <label class="opt"><input type="radio" name="q5" value="c"> Appliquer la batida (basse au pouce + accords syncopés)</label>
+        </div>
+        <div class="explain"><b>La batida.</b> C'est la main droite du module 6 qui transforme une grille en bossa : basse régulière + accords syncopés.</div>
+      </div>
+
+      <h3 style="margin-top:26px">Auto-évaluation de ta pratique</h3>
+      <p class="quiz-intro">Coche ce que tu sais faire.</p>
+      <div class="selfcheck">
+        <label class="sc-item"><input type="checkbox"> <span>Je sais lire une grille simple en degrés (I, vi, IV, V).</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>J'ai coloré une progression et inséré au moins un ii–V.</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>J'ai essayé une substitution tritonique dans une vraie chanson.</span></label>
+        <label class="sc-item"><input type="checkbox"> <span>J'ai joué une chanson bossanovisée en entier, à la batida.</span></label>
+      </div>
+
+      <div class="quiz-actions">
+        <button type="button" class="btn-check" data-check>Vérifier mes réponses</button>
+        <span class="quiz-score" data-live-score></span>
+      </div>
+      <div class="result" data-result></div>
+    </form>
+  </div>
+
+  <nav class="module-foot">
+    <a class="foot-link" data-goto="m9" style="cursor:pointer">← Module 9</a>
+    <a class="foot-link" data-goto="hub" style="cursor:pointer">🌴 Retour au parcours</a>
+  </nav>
+</div>
+</section>
+
+</div>
+
+<footer class="bfoot">
+  <div class="wrap">
+    <span>Bossa Nova · Método — méthode de guitare progressive 🌴</span>
+    <span>Fait pour jouer, pas seulement pour lire.</span>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   Bossa Nova — moteur single-page (standalone)
+   Navigation par vues (hub + 10 modules) dans un seul fichier.
+   Adapté pour intégration Google Sites (aucun fichier externe).
+   ========================================================= */
+(function () {
+  "use strict";
+
+  const MODULES = [
+    { n: 1,  color: "#2f8f6b", title: "Entrer dans la bossa nova",
+      sub: "Histoire, oreille, posture, accordage : poser le décor et le corps." },
+    { n: 2,  color: "#1ea7a0", title: "La main droite : le geste fondateur",
+      sub: "Pouce et doigts, la basse alternée et le premier pincé bossa." },
+    { n: 3,  color: "#3d7ea6", title: "Les premiers accords colorés",
+      sub: "maj7, m7, 7 : les accords à quatre sons qui font le son bossa." },
+    { n: 4,  color: "#6b5ca8", title: "Comprendre l'harmonie : le ii–V–I",
+      sub: "La cellule qui gouverne 90 % du répertoire bossa et jazz." },
+    { n: 5,  color: "#e8933a", title: "Voicings & accords barrés mobiles",
+      sub: "Déplacer une forme sur tout le manche : la boîte à outils." },
+    { n: 6,  color: "#ee5a2a", title: "Le rythme bossa : la batida de João",
+      sub: "Clave, syncope et indépendance pouce / doigts." },
+    { n: 7,  color: "#c1425f", title: "Progressions typiques & cycle des quintes",
+      sub: "Enchaîner les ii–V–I, tourner autour de la tonalité." },
+    { n: 8,  color: "#8a8f2c", title: "Enrichissements & substitutions",
+      sub: "9, 11, 13, altérations et substitution tritonique." },
+    { n: 9,  color: "#1f7a8c", title: "Morceaux d'application",
+      sub: "Trois grilles-types de standards pour tout réunir." },
+    { n: 10, color: "#b5651d", title: "Bossanoviser n'importe quelle chanson",
+      sub: "La méthode de réharmonisation, étape par étape." },
+  ];
+  const MAX_STARS = 5, PASS = 0.8, KEY = "bossaProgressV1";
+
+  let memStore = null;
+  function load() {
+    try { const r = localStorage.getItem(KEY); return r ? (JSON.parse(r) || {}) : (memStore || {}); }
+    catch (e) { return memStore || {}; }
+  }
+  function save(p) { memStore = p; try { localStorage.setItem(KEY, JSON.stringify(p)); } catch (e) {} }
+  function moduleState(n) { const p = load(); return p[n] || { best: 0, stars: 0, passed: false }; }
+  function isUnlocked(n) { if (n <= 1) return true; return !!moduleState(n - 1).passed; }
+  function totalStars() { const p = load(); return MODULES.reduce((s, m) => s + (p[m.n] ? p[m.n].stars : 0), 0); }
+  function maxStars() { return MODULES.length * MAX_STARS; }
+  function passedCount() { const p = load(); return MODULES.filter(m => p[m.n] && p[m.n].passed).length; }
+  function recordResult(n, pct) {
+    const p = load();
+    const stars = Math.max(0, Math.min(MAX_STARS, Math.round(pct * MAX_STARS)));
+    const prev = p[n] || { best: 0, stars: 0, passed: false };
+    p[n] = { best: Math.max(prev.best, pct), stars: Math.max(prev.stars, stars), passed: prev.passed || pct >= PASS };
+    save(p); return p[n];
+  }
+
+  function starSVG(f) {
+    const c = f ? "#f5b820" : "#d9d2c4";
+    return `<svg viewBox="0 0 24 24" fill="${c}" aria-hidden="true"><path d="M12 2.5l2.9 6.05 6.6.86-4.85 4.55 1.24 6.54L12 17.9 6.1 20.9l1.24-6.54L2.5 9.41l6.6-.86z"/></svg>`;
+  }
+  function starRow(c, m) { let o = ""; for (let i = 0; i < m; i++) o += starSVG(i < c); return o; }
+
+  function renderChord(el) {
+    let d; try { d = JSON.parse(el.getAttribute("data-chord")); } catch (e) { return; }
+    const frets = d.frets || [], fingers = d.fingers || [];
+    const nStrings = 6, nFrets = 4, W = 96, H = 128, padX = 12, padTop = 26, padBottom = 14;
+    const gridW = W - padX * 2, gridH = H - padTop - padBottom;
+    const dx = gridW / (nStrings - 1), dy = gridH / nFrets, base = d.base || 1;
+    let svg = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Accord ${d.name || ""}">`;
+    if (base === 1) svg += `<rect x="${padX}" y="${padTop - 4}" width="${gridW}" height="4" rx="1.5" fill="#142546"/>`;
+    else svg += `<text x="${padX - 6}" y="${padTop + dy * 0.7}" font-size="11" font-family="Space Grotesk,sans-serif" fill="#7a849c" text-anchor="end" font-weight="600">${base}</text>`;
+    for (let f = 0; f <= nFrets; f++) svg += `<line x1="${padX}" y1="${padTop + f * dy}" x2="${padX + gridW}" y2="${padTop + f * dy}" stroke="#c9cfda" stroke-width="1.4"/>`;
+    for (let s = 0; s < nStrings; s++) svg += `<line x1="${padX + s * dx}" y1="${padTop}" x2="${padX + s * dx}" y2="${padTop + gridH}" stroke="#c9cfda" stroke-width="1.4"/>`;
+    (d.barres || []).forEach(b => {
+      const rel = b.fret - base + 1; if (rel < 1 || rel > nFrets) return;
+      const y = padTop + (rel - 0.5) * dy, x1 = padX + b.from * dx, x2 = padX + b.to * dx;
+      svg += `<rect x="${x1 - 7}" y="${y - 7}" width="${x2 - x1 + 14}" height="14" rx="7" fill="#142546"/>`;
+    });
+    for (let s = 0; s < nStrings; s++) {
+      const fr = frets[s], x = padX + s * dx;
+      if (fr === -1) svg += `<text x="${x}" y="${padTop - 8}" font-size="12" font-family="Space Grotesk,sans-serif" fill="#7a849c" text-anchor="middle" font-weight="700">×</text>`;
+      else if (fr === 0) svg += `<circle cx="${x}" cy="${padTop - 11}" r="4.4" fill="none" stroke="#404a66" stroke-width="1.6"/>`;
+      else {
+        const rel = fr - base + 1; if (rel < 1 || rel > nFrets) continue;
+        const y = padTop + (rel - 0.5) * dy;
+        const covered = (d.barres || []).some(b => b.fret === fr && s >= b.from && s <= b.to);
+        if (!covered) svg += `<circle cx="${x}" cy="${y}" r="7.4" fill="${d.color || "#1ea7a0"}"/>`;
+        const fg = fingers[s];
+        if (fg && fg > 0 && !covered) svg += `<text x="${x}" y="${y + 3.6}" font-size="10" font-family="Space Grotesk,sans-serif" fill="#fff" text-anchor="middle" font-weight="700">${fg}</text>`;
+      }
+    }
+    svg += `</svg>`;
+    el.innerHTML = (d.name ? `<div class="cname">${d.name}</div>` : "") + `<div class="csub">${d.sub || ""}</div>` + svg;
+  }
+
+  function renderRhythm(el) {
+    let d; try { d = JSON.parse(el.getAttribute("data-rhythm")); } catch (e) { return; }
+    const beats = d.beats || 16;
+    let html = `<div class="rtitle">🎵 ${d.title || "Motif main droite"}</div><div class="rgrid">`;
+    d.lanes.forEach(lane => {
+      html += `<div class="rlane"><div class="rlbl">${lane.lbl}</div><div class="rcells" style="grid-template-columns:repeat(${beats},1fr)">`;
+      const pat = (lane.pattern || "").padEnd(beats, ".");
+      for (let i = 0; i < beats; i++) {
+        const c = pat[i], isBeat = (i % (beats / 4) === 0);
+        let cls = "rcell"; if (isBeat) cls += " beat"; let lab = "";
+        if (c === "x") cls += " hit";
+        else if (c === "o") cls += " hit thumb";
+        else if (c === "A") { cls += " hit acc"; lab = `<span class="lab">›</span>`; }
+        html += `<div class="${cls}">${lab}</div>`;
+      }
+      html += `</div></div>`;
+    });
+    html += `</div><div class="rbeats"><div class="sp"></div><div class="nums" style="grid-template-columns:repeat(4,1fr)"><span>1</span><span>2</span><span>3</span><span>4</span></div></div>`;
+    if (d.legend !== false) html += `<div class="rlegend"><span><i style="background:#f5b820"></i>Pouce (basse)</span><span><i style="background:#1ea7a0"></i>Doigts (accord)</span><span><i style="background:#ee5a2a"></i>Accent syncopé</span></div>`;
+    el.innerHTML = html;
+  }
+
+  function paintNavStars() {
+    document.querySelectorAll("[data-nav-stars]").forEach(el => {
+      el.innerHTML = starSVG(true) + `<span>${totalStars()} / ${maxStars()}</span>`;
+    });
+  }
+
+  function renderHub() {
+    const grid = document.querySelector("[data-hub-grid]");
+    if (!grid) return;
+    const p = load();
+    let html = "";
+    MODULES.forEach(m => {
+      const st = p[m.n] || { stars: 0, passed: false };
+      const unlocked = isUnlocked(m.n);
+      let badge, foot;
+      if (!unlocked) badge = `<span class="mbadge locked">🔒 Verrouillé</span>`;
+      else if (st.passed) badge = `<span class="mbadge done">✔ Validé</span>`;
+      else badge = `<span class="mbadge open">● À travailler</span>`;
+      const stars = `<span class="mstars">${starRow(st.stars, MAX_STARS)}</span>`;
+      if (unlocked) foot = `${stars}<span class="mcard-cta">${st.passed ? "Revoir" : "Commencer"} →</span>`;
+      else foot = `${stars}<span class="lockmsg">Validez le module ${m.n - 1}</span>`;
+      const inner = `
+        <div class="mcard-top">
+          <span class="mnum" style="--c:${m.color}">${String(m.n).padStart(2, "0")}</span>
+          ${badge}
+        </div>
+        <h3>${m.title}</h3>
+        <p>${m.sub}</p>
+        <span class="mtime">⏱ ≈ 1 h 30 · pratique + théorie</span>
+        <div class="mcard-foot">${foot}</div>`;
+      if (unlocked) html += `<div class="mcard is-open" style="--c:${m.color};cursor:pointer" data-goto="m${m.n}">${inner}</div>`;
+      else html += `<div class="mcard is-locked" style="--c:${m.color}">${inner}</div>`;
+    });
+    grid.innerHTML = html;
+    const ps = document.querySelector("[data-progress-fill]");
+    if (ps) ps.style.width = (totalStars() / maxStars() * 100) + "%";
+    document.querySelectorAll("[data-total-stars]").forEach(e => e.textContent = totalStars());
+    document.querySelectorAll("[data-max-stars]").forEach(e => e.textContent = maxStars());
+    document.querySelectorAll("[data-passed-count]").forEach(e => e.textContent = passedCount());
+  }
+
+  function toast(msg) {
+    let t = document.querySelector(".toast");
+    if (!t) { t = document.createElement("div"); t.className = "toast"; document.body.appendChild(t); }
+    t.innerHTML = starSVG(true) + `<span>${msg}</span>`;
+    requestAnimationFrame(() => t.classList.add("show"));
+    setTimeout(() => t.classList.remove("show"), 3200);
+  }
+
+  function initQuiz(form) {
+    if (form.dataset.wired) return; form.dataset.wired = "1";
+    const n = parseInt(form.getAttribute("data-quiz"), 10);
+    const checkBtn = form.querySelector("[data-check]");
+    const scoreEl = form.querySelector("[data-live-score]");
+    const result = form.querySelector("[data-result]");
+    const questions = Array.from(form.querySelectorAll(".q"));
+    const selfItems = Array.from(form.querySelectorAll(".selfcheck input"));
+    const totalItems = questions.length + selfItems.length;
+    function liveCount() {
+      let done = 0;
+      questions.forEach(q => { if (q.querySelector("input:checked")) done++; });
+      selfItems.forEach(i => { if (i.checked) done++; });
+      return done;
+    }
+    function refresh() { if (scoreEl) scoreEl.textContent = `${liveCount()} / ${totalItems} répondus`; }
+    form.addEventListener("change", refresh); refresh();
+    checkBtn.addEventListener("click", function () {
+      let correct = 0;
+      questions.forEach(q => {
+        const right = q.getAttribute("data-answer");
+        const opts = Array.from(q.querySelectorAll(".opt"));
+        const chosen = q.querySelector("input:checked");
+        opts.forEach(o => {
+          o.classList.remove("correct", "wrong");
+          const v = o.querySelector("input").value;
+          const mk = o.querySelector(".mark"); if (mk) mk.remove();
+          if (v === right) { o.classList.add("correct"); o.insertAdjacentHTML("beforeend", `<span class="mark">✔</span>`); }
+          else if (chosen && chosen.value === v) { o.classList.add("wrong"); o.insertAdjacentHTML("beforeend", `<span class="mark">✕</span>`); }
+        });
+        if (chosen && chosen.value === right) correct++;
+        const ex = q.querySelector(".explain"); if (ex) ex.classList.add("show");
+      });
+      let selfDone = 0; selfItems.forEach(i => { if (i.checked) selfDone++; });
+      correct += selfDone;
+      const pct = totalItems ? correct / totalItems : 0;
+      const saved = recordResult(n, pct);
+      const passed = pct >= PASS, pctTxt = Math.round(pct * 100);
+      result.className = "result show " + (passed ? "pass" : "fail");
+      let nextHtml = "";
+      if (passed && n < MODULES.length) nextHtml = `<a class="next-btn" data-goto="m${n + 1}">Débloquer le module ${n + 1} →</a>`;
+      else if (passed && n === MODULES.length) nextHtml = `<a class="next-btn" data-goto="hub">Retour au parcours · 🎉 parcours complété</a>`;
+      else nextHtml = `<a class="next-btn" data-goto="m${n}">Revoir le module</a>`;
+      result.innerHTML = `
+        <h3>${passed ? "🌴 Module validé !" : "🎧 Presque !"}</h3>
+        <p>Score : <b>${pctTxt} %</b> (${correct}/${totalItems}). ${passed
+          ? "Tu as dépassé le seuil de 80 %. Les étoiles sont créditées et le module suivant est débloqué."
+          : "Il faut atteindre 80 % pour valider. Revois les explications ci-dessus, puis relance la vérification."}</p>
+        <div class="earned">${starRow(saved.stars, MAX_STARS)}</div>
+        <div>${nextHtml}</div>`;
+      paintNavStars();
+      if (passed) toast(`+${saved.stars} étoile${saved.stars > 1 ? "s" : ""} · module ${n} validé`);
+      result.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  }
+
+  function initView(view) {
+    if (view.dataset.inited) return;
+    view.querySelectorAll("[data-chord]").forEach(renderChord);
+    view.querySelectorAll("[data-rhythm]").forEach(renderRhythm);
+    const form = view.querySelector("[data-quiz]");
+    if (form) initQuiz(form);
+    view.dataset.inited = "1";
+  }
+
+  function go(id) {
+    if (!id) id = "hub";
+    let view = document.getElementById("view-" + id);
+    if (!view) { id = "hub"; view = document.getElementById("view-hub"); }
+    document.querySelectorAll(".view").forEach(v => { v.hidden = true; });
+    view.hidden = false;
+    const n = parseInt(view.getAttribute("data-module") || "0", 10);
+    if (n) {
+      const lock = view.querySelector(".lockpanel");
+      const body = view.querySelector(".modulebody");
+      if (!isUnlocked(n)) { if (lock) lock.hidden = false; if (body) body.hidden = true; }
+      else { if (lock) lock.hidden = true; if (body) { body.hidden = false; initView(view); } }
+    }
+    if (id === "hub") renderHub();
+    paintNavStars();
+    window.scrollTo(0, 0);
+    if (location.hash !== "#" + id) { try { history.replaceState(null, "", "#" + id); } catch (e) {} }
+  }
+
+  document.addEventListener("click", function (e) {
+    const goEl = e.target.closest("[data-goto]");
+    if (goEl) { e.preventDefault(); go(goEl.getAttribute("data-goto")); return; }
+    const rs = e.target.closest("[data-reset]");
+    if (rs) {
+      if (confirm("Réinitialiser toute la progression et les étoiles ?")) {
+        memStore = {}; try { localStorage.removeItem(KEY); } catch (x) {}
+        renderHub(); paintNavStars(); go("hub");
+      }
+    }
+  });
+  window.addEventListener("hashchange", function () { go(location.hash.replace("#", "")); });
+
+  function boot() { go(location.hash.replace("#", "") || "hub"); }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})();
+
+</script>
+</body>
+</html>
