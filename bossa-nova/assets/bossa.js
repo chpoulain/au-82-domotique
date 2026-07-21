@@ -37,12 +37,24 @@
   const PASS = 0.8;         // 80 % pour valider
   const KEY = "bossaProgressV1";
 
-  /* ---------- Persistance ---------- */
+  /* ---------- Persistance ----------
+     Repli en mémoire si localStorage est indisponible (ex. iframe
+     « bac à sable » de certaines intégrations). La progression n'est
+     alors pas conservée entre deux visites, mais rien ne plante. */
+  let memStore = null; // cache mémoire de secours
   function load() {
-    try { return JSON.parse(localStorage.getItem(KEY)) || {}; }
-    catch (e) { return {}; }
+    try {
+      const raw = localStorage.getItem(KEY);
+      return raw ? (JSON.parse(raw) || {}) : (memStore || {});
+    } catch (e) {
+      return memStore || {};
+    }
   }
-  function save(p) { localStorage.setItem(KEY, JSON.stringify(p)); }
+  function save(p) {
+    memStore = p;
+    try { localStorage.setItem(KEY, JSON.stringify(p)); }
+    catch (e) { /* stockage bloqué : on garde memStore */ }
+  }
 
   function moduleState(n) {
     const p = load();
@@ -377,7 +389,8 @@
     document.querySelectorAll("[data-reset]").forEach(btn => {
       btn.addEventListener("click", () => {
         if (confirm("Réinitialiser toute la progression et les étoiles ?")) {
-          localStorage.removeItem(KEY);
+          memStore = {};
+          try { localStorage.removeItem(KEY); } catch (e) {}
           location.reload();
         }
       });
