@@ -215,6 +215,12 @@ p.para{font-size:16px;color:var(--ink-2);margin:10px 0}
 .demo-btn.on{background:var(--coral)}
 
 .comp-cover{width:100%;max-height:190px;object-fit:cover;border-radius:16px;margin:6px 0 10px;border:1px solid var(--line);box-shadow:var(--shadow-sm)}
+.posture-chip{display:inline-flex;align-items:center;gap:6px;margin:2px 0 10px;padding:6px 13px;background:rgba(47,143,107,.12);color:var(--leaf);border:1px solid rgba(47,143,107,.25);border-radius:99px;font-weight:600;font-size:12.5px;font-family:inherit;cursor:pointer}
+.posture-chip:hover{background:var(--leaf);color:#fff}
+.selfcheck .sc-item{display:flex;gap:11px;align-items:flex-start;padding:11px 0;border-top:1px dashed var(--line);cursor:pointer}
+.selfcheck .sc-item:first-child{border-top:none}
+.selfcheck input[type=checkbox]{margin-top:3px;width:18px;height:18px;accent-color:var(--leaf);flex:0 0 auto;cursor:pointer}
+.selfcheck .sc-item span{font-size:15px;color:var(--ink-2)}
 </style>
 </head>
 <body>
@@ -373,7 +379,7 @@ function st(){ return load(); }
 /* ---------- Référentiel de compétences ---------- */
 // outillées = contenu réel ; soon = structure ouverte (à remplir sans limite)
 const COMPS=[
- {id:"posture",live:true,color:"#2f8f6b",ic:"🧘",name:"Posture & prévention",short:"Tenir l'instrument détendu, éviter les douleurs.",
+ {id:"posture",live:true,kind:"checklist",color:"#2f8f6b",ic:"🧘",name:"Posture & prévention",short:"Tenir l'instrument détendu, éviter les douleurs.",
   levels:[
    {n:1,title:"Tenir le ukulélé sans tension",goal:"Assis, instrument calé, épaules basses.",
     body:`<p>Assieds-toi au bord de la chaise, dos droit mais <strong>relâché</strong>. Cale le ukulélé contre ton avant-bras droit : il tient presque seul, sans que la main gauche le soutienne.</p>
@@ -577,6 +583,7 @@ function screenDash(){
 
   let live="",soon="";
   COMPS.forEach(c=>{
+    if(c.kind==="checklist")return;
     if(c.live){
       const lvl=compLevel(c.id), tot=c.levels.length, pct=Math.round(lvl/tot*100);
       live+=`<div class="ccard live" style="--c:${c.color}" onclick="UKE.go('comp:${c.id}')">
@@ -605,7 +612,7 @@ function screenDash(){
     ${placeHtml}
     <div class="xpstrip">
       <div class="xpstat"><div class="num">${totalStars()} <span class="inf">★</span></div><div class="lbl">Étoiles (sans plafond)</div></div>
-      <div class="xpstat"><div class="num">${COMPS.filter(c=>c.live).length}<span style="font-size:17px;color:var(--ink-3)"> actives · <span class="inf">∞</span></span></div><div class="lbl">Compétences</div></div>
+      <div class="xpstat"><div class="num">${COMPS.filter(c=>c.live&&c.kind!=="checklist").length}<span style="font-size:17px;color:var(--ink-3)"> actives · <span class="inf">∞</span></span></div><div class="lbl">Compétences</div></div>
       <div class="xpstat"><div class="num">3–10<span style="font-size:17px;color:var(--ink-3)"> min</span></div><div class="lbl">Par jour suffit</div></div>
       <button class="reset" onclick="UKE.reset()">Réinitialiser</button>
     </div>
@@ -633,7 +640,7 @@ function screenDash(){
 function pickDefi(maxMin){
   // réservoir = tous les défis des compétences live, filtrés par temps et proches du niveau
   const pool=[];
-  COMPS.filter(c=>c.live).forEach(c=>{ c.levels.forEach(l=>{ if(l.defi){ pool.push({comp:c,lvl:l,key:c.id+":"+l.n}); } }); });
+  COMPS.filter(c=>c.live&&c.kind!=="checklist").forEach(c=>{ c.levels.forEach(l=>{ if(l.defi){ pool.push({comp:c,lvl:l,key:c.id+":"+l.n}); } }); });
   const lim=pool.filter(d=>d.lvl.defi.min<=maxMin);
   // priorité : défis au niveau courant ou juste au-dessus, non faits
   const cur=lim.filter(d=>!isDone("defi:"+d.key) && d.lvl.n<=compLevel(d.comp.id)+1);
@@ -665,7 +672,7 @@ function mountDefi(mount,maxMin){
 
 /* ----- écran compétence ----- */
 function screenComp(id){
-  const c=comp(id); if(!c||!c.live){ return screenDash(); }
+  const c=comp(id); if(c&&c.kind==="checklist"){return screenPosture();} if(!c||!c.live){ return screenDash(); }
   const cur=compLevel(id);
   let levels="";
   c.levels.forEach(l=>{
@@ -685,7 +692,7 @@ function screenComp(id){
       ${unlocked?`<div class="level-body">${inner}</div>`:""}</div>`;
   });
   SC.innerHTML=`<a class="back" onclick="UKE.go('dash')">← Tableau de bord</a>
-    ${coverTag(c)}<div style="font-size:30px">${c.ic}</div>
+    <button class="posture-chip" onclick="UKE.go('posture')">📋 Rappel posture</button>${coverTag(c)}<div style="font-size:30px">${c.ic}</div>
     <h1 class="detail-h">${c.name}</h1>
     <p class="lead">${c.short}</p>
     <div class="goalrow"><span class="pill">Palier atteint : <b>${cur}</b></span><span class="pill">Paliers déployés : <b>${c.levels.length}</b> · <b>∞ évolutif</b></span></div>
@@ -708,7 +715,7 @@ function screenMorceau(id,vsel){
   const compsTxt = (v.comps||[]).map(cid=>{ const cc=comp(cid); return cc?`${cc.ic} ${cc.name}`:cid; }).join(" · ");
   const done=!!prog["v"+v.v];
   SC.innerHTML=`<a class="back" onclick="UKE.go('dash')">← Tableau de bord</a>
-    <span class="eyebrow alt">${p.tag} · ${p.style}</span>
+    <button class="posture-chip" onclick="UKE.go('posture')">📋 Rappel posture</button><span class="eyebrow alt">${p.tag} · ${p.style}</span>
     <h1 class="detail-h">${p.title}</h1>
     <div class="goalrow">${tabs}</div>
     <div class="panel">
@@ -795,6 +802,50 @@ function screenPlacement(){
 }
 
 /* ---------- interactions communes (chords play, strum, métronome) ---------- */
+/* ===== Posture : checklist de rappel (pas un défi) ===== */
+const POSTURE=[
+ {t:"Le corps (toujours)",items:[
+   "Dos droit mais relâché, épaules basses, nuque libre",
+   "Respiration calme, aucune crispation",
+   "Le ukulélé tient presque seul, sans le serrer"]},
+ {t:"Jouer assis",items:[
+   "Au bord de la chaise, sans t'appuyer au dossier",
+   "Pieds à plat au sol",
+   "Appuis sur les ischions (os des fesses) bien ancrés, bassin stable",
+   "Corps du ukulélé calé contre le torse ; l'avant-bras droit le maintient"]},
+ {t:"Jouer debout",items:[
+   "Ukulélé plus haut : la rosace vers la hauteur de poitrine",
+   "Sangle conseillée (surtout ténor / baryton)",
+   "Pieds écartés largeur du bassin, appui égal sur les deux pieds",
+   "Coude droit relâché, pas plaqué contre le corps"]},
+ {t:"L'axe & le manche",items:[
+   "Manche légèrement relevé, incliné jusqu'à l'angle naturel",
+   "Buste droit, dans l'axe, sans torsion",
+   "Pouce gauche derrière le manche, prise légère (pivot), doigts libres"]},
+ {t:"Vérifier",items:[
+   "Test de stabilité : lâche une main puis l'autre, l'instrument reste en place",
+   "Une gêne ou une douleur ? J'ajuste tout de suite, je ne force jamais"]}
+];
+function postureState(){try{return JSON.parse(localStorage.getItem("ukPostureV1"))||{};}catch(e){return {};}}
+function savePosture(s){try{localStorage.setItem("ukPostureV1",JSON.stringify(s));}catch(e){}}
+function screenPosture(){
+  const ps=postureState();
+  let html='<a class="back" onclick="UKE.go(\'dash\')">← Tableau de bord</a>'
+    +'<h1 class="detail-h">📋 Checklist posture</h1>'
+    +'<p class="lead">Pas un défi : un <b>rappel</b> à parcourir avant de jouer, assis comme debout. Coche ce qui est en place — c\'est enregistré, et accessible depuis chaque exercice.</p>';
+  POSTURE.forEach(function(sec,si){
+    html+='<div class="panel"><h3 style="font-size:17px;color:var(--navy-deep);margin-bottom:4px">'+sec.t+'</h3><div class="selfcheck">';
+    sec.items.forEach(function(it,ii){const key=si+"-"+ii;const on=ps[key]?"checked":"";
+      html+='<label class="sc-item"><input type="checkbox" data-pk="'+key+'" '+on+'> <span>'+it+'</span></label>';});
+    html+='</div></div>';
+  });
+  html+='<div class="call warn" style="--c:#ee5a2a"><div class="i">⚠️</div><div><h4>Prévention, pas diagnostic</h4><p>Ce rappel aide à bien se placer ; il ne remplace pas un avis médical. Une douleur qui persiste → professionnel de santé.</p></div></div>';
+  html+='<button class="do-btn" onclick="UKE.go(\'dash\')">Retour au tableau de bord</button>';
+  SC.innerHTML=html;
+  SC.querySelectorAll("[data-pk]").forEach(function(cb){cb.onchange=function(){const s=postureState();s[this.dataset.pk]=this.checked;savePosture(s);};});
+  paintXP();
+}
+
 function wireInteractions(){ wireDemos(document);
   document.querySelectorAll("[data-strum]").forEach(b=>b.onclick=()=>{ try{ strum(JSON.parse(b.dataset.strum)); }catch(e){} });
   document.querySelectorAll("[data-note]").forEach(b=>b.onclick=()=>playNote(b.dataset.note,0));
@@ -817,6 +868,7 @@ function go(route){
   const [name,a,b]=route.split(":");
   if(name==="dash") screenDash();
   else if(name==="placement") screenPlacement();
+  else if(name==="posture") screenPosture();
   else if(name==="comp") screenComp(a);
   else if(name==="morceau") screenMorceau(a,b);
   else if(name==="notions") screenNotions();
