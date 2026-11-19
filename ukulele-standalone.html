@@ -1,0 +1,745 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Ukulélé — programme d'apprentissage (prototype)</title>
+<meta name="description" content="Programme d'apprentissage du ukulélé pour adultes, par compétences, sans limite : expérimentation, défis quotidiens, morceaux multi-niveaux." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --navy:#1f3a6b;--navy-deep:#142546;--teal:#1ea7a0;--yellow:#f5b820;--orange:#ee5a2a;
+  --lime:#a7c842;--sky:#5fa8d6;--cream:#fbf8f1;--paper:#fff;--ink:#0e1a33;--ink-2:#404a66;
+  --ink-3:#7a849c;--line:rgba(20,37,70,.10);--sand:#f3e9d6;--leaf:#2f8f6b;--sun:#e8933a;
+  --coral:#ef6f53;--violet:#6b5ca8;--radius:18px;
+  --shadow:0 18px 50px -24px rgba(20,37,70,.35);--shadow-sm:0 6px 20px -10px rgba(20,37,70,.3);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+html,body{background:var(--cream);color:var(--ink);font-family:"Space Grotesk",system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6}
+img{max-width:100%;display:block}a{color:inherit;text-decoration:none;cursor:pointer}
+.serif{font-family:"Instrument Serif",serif;font-weight:400;font-style:italic}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+button{font-family:inherit;cursor:pointer}
+.hidden{display:none!important}
+
+/* NAV */
+.unav{position:sticky;top:0;z-index:60;background:rgba(251,248,241,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.unav-in{display:flex;align-items:center;justify-content:space-between;height:66px;gap:14px}
+.ubrand{display:flex;align-items:center;gap:11px;font-weight:700;font-size:18px;letter-spacing:-.02em;color:var(--navy-deep)}
+.ubrand .g{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--coral),var(--sun));display:grid;place-items:center;font-size:18px;box-shadow:var(--shadow-sm)}
+.unav-r{display:flex;align-items:center;gap:12px}
+.uxp{display:inline-flex;align-items:center;gap:7px;padding:7px 14px;background:var(--paper);border:1px solid var(--line);border-radius:99px;font-weight:600;font-size:13.5px;color:var(--navy-deep);box-shadow:var(--shadow-sm)}
+.uxp svg{width:16px;height:16px}
+.ubtn{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;background:var(--navy-deep);color:#fff;border:none;border-radius:99px;font-weight:600;font-size:13.5px;transition:background .18s}
+.ubtn:hover{background:var(--coral)}
+.ubtn.ghost{background:var(--paper);color:var(--navy-deep);border:1px solid var(--line)}
+.ubtn.ghost:hover{background:var(--navy-deep);color:#fff}
+
+/* SCREEN */
+#screen{min-height:60vh;padding:30px 0 70px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:var(--lime);border-radius:99px;font-size:12px;font-weight:600;color:var(--navy-deep);text-transform:uppercase;letter-spacing:.06em}
+.eyebrow.alt{background:var(--sand);color:var(--ink-2)}
+h1.big{font-weight:500;font-size:clamp(32px,5.5vw,60px);line-height:1;letter-spacing:-.03em;color:var(--navy-deep);margin:16px 0 14px;text-wrap:balance}
+h1.big .ac{color:var(--coral)}
+.lead{font-size:18px;color:var(--ink-2);max-width:640px}
+.lead strong{color:var(--navy-deep);font-weight:600}
+.sect-h{display:flex;align-items:baseline;gap:12px;margin:38px 0 8px}
+.sect-h h2{font-size:23px;font-weight:600;letter-spacing:-.02em;color:var(--navy-deep)}
+.sect-h .n{font-family:"Instrument Serif",serif;font-style:italic;font-size:20px;color:var(--coral)}
+.sect-h .hint{margin-left:auto;font-size:12.5px;color:var(--ink-3)}
+p.para{font-size:16px;color:var(--ink-2);margin:10px 0}
+
+/* placement banner */
+.place-cta{margin-top:26px;background:linear-gradient(135deg,var(--navy-deep),#24406f);color:#fff;border-radius:var(--radius);padding:24px 26px;display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap;box-shadow:var(--shadow)}
+.place-cta h3{font-size:20px;margin-bottom:4px}
+.place-cta p{font-size:14.5px;color:rgba(255,255,255,.8);max-width:520px}
+.place-cta .ubtn{background:var(--yellow);color:var(--navy-deep)}
+.place-cta .ubtn:hover{background:#fff}
+
+/* XP strip */
+.xpstrip{margin-top:22px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:18px 24px;display:flex;gap:30px;flex-wrap:wrap;align-items:center;box-shadow:var(--shadow-sm)}
+.xpstat .num{font-family:"Instrument Serif",serif;font-style:italic;font-size:30px;color:var(--navy-deep);line-height:1}
+.xpstat .num .inf{color:var(--coral)}
+.xpstat .lbl{font-size:11.5px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-top:2px}
+.xpstrip .reset{margin-left:auto;background:none;border:none;color:var(--ink-3);font-size:12px;text-decoration:underline;cursor:pointer}
+.xpstrip .reset:hover{color:var(--coral)}
+
+/* competence grid */
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;margin-top:14px}
+.ccard{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);transition:transform .18s,box-shadow .18s;position:relative;overflow:hidden}
+.ccard::before{content:"";position:absolute;inset:0 auto 0 0;width:5px;background:var(--c,var(--teal))}
+.ccard.live{cursor:pointer}
+.ccard.live:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.ccard.soon{opacity:.62}
+.ccard .ic{font-size:26px;margin-bottom:8px}
+.ccard h3{font-size:17px;font-weight:600;color:var(--navy-deep);line-height:1.2}
+.ccard .cshort{font-size:13px;color:var(--ink-2);margin:5px 0 12px}
+.ccard .pal{font-size:12px;font-weight:600;color:var(--c,var(--teal));text-transform:uppercase;letter-spacing:.04em}
+.ccard .pal .evo{color:var(--ink-3);font-weight:500;text-transform:none;letter-spacing:0}
+.cbar{height:8px;border-radius:99px;background:var(--sand);overflow:hidden;margin-top:7px}
+.cbar>span{display:block;height:100%;border-radius:99px;background:var(--c,var(--teal));transition:width .5s}
+.ccard .soonlbl{display:inline-block;margin-top:10px;font-size:11.5px;font-weight:600;color:var(--ink-3);background:var(--sand);padding:4px 10px;border-radius:99px}
+
+/* piece cards */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:14px}
+.pcard{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);cursor:pointer;transition:transform .18s,box-shadow .18s}
+.pcard:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.pcard .tag{display:inline-block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;padding:3px 10px;border-radius:99px;background:rgba(30,167,160,.14);color:var(--teal)}
+.pcard .tag.orig{background:rgba(239,111,83,.14);color:var(--coral)}
+.pcard h3{font-size:19px;font-weight:600;color:var(--navy-deep);margin:9px 0 3px}
+.pcard .meta{font-size:13px;color:var(--ink-3)}
+.pcard .levels{display:flex;gap:5px;margin-top:12px}
+.pcard .lv{flex:1;text-align:center;font-size:12px;font-weight:600;padding:6px 0;border-radius:8px;background:var(--sand);color:var(--ink-3)}
+.pcard .lv.ok{background:rgba(47,143,107,.16);color:var(--leaf)}
+
+/* defi card */
+.defi-feature{margin-top:14px;background:linear-gradient(135deg,#fff,var(--sand));border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px;box-shadow:var(--shadow-sm)}
+.defi-feature .tag{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--coral)}
+.defi-feature h3{font-size:21px;color:var(--navy-deep);margin:6px 0 4px}
+.timefilter{display:flex;gap:8px;margin:14px 0}
+.timefilter button{padding:8px 16px;border:1.5px solid var(--line);background:var(--paper);border-radius:99px;font-size:13.5px;font-weight:600;color:var(--ink-2)}
+.timefilter button.on{border-color:var(--coral);background:var(--coral);color:#fff}
+
+/* generic cards / detail */
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px;box-shadow:var(--shadow-sm);margin:16px 0}
+.back{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14px;color:var(--navy-deep);margin-bottom:6px}
+.back:hover{color:var(--coral)}
+.detail-h{font-size:clamp(26px,4vw,40px);font-weight:500;letter-spacing:-.02em;color:var(--navy-deep);line-height:1.05;margin:10px 0 10px}
+.goalrow{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 4px}
+.pill{display:inline-flex;align-items:center;gap:7px;background:var(--paper);border:1px solid var(--line);border-radius:99px;padding:7px 14px;font-size:13px;font-weight:500;color:var(--ink-2)}
+.pill b{color:var(--navy-deep)}
+
+/* level list */
+.level{border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:12px 0;background:var(--paper);transition:border-color .2s}
+.level.done{border-color:rgba(47,143,107,.4);background:rgba(47,143,107,.05)}
+.level.locked{opacity:.55}
+.level-top{display:flex;align-items:center;gap:12px}
+.level-n{width:34px;height:34px;flex:0 0 auto;border-radius:9px;background:var(--c,var(--teal));color:#fff;display:grid;place-items:center;font-weight:700;font-size:15px}
+.level.done .level-n{background:var(--leaf)}
+.level h4{font-size:17px;font-weight:600;color:var(--navy-deep)}
+.level .lgoal{font-size:13.5px;color:var(--ink-3)}
+.level .badge{margin-left:auto;font-size:12px;font-weight:600;padding:4px 11px;border-radius:99px}
+.level .badge.d{background:rgba(47,143,107,.16);color:var(--leaf)}
+.level .badge.c{background:rgba(239,111,83,.14);color:var(--coral)}
+.level .badge.l{background:var(--sand);color:var(--ink-3)}
+.level-body{margin-top:14px;padding-top:14px;border-top:1px dashed var(--line)}
+.level-body p{font-size:15px;color:var(--ink-2);margin:8px 0}
+.level-body ul{margin:8px 0 8px 20px}.level-body li{font-size:15px;color:var(--ink-2);margin:5px 0}
+.level-body strong{color:var(--navy-deep)}
+
+.do-btn{display:inline-flex;align-items:center;gap:9px;margin-top:10px;padding:12px 22px;background:var(--navy-deep);color:#fff;border:none;border-radius:99px;font-weight:600;font-size:14.5px;transition:background .18s}
+.do-btn:hover{background:var(--coral)}
+.do-btn.ok{background:var(--leaf)}
+
+/* chord + tab */
+.chordrow{display:flex;flex-wrap:wrap;gap:20px;margin:18px 0;align-items:flex-start}
+.chord{width:100px;text-align:center}
+.chord .cn{font-weight:600;font-size:15px;color:var(--navy-deep)}
+.chord .cn .fr{color:var(--coral);font-style:italic;font-family:"Instrument Serif",serif;font-size:16px}
+.chord .csub{font-size:11px;color:var(--ink-3);min-height:14px;margin-bottom:6px}
+.chord svg{margin:0 auto;filter:drop-shadow(0 6px 14px rgba(20,37,70,.12))}
+.chord .play{margin-top:7px;font-size:12px;font-weight:600;color:var(--teal);background:rgba(30,167,160,.1);border:none;border-radius:99px;padding:5px 12px}
+.chord .play:hover{background:var(--teal);color:#fff}
+
+.tab{background:var(--navy-deep);border-radius:14px;padding:18px 20px;margin:16px 0;overflow-x:auto}
+.tab .tt{font-size:13px;font-weight:600;color:var(--yellow);margin-bottom:10px}
+.tabgrid{font-family:ui-monospace,"SF Mono",Menlo,monospace;color:#fff;font-size:14px;min-width:420px}
+.tabline{display:grid;grid-template-columns:28px 1fr;gap:8px;align-items:center;line-height:1.9}
+.tabline .s{color:var(--yellow);font-weight:700}
+.tabcells{display:flex;gap:2px}
+.tabcells .c{flex:1;text-align:center;color:rgba(255,255,255,.9);border-bottom:1px solid rgba(255,255,255,.18)}
+.tabcells .c.hit{color:var(--yellow);font-weight:700}
+
+/* strum pattern */
+.strum{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.strum .b{width:46px;height:52px;border-radius:10px;background:var(--paper);border:1.5px solid var(--line);display:grid;place-items:center;font-weight:700;font-size:20px;color:var(--ink-3)}
+.strum .b.d{border-color:var(--coral);color:var(--coral)}
+.strum .b.u{border-color:var(--teal);color:var(--teal)}
+.strum .b small{display:block;font-size:9px;font-weight:600;color:var(--ink-3);text-transform:uppercase}
+
+/* metronome */
+.metro{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:16px 0;box-shadow:var(--shadow-sm)}
+.metro-top{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.metro .dots{display:flex;gap:8px}
+.metro .dot{width:16px;height:16px;border-radius:50%;background:var(--sand);transition:background .05s,transform .05s}
+.metro .dot.on{background:var(--coral);transform:scale(1.25)}
+.metro .dot.acc.on{background:var(--yellow)}
+.metro .bpm{font-family:"Instrument Serif",serif;font-style:italic;font-size:30px;color:var(--navy-deep);min-width:76px}
+.metro input[type=range]{flex:1;accent-color:var(--coral);min-width:140px}
+.metro .mstart{padding:10px 20px;background:var(--navy-deep);color:#fff;border:none;border-radius:99px;font-weight:600;font-size:14px}
+.metro .mstart.on{background:var(--coral)}
+
+/* callout */
+.call{display:flex;gap:14px;background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--c,var(--teal));border-radius:12px;padding:16px 18px;margin:16px 0;box-shadow:var(--shadow-sm)}
+.call .i{font-size:20px}.call h4{font-size:15px;color:var(--navy-deep);margin-bottom:2px}.call p{font-size:14px;color:var(--ink-2)}
+.call.warn{border-left-color:var(--orange)}.call.tip{border-left-color:var(--leaf)}.call.ear{border-left-color:var(--violet)}
+
+/* notions table */
+.ntable{width:100%;border-collapse:separate;border-spacing:0;margin:16px 0;font-size:14.5px;background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.ntable th{background:var(--navy-deep);color:#fff;text-align:left;padding:11px 14px;font-size:13px}
+.ntable td{padding:11px 14px;border-top:1px solid var(--line);color:var(--ink-2)}
+.ntable td b{color:var(--navy-deep)}
+
+/* placement test */
+.q{padding:18px 0;border-top:1px solid var(--line)}.q:first-of-type{border-top:none}
+.q .qt{font-size:16px;font-weight:600;color:var(--navy-deep);margin-bottom:10px}
+.opts{display:grid;gap:8px}
+.opt{display:flex;gap:11px;align-items:center;padding:12px 14px;border:1.5px solid var(--line);border-radius:11px;cursor:pointer;font-size:14.5px;color:var(--ink-2)}
+.opt:hover{border-color:var(--coral)}
+.opt input{accent-color:var(--coral)}
+
+/* result / toast */
+.result{margin-top:18px;border-radius:14px;padding:20px 22px;background:linear-gradient(135deg,rgba(47,143,107,.14),rgba(30,167,160,.1));border:1px solid rgba(47,143,107,.3);display:none}
+.result.show{display:block}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--navy-deep);color:#fff;padding:13px 20px;border-radius:99px;font-weight:600;font-size:14px;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.3s;z-index:200;display:flex;gap:9px;align-items:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}.toast svg{width:17px;height:17px}
+
+.ufoot{background:var(--navy-deep);color:rgba(255,255,255,.7);padding:30px 0;font-size:13px;margin-top:20px}
+.ufoot .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.proto{display:inline-block;margin-left:8px;font-size:11px;font-weight:700;color:var(--coral);background:rgba(239,111,83,.12);padding:3px 9px;border-radius:99px;text-transform:uppercase;letter-spacing:.05em}
+@media(max-width:640px){.wrap{padding:0 18px}.sect-h .hint{display:none}}
+</style>
+</head>
+<body>
+
+<nav class="unav">
+  <div class="wrap unav-in">
+    <div class="ubrand" onclick="UKE.go('dash')"><span class="g">🪕</span> Ukulélé · Método <span class="proto">prototype</span></div>
+    <div class="unav-r">
+      <span class="uxp" id="xpBadge"></span>
+      <button class="ubtn ghost" onclick="UKE.go('dash')">Tableau de bord</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap"><div id="screen"></div></main>
+
+<footer class="ufoot"><div class="wrap">
+  <span>Ukulélé · Método — prototype d'architecture (compétences, sans plafond) 🌴</span>
+  <span>L'expérimentation au cœur.</span>
+</div></footer>
+
+<script>
+/* ============================================================
+   UKULÉLÉ — moteur prototype
+   Architecture ouverte par compétences (sans limite numérique)
+   ============================================================ */
+(function(){
+"use strict";
+
+/* ---------- Audio (Web Audio, sans fichier externe) ---------- */
+let actx=null;
+function AC(){ if(!actx){ try{actx=new (window.AudioContext||window.webkitAudioContext)();}catch(e){actx=null;} } if(actx&&actx.state==="suspended")actx.resume(); return actx; }
+// fréquences cordes à vide (GCEA, high G)
+const OPEN={G:392.00,C:261.63,E:329.63,A:440.00};
+function freq(string,fret){ return OPEN[string]*Math.pow(2,fret/12); }
+// Karplus-Strong : son de corde pincée
+function pluck(f,when,dur,gainv){
+  const ac=AC(); if(!ac)return; dur=dur||1.3; gainv=gainv||0.22;
+  const sr=ac.sampleRate, N=Math.max(1,Math.round(sr*dur)), buf=ac.createBuffer(1,N,sr), d=buf.getChannelData(0);
+  const p=Math.max(2,Math.round(sr/f)), ring=new Float32Array(p);
+  for(let i=0;i<p;i++) ring[i]=Math.random()*2-1;
+  let idx=0; const decay=0.9965;
+  for(let i=0;i<N;i++){ const cur=ring[idx], nxt=ring[(idx+1)%p], avg=(cur+nxt)*0.5*decay; d[i]=cur; ring[idx]=avg; idx=(idx+1)%p; }
+  // léger fondu de fin
+  const fade=Math.min(N,Math.round(sr*0.08)); for(let i=0;i<fade;i++) d[N-1-i]*= i/fade;
+  const src=ac.createBufferSource(); src.buffer=buf; const g=ac.createGain(); g.gain.value=gainv;
+  src.connect(g); g.connect(ac.destination); src.start(when||ac.currentTime);
+}
+function strum(frets){ // frets = {G,C,E,A} (null = corde non jouée)
+  const ac=AC(); if(!ac)return; const order=["G","C","E","A"]; let t=ac.currentTime+0.02;
+  order.forEach(s=>{ const fr=frets[s]; if(fr!==null&&fr!==undefined){ pluck(freq(s,fr),t,1.4); t+=0.035; } });
+}
+function playNote(string,fret){ pluck(freq(string,fret),null,1.2); }
+
+/* ---------- Métronome ---------- */
+const metro={on:false,bpm:80,next:0,beat:0,timer:null};
+function metroStart(){ const ac=AC(); if(!ac)return; metro.on=true; metro.next=ac.currentTime+0.1; metro.beat=0; metroLoop(); }
+function metroStop(){ metro.on=false; if(metro.timer)clearTimeout(metro.timer); document.querySelectorAll(".metro .dot").forEach(d=>d.classList.remove("on")); }
+function metroLoop(){
+  const ac=AC(); if(!ac||!metro.on)return;
+  while(metro.next < ac.currentTime+0.12){
+    const t=metro.next, acc=(metro.beat%4===0);
+    const o=ac.createOscillator(), g=ac.createGain();
+    o.frequency.value=acc?1500:1050; o.connect(g); g.connect(ac.destination);
+    g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(acc?0.4:0.25,t+0.001); g.gain.exponentialRampToValueAtTime(0.0001,t+0.05);
+    o.start(t); o.stop(t+0.06);
+    const b=metro.beat%4, delay=(t-ac.currentTime)*1000;
+    setTimeout(()=>{ const dots=document.querySelectorAll(".metro .dot"); dots.forEach(d=>d.classList.remove("on")); if(dots[b])dots[b].classList.add("on"); },Math.max(0,delay));
+    metro.beat++; metro.next += 60/metro.bpm;
+  }
+  metro.timer=setTimeout(metroLoop,25);
+}
+
+/* ---------- Persistance (repli mémoire) ---------- */
+const KEY="ukuleleProgressV1"; let mem=null;
+function load(){ try{const r=localStorage.getItem(KEY);return r?JSON.parse(r):(mem||def());}catch(e){return mem||def();} }
+function save(s){ mem=s; try{localStorage.setItem(KEY,JSON.stringify(s));}catch(e){} }
+function def(){ return {placed:false, comps:{}, xp:0, done:{}, morceaux:{}}; }
+function st(){ return load(); }
+
+/* ---------- Référentiel de compétences ---------- */
+// outillées = contenu réel ; soon = structure ouverte (à remplir sans limite)
+const COMPS=[
+ {id:"posture",live:true,color:"#2f8f6b",ic:"🧘",name:"Posture & prévention",short:"Tenir l'instrument détendu, éviter les douleurs.",
+  levels:[
+   {n:1,title:"Tenir le ukulélé sans tension",goal:"Assis, instrument calé, épaules basses.",
+    body:`<p>Assieds-toi au bord de la chaise, dos droit mais <strong>relâché</strong>. Cale le ukulélé contre ton avant-bras droit : il tient presque seul, sans que la main gauche le soutienne.</p>
+    <ul><li>Épaules <strong>basses</strong>, nuque libre.</li><li>Le manche part légèrement vers le haut.</li><li>Le poignet droit reste souple, la main flotte au-dessus des cordes.</li></ul>`,
+    defi:{min:3,txt:"Tiens la position 1 minute, respiration lente, sans crisper. Relâche les épaules à chaque expiration."}},
+   {n:2,title:"Main gauche détendue",goal:"Pouce derrière le manche, doigts arrondis.",
+    body:`<p>Le pouce se pose <strong>derrière</strong> le manche (pas par-dessus), face à l'index. Les doigts arrondis appuient <strong>juste derrière</strong> la barrette, pas dessus.</p>
+    <ul><li>On appuie du <strong>bout</strong> des doigts.</li><li>Juste la pression nécessaire pour que ça sonne, pas plus.</li></ul>`,
+    defi:{min:3,txt:"Pose un doigt sur une corde, appuie, relâche, 10 fois, en cherchant la pression minimale qui fait sonner net."}},
+   {n:3,title:"Échauffement & durée",goal:"Préparer les mains, doser l'effort.",
+    body:`<p>Avant de jouer : ouvre/ferme les mains 10 fois, fais rouler les poignets. Joue par <strong>sessions courtes</strong> (3–10 min). Mieux vaut <strong>souvent et peu</strong> que longtemps d'un coup.</p>`,
+    defi:{min:3,txt:"Fais la routine d'échauffement (mains + poignets) puis joue 2 minutes. Arrête-toi avant toute gêne."}},
+   {n:4,title:"Repérer & prévenir la douleur",goal:"Écouter les signaux d'alerte.",
+    body:`<p>Une petite fatigue musculaire est normale ; une <strong>douleur vive, un fourmillement ou une douleur articulaire</strong> ne le sont pas : on <strong>arrête</strong> et on relâche.</p>
+    <div class="call warn" style="--c:#ee5a2a"><div class="i">⚠️</div><div><h4>Important</h4><p>Ce programme éduque à la prévention mais ne remplace pas un avis médical. En cas de douleur persistante, consulte un professionnel de santé.</p></div></div>`,
+    defi:{min:3,txt:"Identifie 3 signaux qui doivent te faire arrêter, et teste : jouer 1 min, pause, auto-check des tensions."}}
+  ]},
+ {id:"accords",live:true,color:"#ee5a2a",ic:"🖐️",name:"Accords (main gauche)",short:"Former et enchaîner les premiers accords.",
+  levels:[
+   {n:1,title:"Do majeur (C) — un seul doigt !",goal:"Ton premier accord, instantané.",
+    chords:[{name:"Do",en:"C",frets:{G:0,C:0,E:0,A:3},fingers:{A:3},sub:"1 doigt"}],
+    body:`<p>Le cadeau du ukulélé : <strong>Do (C)</strong> se joue avec <strong>un seul doigt</strong> — l'annulaire sur la 1ʳᵉ corde (La/A), 3ᵉ case. Gratte les 4 cordes vers le bas : tu joues déjà un accord !</p>`,
+    defi:{min:3,txt:"Place Do (C), gratte 8 fois vers le bas lentement. Chaque corde doit sonner claire."}},
+   {n:2,title:"La mineur (Am) & Do7 (C7)",goal:"Deux accords d'un doigt de plus.",
+    chords:[{name:"La min",en:"Am",frets:{G:2,C:0,E:0,A:0},fingers:{G:2},sub:"1 doigt"},
+            {name:"Do7",en:"C7",frets:{G:0,C:0,E:0,A:1},fingers:{A:1},sub:"1 doigt"}],
+    body:`<p><strong>La mineur (Am)</strong> : majeur de l'ambiance douce-triste, un doigt sur la corde Sol (G), 2ᵉ case. <strong>Do7 (C7)</strong> : un doigt sur La (A), 1ʳᵉ case. Tu as déjà 3 accords.</p>`,
+    defi:{min:5,txt:"Alterne Do (C) → La min (Am) → Do7 (C7), 4 grattes chacun, en boucle lente."}},
+   {n:3,title:"Fa majeur (F)",goal:"Premier accord à deux doigts.",
+    chords:[{name:"Fa",en:"F",frets:{G:2,C:0,E:1,A:0},fingers:{G:2,E:1},sub:"2 doigts"}],
+    body:`<p><strong>Fa (F)</strong> : index sur Mi (E) 1ʳᵉ case, majeur sur Sol (G) 2ᵉ case. Les deux cordes du milieu restent à vide. Vérifie que chaque corde sonne.</p>`,
+    defi:{min:5,txt:"Place Fa (F) proprement 10 fois (pose/retire). Puis gratte 8 fois : tout doit sonner clair."}},
+   {n:4,title:"Changer C ↔ Am ↔ F en rythme",goal:"La vraie compétence : enchaîner.",
+    chords:[{name:"Do",en:"C",frets:{G:0,C:0,E:0,A:3},fingers:{A:3}},
+            {name:"La min",en:"Am",frets:{G:2,C:0,E:0,A:0},fingers:{G:2}},
+            {name:"Fa",en:"F",frets:{G:2,C:0,E:1,A:0},fingers:{G:2,E:1}}],
+    body:`<p>On vise le <strong>changement fluide</strong>. Astuce : repère la note qui <strong>ne bouge pas</strong> entre deux accords et garde le doigt posé. Commence très lentement, 2 grattes par accord.</p>`,
+    defi:{min:10,txt:"Boucle Do (C) → La min (Am) → Fa (F) → Do (C), 2 grattes chacun, sans t'arrêter pendant 2 minutes. Lentement !"}}
+  ]},
+ {id:"rythme",live:true,color:"#e8933a",ic:"🥁",name:"Rythmique (main droite)",short:"Donner le rythme : grattes et motifs.",
+  levels:[
+   {n:1,title:"Le battement régulier",goal:"Gratter vers le bas, en mesure.",
+    body:`<p>Gratte les 4 cordes vers le <strong>bas</strong> avec le gras de l'index (ou le pouce), un coup par temps : 1 – 2 – 3 – 4. Cherche la <strong>régularité</strong>, pas la vitesse.</p>`,
+    strum:["D","D","D","D"],
+    metro:70,
+    defi:{min:3,txt:"Sur un accord de Do (C), gratte vers le bas en suivant le métronome à 70, 1 coup par temps, 2 minutes."}},
+   {n:2,title:"Aller-retour (bas-haut)",goal:"Doubler les coups : bas puis haut.",
+    body:`<p>Entre deux temps, ajoute un coup vers le <strong>haut</strong> (plus léger). Le motif devient : bas-haut bas-haut… On remplit l'espace sans forcer.</p>`,
+    strum:["D","U","D","U","D","U","D","U"],
+    metro:70,
+    defi:{min:5,txt:"Sur Do (C), joue bas-haut sur chaque temps au métronome (70). Le coup vers le haut reste léger."}},
+   {n:3,title:"La rythmique « île »",goal:"Le motif qui sonne ukulélé.",
+    body:`<p>Le célèbre motif : <strong>bas, bas-haut, (silence)-haut, bas-haut</strong>. On saute volontairement un coup : c'est ce « trou » qui crée le balancement. Compte « 1 et 2 <em>(et)</em> 3 et 4 et » en sautant le 3.</p>`,
+    strum:["D","","D","U","","U","D","U"],
+    metro:66,
+    defi:{min:10,txt:"Apprends le motif île sur Do (C), très lentement au métronome (60–66). Vise la régularité avant la vitesse."}},
+   {n:4,title:"Jouer en tempo sur un vrai enchaînement",goal:"Accords + rythmique ensemble.",
+    body:`<p>On combine : la rythmique île sur l'enchaînement <strong>Do (C) → La min (Am) → Fa (F)</strong>. C'est le moment où « ça sonne comme une chanson ».</p>`,
+    strum:["D","","D","U","","U","D","U"],
+    metro:64,
+    defi:{min:10,txt:"Joue la rythmique île en changeant Do → Am → Fa (une mesure chacun) au métronome lent. Bravo, tu accompagnes !"}}
+  ]},
+ // ---- compétences à venir (architecture ouverte, sans limite) ----
+ {id:"arpeges",live:false,color:"#3d7ea6",ic:"🎵",name:"Arpèges",short:"Égrener les accords, corde par corde."},
+ {id:"harmonie",live:false,color:"#6b5ca8",ic:"🎼",name:"Harmonie & grilles",short:"Comprendre les enchaînements, transposer."},
+ {id:"lecture-jeu",live:false,color:"#1f7a8c",ic:"📖",name:"Lecture — piste jeu",short:"Diagrammes, tablatures, rythme écrit."},
+ {id:"lecture-solfege",live:false,color:"#b5651d",ic:"🎹",name:"Lecture — piste solfège",short:"Portée, durées, noms FR & EN."},
+ {id:"oreille",live:false,color:"#c1425f",ic:"👂",name:"Oreille",short:"Reconnaître, reproduire, s'auto-contrôler."},
+ {id:"interpretation",live:false,color:"#8a8f2c",ic:"✨",name:"Interprétation",short:"Finir un morceau, nuancer, enchaîner."},
+ {id:"chant",live:false,color:"#ef6f53",ic:"🎤",name:"Chant & accompagnement",short:"Chanter en jouant (2ᵉ temps)."}
+];
+function comp(id){ return COMPS.find(c=>c.id===id); }
+
+/* ---------- Morceaux (multi-niveaux) ---------- */
+const PIECES=[
+ {id:"clair-lune",title:"Au clair de la lune",origin:"trad",tag:"Domaine public",style:"Traditionnel français",
+  versions:[
+   {v:1,diff:"Mélodie — 5 notes",comps:["lecture-jeu"],
+    body:`<p>La toute première phrase, en <strong>notes seules</strong> : Do Do Do Ré Mi (C C C D E). Joue-les lentement, une par une. C'est ta première <strong>mélodie</strong> (des notes à la suite, pas un accord).</p>`,
+    tab:[{C:0,lbl:"Do/C"},{C:0,lbl:"Do/C"},{C:0,lbl:"Do/C"},{C:2,lbl:"Ré/D"},{E:0,lbl:"Mi/E"}]},
+   {v:2,diff:"Mélodie complète",comps:["lecture-jeu"],
+    body:`<p>La phrase entière : Do Do Do Ré Mi Ré Do Mi Ré Ré Do. Garde un tempo lent et régulier.</p>`,
+    tab:[{C:0},{C:0},{C:0},{C:2},{E:0},{C:2},{C:0},{E:0},{C:2},{C:2},{C:0}]},
+   {v:3,diff:"Accompagnement — 2 accords",comps:["accords"],
+    chords:[{name:"Do",en:"C",frets:{G:0,C:0,E:0,A:3},fingers:{A:3}},{name:"Sol7",en:"G7",frets:{G:0,C:2,E:1,A:2},fingers:{C:2,E:1,A:2}}],
+    body:`<p>On passe à l'<strong>accompagnement</strong> : presque tout en <strong>Do (C)</strong>, avec un <strong>Sol7 (G7)</strong> sur la cadence. Gratte un coup par temps.</p>`},
+   {v:4,diff:"Accords + rythmique",comps:["accords","rythme"],
+    chords:[{name:"Do",en:"C",frets:{G:0,C:0,E:0,A:3},fingers:{A:3}},{name:"Sol7",en:"G7",frets:{G:0,C:2,E:1,A:2},fingers:{C:2,E:1,A:2}}],
+    body:`<p>Même grille, avec la rythmique <strong>bas-haut</strong>. Tu joues un vrai petit morceau accompagné.</p>`}
+  ]},
+ {id:"petite-vague",title:"Petite vague",origin:"original",tag:"Composition originale",style:"Original — libre de droits",
+  versions:[
+   {v:1,diff:"2 accords, très lent",comps:["accords"],
+    chords:[{name:"Do",en:"C",frets:{G:0,C:0,E:0,A:3},fingers:{A:3}},{name:"La min",en:"Am",frets:{G:2,C:0,E:0,A:0},fingers:{G:2}}],
+    body:`<p>Une boucle douce : <strong>Do (C) · La min (Am)</strong>, une mesure chacun, 4 grattes vers le bas. Parfait pour s'installer.</p>`},
+   {v:2,diff:"3 accords",comps:["accords"],
+    chords:[{name:"Do",en:"C",frets:{G:0,C:0,E:0,A:3},fingers:{A:3}},{name:"La min",en:"Am",frets:{G:2,C:0,E:0,A:0},fingers:{G:2}},{name:"Fa",en:"F",frets:{G:2,C:0,E:1,A:0},fingers:{G:2,E:1}}],
+    body:`<p>On ajoute <strong>Fa (F)</strong> : <strong>Do · La min · Fa · Do</strong>. L'enchaînement respire davantage.</p>`},
+   {v:3,diff:"+ rythmique île",comps:["accords","rythme"],
+    chords:[{name:"Do",en:"C",frets:{G:0,C:0,E:0,A:3},fingers:{A:3}},{name:"La min",en:"Am",frets:{G:2,C:0,E:0,A:0},fingers:{G:2}},{name:"Fa",en:"F",frets:{G:2,C:0,E:1,A:0},fingers:{G:2,E:1}}],
+    strum:["D","","D","U","","U","D","U"],
+    body:`<p>Applique la <strong>rythmique île</strong> sur Do · La min · Fa · Do. Ça balance !</p>`},
+   {v:4,diff:"+ arpège (découverte)",comps:["accords","arpeges"],
+    chords:[{name:"Do",en:"C",frets:{G:0,C:0,E:0,A:3},fingers:{A:3}},{name:"La min",en:"Am",frets:{G:2,C:0,E:0,A:0},fingers:{G:2}}],
+    body:`<p>Au lieu de gratter, <strong>égrène</strong> les cordes une à une (pouce-index-majeur-annulaire) : c'est un <strong>arpège</strong>. Même accord, couleur toute différente.</p>`}
+  ]},
+ {id:"grille-magique",title:"La grille « magique »",origin:"grille",tag:"Grille d'accords",style:"C–G–Am–F — des centaines de chansons",
+  versions:[
+   {v:1,diff:"Les 4 accords",comps:["accords"],
+    chords:[{name:"Do",en:"C",frets:{G:0,C:0,E:0,A:3},fingers:{A:3}},{name:"Sol",en:"G",frets:{G:0,C:2,E:3,A:2},fingers:{C:2,E:3,A:2}},{name:"La min",en:"Am",frets:{G:2,C:0,E:0,A:0},fingers:{G:2}},{name:"Fa",en:"F",frets:{G:2,C:0,E:1,A:0},fingers:{G:2,E:1}}],
+    body:`<p>La suite d'accords la plus célèbre du monde : <strong>Do · Sol · La min · Fa (C–G–Am–F)</strong>. Des centaines de tubes tournent dessus. (Ici on travaille la <strong>grille</strong> ; les chansons, tu les reconnaîtras à l'oreille.)</p>`},
+   {v:2,diff:"En rythmique",comps:["accords","rythme"],
+    chords:[{name:"Do",en:"C",frets:{G:0,C:0,E:0,A:3},fingers:{A:3}},{name:"Sol",en:"G",frets:{G:0,C:2,E:3,A:2},fingers:{C:2,E:3,A:2}},{name:"La min",en:"Am",frets:{G:2,C:0,E:0,A:0},fingers:{G:2}},{name:"Fa",en:"F",frets:{G:2,C:0,E:1,A:0},fingers:{G:2,E:1}}],
+    strum:["D","","D","U","","U","D","U"],
+    body:`<p>La même grille avec la rythmique île. Une fois fluide, tu peux « plaquer » plein de chansons dessus.</p>`}
+  ]}
+];
+function piece(id){ return PIECES.find(p=>p.id===id); }
+
+/* ---------- Rendu : diagramme d'accord ukulélé (4 cordes) ---------- */
+function chordSVG(ch,color){
+  const strings=["G","C","E","A"], nF=4, W=78,H=104,padX=11,padTop=22,padB=10;
+  const gw=W-padX*2, gh=H-padTop-padB, dx=gw/(strings.length-1), dy=gh/nF;
+  let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Accord ${ch.en}">`;
+  s+=`<rect x="${padX}" y="${padTop-3}" width="${gw}" height="3.4" rx="1.4" fill="#142546"/>`;
+  for(let f=0;f<=nF;f++) s+=`<line x1="${padX}" y1="${padTop+f*dy}" x2="${padX+gw}" y2="${padTop+f*dy}" stroke="#c9cfda" stroke-width="1.3"/>`;
+  for(let i=0;i<strings.length;i++) s+=`<line x1="${padX+i*dx}" y1="${padTop}" x2="${padX+i*dx}" y2="${padTop+gh}" stroke="#c9cfda" stroke-width="1.3"/>`;
+  strings.forEach((str,i)=>{
+    const fr=ch.frets[str], x=padX+i*dx;
+    if(fr===0){ s+=`<circle cx="${x}" cy="${padTop-10}" r="4" fill="none" stroke="#404a66" stroke-width="1.5"/>`; }
+    else if(fr>0 && fr<=nF){ const y=padTop+(fr-0.5)*dy; s+=`<circle cx="${x}" cy="${y}" r="7" fill="${color||"#1ea7a0"}"/>`;
+      const fg=ch.fingers&&ch.fingers[str]; if(fg) s+=`<text x="${x}" y="${y+3.4}" font-size="9" font-family="Space Grotesk" fill="#fff" text-anchor="middle" font-weight="700">${fg}</text>`; }
+  });
+  // labels cordes
+  strings.forEach((str,i)=>{ s+=`<text x="${padX+i*dx}" y="${H-1}" font-size="7.5" font-family="Space Grotesk" fill="#7a849c" text-anchor="middle" font-weight="600">${str}</text>`; });
+  s+=`</svg>`; return s;
+}
+function chordBlock(ch,color){
+  const fr=JSON.stringify(ch.frets).replace(/"/g,"&quot;");
+  return `<div class="chord"><div class="cn">${ch.name} <span class="fr">${ch.en}</span></div><div class="csub">${ch.sub||""}</div>${chordSVG(ch,color)}<button class="play" data-strum='${fr}'>▶ écouter</button></div>`;
+}
+
+/* ---------- Rendu : tablature ---------- */
+function tabBlock(steps){
+  const strings=["A","E","C","G"]; // ordre d'affichage (aigu en haut)
+  let rows="";
+  strings.forEach(str=>{
+    let cells="";
+    steps.forEach(stp=>{ const v=(stp[str]!==undefined&&stp[str]!==null)?stp[str]:null; cells+=`<span class="c ${v!==null?"hit":""}">${v!==null?v:"–"}</span>`; });
+    rows+=`<div class="tabline"><span class="s">${str}</span><div class="tabcells">${cells}</div></div>`;
+  });
+  // ligne des noms de notes si fournis
+  let names=""; if(steps.some(s=>s.lbl)){ let c=""; steps.forEach(s=>{ c+=`<span class="c">${s.lbl||""}</span>`; }); names=`<div class="tabline"><span class="s"></span><div class="tabcells" style="color:var(--yellow)">${c}</div></div>`; }
+  return `<div class="tab"><div class="tt">🎼 Tablature (chiffres = cases, – = corde non jouée)</div><div class="tabgrid">${rows}${names}</div></div>`;
+}
+
+/* ---------- Rendu : rythmique ---------- */
+function strumBlock(pat){
+  let b=""; pat.forEach((p,i)=>{
+    const beat=(i%2===0)?Math.floor(i/2)+1:"&";
+    if(p==="D") b+=`<div class="b d">↓<small>${beat}</small></div>`;
+    else if(p==="U") b+=`<div class="b u">↑<small>${beat}</small></div>`;
+    else b+=`<div class="b"><small>${beat}</small></div>`;
+  });
+  return `<div class="strum">${b}</div><p class="para" style="font-size:13.5px;color:var(--ink-3)">↓ coup vers le bas · ↑ coup vers le haut · case vide = on saute (silence)</p>`;
+}
+
+/* ---------- Rendu : métronome ---------- */
+function metroBlock(bpm){
+  return `<div class="metro" data-metro><div class="metro-top">
+    <button class="mstart" data-mstart>▶ Démarrer</button>
+    <div class="dots"><div class="dot acc"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+    <span class="bpm" data-bpmv>${bpm}</span>
+    <input type="range" min="40" max="160" value="${bpm}" data-bpm>
+  </div></div>`;
+}
+
+/* ---------- Progression ---------- */
+function compLevel(id){ const s=st(); return (s.comps[id]&&s.comps[id].lvl)||0; }
+function setCompLevel(id,lvl){ const s=st(); if(!s.comps[id])s.comps[id]={lvl:0}; if(lvl>s.comps[id].lvl)s.comps[id].lvl=lvl; save(s); }
+function addXP(n){ const s=st(); s.xp=(s.xp||0)+n; save(s); }
+function markDone(key){ const s=st(); s.done[key]=true; save(s); }
+function isDone(key){ return !!st().done[key]; }
+function totalStars(){ return st().xp||0; }
+
+function paintXP(){ const el=document.getElementById("xpBadge"); if(el) el.innerHTML=starSVG()+`<span>${totalStars()} ★ <span style="color:var(--coral)">∞</span></span>`; }
+function starSVG(){ return `<svg viewBox="0 0 24 24" fill="#f5b820"><path d="M12 2.5l2.9 6.05 6.6.86-4.85 4.55 1.24 6.54L12 17.9 6.1 20.9l1.24-6.54L2.5 9.41l6.6-.86z"/></svg>`; }
+
+function toast(msg){ let t=document.querySelector(".toast"); if(!t){t=document.createElement("div");t.className="toast";document.body.appendChild(t);} t.innerHTML=starSVG()+`<span>${msg}</span>`; requestAnimationFrame(()=>t.classList.add("show")); setTimeout(()=>t.classList.remove("show"),3000); }
+
+/* ============================================================
+   ÉCRANS
+   ============================================================ */
+const SC=document.getElementById("screen");
+
+function screenDash(){
+  const s=st();
+  const placeHtml = s.placed ? "" : `<div class="place-cta">
+    <div><h3>🎯 Commence par te situer</h3><p>Un court test (1 min) place le programme à ton niveau sur chaque compétence — vrai débutant comme faux débutant. Tu pourras le refaire quand tu veux.</p></div>
+    <button class="ubtn" onclick="UKE.go('placement')">Faire le test de départ →</button></div>`;
+
+  let live="",soon="";
+  COMPS.forEach(c=>{
+    if(c.live){
+      const lvl=compLevel(c.id), tot=c.levels.length, pct=Math.round(lvl/tot*100);
+      live+=`<div class="ccard live" style="--c:${c.color}" onclick="UKE.go('comp:${c.id}')">
+        <div class="ic">${c.ic}</div><h3>${c.name}</h3><div class="cshort">${c.short}</div>
+        <div class="pal">Palier ${lvl} <span class="evo">/ ${tot} déployés · évolutif ∞</span></div>
+        <div class="cbar"><span style="width:${pct}%"></span></div></div>`;
+    } else {
+      soon+=`<div class="ccard soon" style="--c:${c.color}"><div class="ic">${c.ic}</div><h3>${c.name}</h3><div class="cshort">${c.short}</div><span class="soonlbl">À déployer</span></div>`;
+    }
+  });
+
+  let pieces="";
+  PIECES.forEach(p=>{
+    const prog=s.morceaux[p.id]||{};
+    let lv=""; p.versions.forEach(v=>{ lv+=`<div class="lv ${prog["v"+v.v]?"ok":""}">v${v.v}</div>`; });
+    pieces+=`<div class="pcard" onclick="UKE.go('morceau:${p.id}')">
+      <span class="tag ${p.origin==='original'?'orig':''}">${p.tag}</span>
+      <h3>${p.title}</h3><div class="meta">${p.style} · ${p.versions.length} niveaux</div>
+      <div class="levels">${lv}</div></div>`;
+  });
+
+  SC.innerHTML=`
+    <span class="eyebrow">🪕 Ukulélé · adultes · par compétences</span>
+    <h1 class="big">Apprends le ukulélé<br>par l'<span class="ac serif">expérimentation</span></h1>
+    <p class="lead">Un programme <strong>sans limite de niveaux</strong> : tu progresses compétence par compétence, avec des <strong>défis courts</strong> (3 à 10 min) et des morceaux jouables à <strong>plusieurs niveaux</strong>. On manipule d'abord, on nomme ensuite.</p>
+    ${placeHtml}
+    <div class="xpstrip">
+      <div class="xpstat"><div class="num">${totalStars()} <span class="inf">★</span></div><div class="lbl">Étoiles (sans plafond)</div></div>
+      <div class="xpstat"><div class="num">${COMPS.filter(c=>c.live).length}<span style="font-size:17px;color:var(--ink-3)"> actives · <span class="inf">∞</span></span></div><div class="lbl">Compétences</div></div>
+      <div class="xpstat"><div class="num">3–10<span style="font-size:17px;color:var(--ink-3)"> min</span></div><div class="lbl">Par jour suffit</div></div>
+      <button class="reset" onclick="UKE.reset()">Réinitialiser</button>
+    </div>
+
+    <div class="sect-h"><span class="n">A</span><h2>Le défi du jour</h2><span class="hint">choisis ton temps dispo</span></div>
+    <div id="defiMount"></div>
+
+    <div class="sect-h"><span class="n">B</span><h2>Tes compétences</h2><span class="hint">progression par maîtrise, pas de « /10 »</span></div>
+    <div class="cgrid">${live}${soon}</div>
+
+    <div class="sect-h"><span class="n">C</span><h2>Morceaux (multi-niveaux)</h2><span class="hint">un morceau, plusieurs difficultés</span></div>
+    <div class="pgrid">${pieces}</div>
+
+    <div class="sect-h"><span class="n">D</span><h2>Bien démarrer</h2></div>
+    <div class="cgrid">
+      <div class="ccard live" style="--c:#6b5ca8" onclick="UKE.go('notions')"><div class="ic">🧩</div><h3>Les notions clés</h3><div class="cshort">Note, accord, position, arpège, rythmique, solfège, FR/EN : tout clarifié.</div></div>
+      <div class="ccard live" style="--c:#2f8f6b" onclick="UKE.go('comp:posture')"><div class="ic">🧘</div><h3>Posture & anti-douleur</h3><div class="cshort">S'installer juste, éviter les tensions dès le départ.</div></div>
+      <div class="ccard live" style="--c:#1ea7a0" onclick="UKE.go('accordage')"><div class="ic">🎚️</div><h3>Les 4 cordes : G C E A</h3><div class="cshort">Sol Do Mi La — nommer et accorder l'instrument.</div></div>
+    </div>`;
+  mountDefi(document.getElementById("defiMount"),3);
+  paintXP();
+}
+
+/* ----- défi du jour ----- */
+function pickDefi(maxMin){
+  // réservoir = tous les défis des compétences live, filtrés par temps et proches du niveau
+  const pool=[];
+  COMPS.filter(c=>c.live).forEach(c=>{ c.levels.forEach(l=>{ if(l.defi){ pool.push({comp:c,lvl:l,key:c.id+":"+l.n}); } }); });
+  const lim=pool.filter(d=>d.lvl.defi.min<=maxMin);
+  // priorité : défis au niveau courant ou juste au-dessus, non faits
+  const cur=lim.filter(d=>!isDone("defi:"+d.key) && d.lvl.n<=compLevel(d.comp.id)+1);
+  const chosen=(cur.length?cur:lim);
+  return chosen[Math.floor(Math.random()*chosen.length)];
+}
+function mountDefi(mount,maxMin){
+  const d=pickDefi(maxMin);
+  if(!d){ mount.innerHTML=`<div class="defi-feature"><p class="para">Tous les défis de ce format sont validés — essaie une durée plus longue !</p></div>`; return; }
+  const done=isDone("defi:"+d.key);
+  mount.innerHTML=`<div class="defi-feature">
+    <span class="tag">Défi · ${d.comp.ic} ${d.comp.name}</span>
+    <h3>${d.lvl.title}</h3>
+    <div class="timefilter">
+      ${[3,5,10].map(m=>`<button class="${m===maxMin?'on':''}" data-time="${m}">${m} min</button>`).join("")}
+    </div>
+    <p class="para">${d.lvl.defi.txt}</p>
+    <button class="do-btn ${done?'ok':''}" data-defi="${d.key}">${done?'✔ Validé — refaire':"J'ai relevé le défi ✓"}</button>
+    <button class="ubtn ghost" style="margin-left:8px" data-another="${maxMin}">Autre défi ↻</button>
+  </div>`;
+  mount.querySelectorAll("[data-time]").forEach(b=>b.onclick=()=>mountDefi(mount,parseInt(b.dataset.time,10)));
+  mount.querySelector("[data-another]").onclick=()=>mountDefi(mount,maxMin);
+  mount.querySelector("[data-defi]").onclick=()=>{
+    const key=d.key; const [cid,ln]=key.split(":");
+    if(!isDone("defi:"+key)){ markDone("defi:"+key); addXP(2); setCompLevel(cid,parseInt(ln,10)); toast("+2 ★ · défi validé !"); }
+    paintXP(); mountDefi(mount,maxMin);
+  };
+}
+
+/* ----- écran compétence ----- */
+function screenComp(id){
+  const c=comp(id); if(!c||!c.live){ return screenDash(); }
+  const cur=compLevel(id);
+  let levels="";
+  c.levels.forEach(l=>{
+    const done=isDone("defi:"+id+":"+l.n);
+    const unlocked = l.n<=cur+1;
+    let inner="";
+    if(l.chords){ inner+=`<div class="chordrow">${l.chords.map(ch=>chordBlock(ch,c.color)).join("")}</div>`; }
+    inner+=`<div>${l.body||""}</div>`;
+    if(l.strum){ inner+=strumBlock(l.strum); }
+    if(l.metro){ inner+=metroBlock(l.metro); }
+    if(l.defi){ inner+=`<p class="para" style="margin-top:12px"><strong>🎯 Défi (${l.defi.min} min) :</strong> ${l.defi.txt}</p>
+      <button class="do-btn ${done?'ok':''}" data-defi="${id}:${l.n}">${done?'✔ Validé — refaire':'Valider ce défi ✓'}</button>`; }
+    const badge = done?`<span class="badge d">✔ validé</span>`:(unlocked?`<span class="badge c">à faire</span>`:`<span class="badge l">🔒</span>`);
+    levels+=`<div class="level ${done?'done':''} ${unlocked?'':'locked'}" style="--c:${c.color}">
+      <div class="level-top"><div class="level-n">${l.n}</div><div><h4>${l.title}</h4><div class="lgoal">${l.goal}</div></div>${badge}</div>
+      ${unlocked?`<div class="level-body">${inner}</div>`:""}</div>`;
+  });
+  SC.innerHTML=`<a class="back" onclick="UKE.go('dash')">← Tableau de bord</a>
+    <div style="font-size:30px">${c.ic}</div>
+    <h1 class="detail-h">${c.name}</h1>
+    <p class="lead">${c.short}</p>
+    <div class="goalrow"><span class="pill">Palier atteint : <b>${cur}</b></span><span class="pill">Paliers déployés : <b>${c.levels.length}</b> · <b>∞ évolutif</b></span></div>
+    ${levels}`;
+  wireInteractions();
+  paintXP();
+}
+
+/* ----- écran morceau ----- */
+function screenMorceau(id,vsel){
+  const p=piece(id); if(!p)return screenDash();
+  const v = vsel ? p.versions.find(x=>x.v===parseInt(vsel,10)) : p.versions[0];
+  const prog=st().morceaux[id]||{};
+  let tabs=""; p.versions.forEach(x=>{ tabs+=`<button class="pill" style="${x.v===v.v?'background:var(--navy-deep);color:#fff':''}" onclick="UKE.go('morceau:${id}:${x.v}')">v${x.v} · ${x.diff} ${prog['v'+x.v]?'✔':''}</button>`; });
+  let body="";
+  if(v.chords){ body+=`<div class="chordrow">${v.chords.map(ch=>chordBlock(ch,"#ef6f53")).join("")}</div>`; }
+  body+=`<div>${v.body||""}</div>`;
+  if(v.tab){ body+=tabBlock(v.tab); }
+  if(v.strum){ body+=strumBlock(v.strum); }
+  const compsTxt = (v.comps||[]).map(cid=>{ const cc=comp(cid); return cc?`${cc.ic} ${cc.name}`:cid; }).join(" · ");
+  const done=!!prog["v"+v.v];
+  SC.innerHTML=`<a class="back" onclick="UKE.go('dash')">← Tableau de bord</a>
+    <span class="eyebrow alt">${p.tag} · ${p.style}</span>
+    <h1 class="detail-h">${p.title}</h1>
+    <div class="goalrow">${tabs}</div>
+    <div class="panel">
+      <div class="goalrow"><span class="pill">Niveau <b>v${v.v}</b> — ${v.diff}</span><span class="pill">Travaille : <b>${compsTxt||"—"}</b></span></div>
+      ${body}
+      <button class="do-btn ${done?'ok':''}" data-piece="${id}:${v.v}">${done?'✔ Niveau validé — rejouer':"J'ai joué ce niveau ✓"}</button>
+    </div>`;
+  wireInteractions();
+  SC.querySelector("[data-piece]").onclick=function(){
+    const s=st(); if(!s.morceaux[id])s.morceaux[id]={}; if(!s.morceaux[id]["v"+v.v]){ s.morceaux[id]["v"+v.v]=true; save(s); addXP(3); (v.comps||[]).forEach(cid=>{ if(comp(cid)&&comp(cid).live) setCompLevel(cid,Math.min(compLevel(cid)+1, (comp(cid).levels||[]).length)); }); toast("+3 ★ · niveau joué !"); }
+    paintXP(); screenMorceau(id,v.v);
+  };
+  paintXP();
+}
+
+/* ----- écran notions ----- */
+function screenNotions(){
+  SC.innerHTML=`<a class="back" onclick="UKE.go('dash')">← Tableau de bord</a>
+  <h1 class="detail-h">Les notions clés, enfin claires</h1>
+  <p class="lead">Avant tout, on distingue des mots qu'on mélange souvent. C'est la base de « lire la musique sous toutes ses formes ».</p>
+  <table class="ntable"><tr><th>Notion</th><th>En clair</th><th>Sur le ukulélé</th></tr>
+   <tr><td><b>Note</b></td><td>un son unique (une hauteur)</td><td>une corde jouée à une case</td></tr>
+   <tr><td><b>Lecture française</b></td><td>Do Ré Mi Fa Sol La Si</td><td>pour nommer la mélodie</td></tr>
+   <tr><td><b>Lecture anglaise</b></td><td>C D E F G A B</td><td>domine les noms d'accords</td></tr>
+   <tr><td><b>Position</b></td><td>où se pose le doigt</td><td>corde + case (une note existe à plusieurs endroits)</td></tr>
+   <tr><td><b>Accord</b></td><td>plusieurs notes ensemble</td><td>une forme de doigts (Do = 1 doigt !)</td></tr>
+   <tr><td><b>Arpège</b></td><td>les notes d'un accord l'une après l'autre</td><td>on « égrène » les cordes</td></tr>
+   <tr><td><b>Rythmique</b></td><td>le motif de battements</td><td>aller-retour sur les cordes</td></tr>
+   <tr><td><b>Solfège</b></td><td>hauteurs + durées écrites</td><td>tablature, diagrammes, portée</td></tr>
+  </table>
+  <div class="call tip" style="--c:#2f8f6b"><div class="i">💡</div><div><h4>À retenir</h4><p>Une <b>note</b> = un son. Un <b>accord</b> = plusieurs sons ensemble. Un <b>arpège</b> = le même accord, mais égrené. La <b>rythmique</b>, c'est <i>comment</i> on frappe. Tout le reste s'accroche à ça.</p></div></div>
+  <button class="do-btn" onclick="UKE.go('dash')">J'ai compris → continuer</button>`;
+  paintXP();
+}
+
+/* ----- écran accordage ----- */
+function screenAccordage(){
+  const strings=[{s:"G",fr:"Sol",n:"4ᵉ (en haut)"},{s:"C",fr:"Do",n:"3ᵉ"},{s:"E",fr:"Mi",n:"2ᵉ"},{s:"A",fr:"La",n:"1ʳᵉ (en bas)"}];
+  SC.innerHTML=`<a class="back" onclick="UKE.go('dash')">← Tableau de bord</a>
+  <h1 class="detail-h">Les 4 cordes : G C E A</h1>
+  <p class="lead">De la plus grave repère à la plus aiguë, le ukulélé standard sonne <strong>Sol – Do – Mi – La</strong> (G C E A). Clique pour entendre chaque corde à vide.</p>
+  <div class="chordrow">${strings.map(x=>`<div class="chord"><div class="cn">${x.fr} <span class="fr">${x.s}</span></div><div class="csub">${x.n}</div><button class="play" data-note="${x.s}">▶ ${x.fr} (${x.s})</button></div>`).join("")}</div>
+  <div class="call ear" style="--c:#6b5ca8"><div class="i">👂</div><div><h4>Moyen mnémotechnique</h4><p>« <b>G</b>ood <b>C</b>ats <b>E</b>at <b>A</b>lways » — ou en français, simplement <b>Sol-Do-Mi-La</b>. Le Sol aigu (« high G ») donne le son sautillant du ukulélé.</p></div></div>
+  <button class="do-btn" onclick="UKE.go('dash')">Continuer</button>`;
+  SC.querySelectorAll("[data-note]").forEach(b=>b.onclick=()=>playNote(b.dataset.note,0));
+  paintXP();
+}
+
+/* ----- écran test de positionnement ----- */
+function screenPlacement(){
+  SC.innerHTML=`<a class="back" onclick="UKE.go('dash')">← Tableau de bord</a>
+  <h1 class="detail-h">Test de positionnement</h1>
+  <p class="lead">5 questions pour placer le programme à ton niveau. Sois honnête : il n'y a pas de bonne réponse, juste la tienne.</p>
+  <div class="panel">
+   <div class="q"><div class="qt">1. As-tu déjà joué d'un instrument à cordes (guitare, ukulélé…) ?</div>
+     <div class="opts"><label class="opt"><input type="radio" name="p1" value="0"> Jamais</label><label class="opt"><input type="radio" name="p1" value="1"> Un peu, il y a longtemps</label><label class="opt"><input type="radio" name="p1" value="2"> Oui, je joue encore</label></div></div>
+   <div class="q"><div class="qt">2. Sais-tu lire une tablature ou un diagramme d'accord ?</div>
+     <div class="opts"><label class="opt"><input type="radio" name="p2" value="0"> Pas du tout</label><label class="opt"><input type="radio" name="p2" value="1"> Vaguement</label><label class="opt"><input type="radio" name="p2" value="2"> Oui, sans problème</label></div></div>
+   <div class="q"><div class="qt">3. Peux-tu déjà former un accord et le faire sonner proprement ?</div>
+     <div class="opts"><label class="opt"><input type="radio" name="p3" value="0"> Non</label><label class="opt"><input type="radio" name="p3" value="1"> Un ou deux, difficilement</label><label class="opt"><input type="radio" name="p3" value="2"> Oui, plusieurs</label></div></div>
+   <div class="q"><div class="qt">4. Peux-tu garder un rythme régulier (taper dans les mains en mesure) ?</div>
+     <div class="opts"><label class="opt"><input type="radio" name="p4" value="0"> Pas sûr</label><label class="opt"><input type="radio" name="p4" value="1"> À peu près</label><label class="opt"><input type="radio" name="p4" value="2"> Oui, facilement</label></div></div>
+   <div class="q"><div class="qt">5. Ton objectif principal ?</div>
+     <div class="opts"><label class="opt"><input type="radio" name="p5" value="0"> Jouer mes premiers accords</label><label class="opt"><input type="radio" name="p5" value="1"> Accompagner des chansons</label><label class="opt"><input type="radio" name="p5" value="2"> Jouer et chanter / aller loin</label></div></div>
+   <button class="do-btn" data-place>Calculer mon point de départ →</button>
+   <div class="result" data-presult></div>
+  </div>`;
+  SC.querySelector("[data-place]").onclick=function(){
+    function val(n){ const el=SC.querySelector(`input[name="${n}"]:checked`); return el?parseInt(el.value,10):0; }
+    const exp=val("p1"),read=val("p2"),chord=val("p3"),rhy=val("p4");
+    const s=st();
+    s.comps["accords"]={lvl:Math.min(chord, 2)};        // 0..2 départ accords
+    s.comps["rythme"]={lvl:Math.min(rhy,2)};
+    s.comps["posture"]={lvl: exp>=1?1:0};
+    s.placed=true; save(s);
+    const profil = (exp+read+chord+rhy)>=6?"faux débutant confirmé":((exp+read+chord+rhy)>=3?"débutant avec quelques bases":"grand débutant");
+    const res=SC.querySelector("[data-presult]"); res.className="result show";
+    res.innerHTML=`<h4 style="color:var(--navy-deep);font-size:18px;margin-bottom:6px">🎯 Profil : ${profil}</h4>
+     <p class="para" style="margin:0">Ton programme est calé : <b>Accords</b> démarre au palier ${s.comps.accords.lvl}, <b>Rythmique</b> au palier ${s.comps.rythme.lvl}. Les défis déjà acquis te sont proposés « à revoir », pas imposés. Tu peux relancer ce test quand tu veux.</p>
+     <button class="do-btn" style="margin-top:12px" onclick="UKE.go('dash')">Voir mon tableau de bord →</button>`;
+    paintXP();
+  };
+  paintXP();
+}
+
+/* ---------- interactions communes (chords play, strum, métronome) ---------- */
+function wireInteractions(){
+  document.querySelectorAll("[data-strum]").forEach(b=>b.onclick=()=>{ try{ strum(JSON.parse(b.dataset.strum)); }catch(e){} });
+  document.querySelectorAll("[data-note]").forEach(b=>b.onclick=()=>playNote(b.dataset.note,0));
+  document.querySelectorAll("[data-defi]").forEach(b=>b.onclick=()=>{
+    const key=b.dataset.defi, [cid,ln]=key.split(":");
+    if(!isDone("defi:"+key)){ markDone("defi:"+key); addXP(2); setCompLevel(cid,parseInt(ln,10)); toast("+2 ★ · défi validé !"); }
+    screenComp(cid);
+  });
+  document.querySelectorAll("[data-metro]").forEach(m=>{
+    const startBtn=m.querySelector("[data-mstart]"), range=m.querySelector("[data-bpm]"), bpmv=m.querySelector("[data-bpmv]");
+    range.oninput=()=>{ metro.bpm=parseInt(range.value,10); bpmv.textContent=range.value; };
+    startBtn.onclick=()=>{ if(metro.on){ metroStop(); startBtn.textContent="▶ Démarrer"; startBtn.classList.remove("on"); } else { metro.bpm=parseInt(range.value,10); metroStart(); startBtn.textContent="■ Arrêter"; startBtn.classList.add("on"); } };
+  });
+}
+
+/* ---------- Router ---------- */
+function go(route){
+  metroStop();
+  route=route||"dash";
+  const [name,a,b]=route.split(":");
+  if(name==="dash") screenDash();
+  else if(name==="placement") screenPlacement();
+  else if(name==="comp") screenComp(a);
+  else if(name==="morceau") screenMorceau(a,b);
+  else if(name==="notions") screenNotions();
+  else if(name==="accordage") screenAccordage();
+  else screenDash();
+  window.scrollTo(0,0);
+  try{ history.replaceState(null,"","#"+route); }catch(e){}
+}
+function reset(){ if(confirm("Réinitialiser toute ta progression ?")){ mem=def(); try{localStorage.removeItem(KEY);}catch(e){} go("dash"); } }
+
+window.UKE={go,reset};
+go((location.hash||"#dash").replace("#",""));
+})();
+</script>
+</body>
+</html>
