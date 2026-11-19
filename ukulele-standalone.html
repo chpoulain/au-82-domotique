@@ -221,6 +221,10 @@ p.para{font-size:16px;color:var(--ink-2);margin:10px 0}
 .selfcheck .sc-item:first-child{border-top:none}
 .selfcheck input[type=checkbox]{margin-top:3px;width:18px;height:18px;accent-color:var(--leaf);flex:0 0 auto;cursor:pointer}
 .selfcheck .sc-item span{font-size:15px;color:var(--ink-2)}
+.intro-video{position:relative;border-radius:18px;overflow:hidden;margin:4px 0 20px;box-shadow:var(--shadow);line-height:0}
+.intro-video video{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.iv-sound{position:absolute;bottom:12px;right:12px;background:rgba(20,37,70,.72);color:#fff;border:none;border-radius:99px;padding:7px 14px;font-family:inherit;font-weight:600;font-size:12.5px;cursor:pointer;line-height:1.2;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+.iv-sound:hover{background:var(--coral)}
 </style>
 </head>
 <body>
@@ -606,6 +610,7 @@ function screenDash(){
   });
 
   SC.innerHTML=`
+    <div class="intro-video"><video src="ukulele-intro.mp4" autoplay muted loop playsinline preload="metadata" onerror="this.closest('.intro-video').style.display='none'"></video><button class="iv-sound" onclick="var v=this.parentNode.querySelector('video');v.muted=!v.muted;if(!v.muted){v.play()}this.textContent=v.muted?'🔊 Activer le son':'🔇 Couper le son'">🔊 Activer le son</button></div>
     <span class="eyebrow">🪕 Ukulélé · adultes · par compétences</span>
     <h1 class="big">Apprends le ukulélé<br>par l'<span class="ac serif">expérimentation</span></h1>
     <p class="lead">Un programme <strong>sans limite de niveaux</strong> : tu progresses compétence par compétence, avec des <strong>défis courts</strong> (3 à 10 min) et des morceaux jouables à <strong>plusieurs niveaux</strong>. On manipule d'abord, on nomme ensuite.</p>
